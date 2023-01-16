@@ -1,7 +1,6 @@
 import { baseUrl, GET, POST, PUT, DELETE } from "./config";
 
 const callApi = async (endpoint: string, verb: {}) => {
-    console.log(verb);
     const response = await fetch(`${baseUrl}/${endpoint}`, verb)
     try {
         switch (response.status) {
