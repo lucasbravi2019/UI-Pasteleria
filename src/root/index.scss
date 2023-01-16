@@ -1,0 +1,23 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 10px;
+    max-width: max-content;
+}
+
+.navigation-bar {
+    display: block;
+    border: none;
+    background-color: white;
+    box-shadow: none;
+    height: 100%;
+    line-height: normal;
+    padding: 10px 50px 10px 10px;
+    &__link {
+        color: rgb(122, 122, 122);
+    }
+    &__link:hover {
+        color: rgb(0, 0, 0);
+    }
+}
