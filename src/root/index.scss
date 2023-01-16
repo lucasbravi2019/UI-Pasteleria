@@ -1,9 +1,6 @@
 .container {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    margin: 10px;
-    max-width: max-content;
+    display: grid;
+    grid-template-columns: 20% 80%;
 }
 
 .navigation-bar {
@@ -14,9 +11,11 @@
     height: 100%;
     line-height: normal;
     padding: 10px 50px 10px 10px;
+
     &__link {
         color: rgb(122, 122, 122);
     }
+
     &__link:hover {
         color: rgb(0, 0, 0);
     }

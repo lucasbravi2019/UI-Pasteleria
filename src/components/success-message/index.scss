@@ -1,0 +1,20 @@
+.success-message {
+    background-color: rgb(51, 255, 0);
+    text-align: center;
+    font-weight: 700;
+    padding: 5px;
+    max-width: max-content;
+    margin: 10px auto;
+
+    animation: hide-message linear 5s;
+}
+
+@keyframes hide-message {
+    80% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
