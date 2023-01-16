@@ -6,10 +6,7 @@ const callApi = async (endpoint: string, verb: {}) => {
     try {
         switch (response.status) {
             case 200:
-                console.log(response.body);
-                let json = await response.json()
-
-                return json
+                return await response.json()
             default:
                 return await response.json()
         }
