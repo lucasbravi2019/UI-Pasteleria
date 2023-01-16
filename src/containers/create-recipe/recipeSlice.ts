@@ -6,7 +6,7 @@ const initialState = {
     form: {
         name: ''
     } as RecipeName
-} 
+}
 
 const recipeSlice = createSlice({
     initialState,

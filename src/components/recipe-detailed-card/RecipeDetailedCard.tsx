@@ -1,25 +1,33 @@
 import { Recipe } from '../../interfaces/recipes'
+import IngredientItem from '../ingredient-item/IngredientItem'
+import './index.scss'
 
-const RecipeDetailedCard = ({recipe}: {recipe: Recipe}) => {
+const RecipeDetailedCard = ({ recipe }: { recipe: Recipe }) => {
     return (
-            <section className="container">
-                <section className="recipe-card">
-                    <h3 className="recipe-card__title"><strong>Receta:</strong> {recipe.name}</h3>
-                    <h3 className="recipe-card__ingredients"><strong>Ingredientes</strong></h3>
+        <section className="recipe-detailed-card">
+            <h1 className="recipe-detailed-card__title"><strong>Receta:</strong> {recipe.name}</h1>
+            <h3 className="recipe-detailed-card__ingredients"><strong>Ingredientes</strong></h3>
+            {recipe.ingredients && recipe.ingredients.length > 0 ? (
+                <section className="recipe-detailed-card__ingredients-list__container">
                     {
                         recipe.ingredients.map((ingredient, index) => (
-                            <section key={index}>
-                                <ul  className="recipe-card__ingredients-list">
-                                    <li className="recipe-card__ingredients-item">Ingrediente: {ingredient.ingredient.name}</li>
-                                    <li className="recipe-card__ingredients-item">Precio: $ {ingredient.price}</li>
-                                    <li className="recipe-card__ingredients-item">Cantidad: {ingredient.quantity}</li>
-                                </ul>
-                            </section>
-                        ))    
+                            <IngredientItem
+                                ingredient={ingredient}
+                                index={index}
+                                key={index}
+                            />
+                        ))
                     }
-                    <p className="recipe-card__paragraph"><strong>Precio: </strong>$ {recipe.price}</p>
                 </section>
-            </section>
+            ) : (
+                <p className="recipe-detailed-card__paragraph">Esta receta no tiene ingredientes</p>
+            )}
+            {recipe.price ? (
+                <p className="recipe-detailed-card__paragraph"><strong>Precio: </strong>$ {recipe.price}</p>
+            ) : (
+                <p className="recipe-detailed-card__paragraph">Esta receta no tiene precio total</p>
+            )}
+        </section>
     )
 }
 

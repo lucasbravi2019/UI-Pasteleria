@@ -1,10 +1,13 @@
 import './index.scss'
 
-const SubmitButton = ({onClick, buttonText, className}: {onClick: Function, buttonText: string, className: string}) => {
+const SubmitButton = ({ onClick, buttonText, className }: { onClick: Function, buttonText: string, className: string }) => {
     return (
-        <button 
-            onClick={() => onClick}
-            className={className}    
+        <button
+            onClick={(e) => {
+                e.preventDefault()
+                onClick()
+            }}
+            className={className}
         >{buttonText}</button>
     )
 }

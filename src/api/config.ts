@@ -5,14 +5,14 @@ export const GET = () => {
 export const POST = (body = {}) => {
     return {
         method: 'POST',
-        body: body
+        body: JSON.stringify(body)
     }
 }
 
 export const PUT = (body = {}) => {
     return {
         method: 'PUT',
-        body: body
+        body: JSON.stringify(body)
     }
 }
 
