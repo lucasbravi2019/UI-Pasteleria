@@ -1,9 +1,13 @@
-.container {
-    width: 100%;
-    display: block;
-    justify-content: center;
-}
-
 .recipe-card {
     border: 3px solid gray;
+    margin: 10px;
+
+    &__title {
+        padding: 10px;
+    }
+
+    &__paragraph {
+        padding: 5px;
+        text-align: center;
+    }
 }

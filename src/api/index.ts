@@ -1,17 +1,18 @@
 import { baseUrl, GET, POST, PUT, DELETE } from "./config";
 
 const callApi = async (endpoint: string, verb: {}) => {
+    console.log(verb);
     const response = await fetch(`${baseUrl}/${endpoint}`, verb)
     try {
         switch (response.status) {
-            case 200: 
+            case 200:
+                console.log(response.body);
                 let json = await response.json()
-                console.log(json);
-                
+
                 return json
-            default: 
+            default:
                 return await response.json()
-        } 
+        }
     } catch (error) {
         console.log(error);
         throw error
@@ -28,5 +29,8 @@ export const deleteData = (endpoint: string) => callApi(endpoint, DELETE())
 
 export const endpoints = {
     getAllRecipes: 'recipes',
-    getRecipeByOid: (oid: string) => `recipes/${oid}`
+    getRecipeByOid: (oid: string) => `recipes/${oid}`,
+    createRecipe: 'recipes',
+    updateRecipe: (oid: string) => `recipes/${oid}`,
+    deleteRecipe: (oid: string) => `recipes/${oid}`
 }
