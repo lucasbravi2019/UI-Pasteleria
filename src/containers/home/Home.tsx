@@ -28,7 +28,7 @@ const Home = () => {
     return (
         <div className="recipes__container">
             {
-                selector ? selector.map((recipe, index) => (
+                selector && selector.length > 0 ? selector.map((recipe, index) => (
                     <RecipeCard
                         key={index}
                         recipe={recipe}

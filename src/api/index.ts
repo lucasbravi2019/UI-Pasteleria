@@ -1,8 +1,8 @@
 import { baseUrl, GET, POST, PUT, DELETE } from "./config";
 
 const callApi = async (endpoint: string, verb: {}) => {
-    const response = await fetch(`${baseUrl}/${endpoint}`, verb)
     try {
+        const response = await fetch(`${baseUrl}/${endpoint}`, verb)
         switch (response.status) {
             case 200:
                 return await response.json()
@@ -10,8 +10,7 @@ const callApi = async (endpoint: string, verb: {}) => {
                 return await response.json()
         }
     } catch (error) {
-        console.log(error);
-        throw error
+        return
     }
 }
 

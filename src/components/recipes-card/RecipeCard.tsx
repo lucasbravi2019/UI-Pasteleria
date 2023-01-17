@@ -6,22 +6,28 @@ import { useAppDispatch } from '../../root/hooks'
 import ErrorMessage from '../error-message/ErrorMessage'
 import NavigationButton from '../navigation-button/NavigationButton'
 import SubmitButton from '../submit-button/SubmitButton'
+import SuccessMessage from '../success-message/SuccessMessage'
 import './index.scss'
 
-const borrarReceta = async (oid: string, setErrorMessage: Function, reducer: () => void) => {
+const resetMessages = (setSuccessMessage: Function, setErrorMessage: Function) => {
+    setSuccessMessage('')
+    setErrorMessage('')
+}
+
+const borrarReceta = async (oid: string, setErrorMessage: Function, setSuccessMessage: Function, reducer: () => void) => {
+    resetMessages(setSuccessMessage, setErrorMessage)
     const response = await deleteData(endpoints.deleteRecipe(oid))
-    if (!response) {
+    if (response) {
+        setSuccessMessage('La receta pudo borrarse satisfactoriamente')
+        reducer()
+    } else {
         setErrorMessage('La receta no pudo borrarse')
-        setTimeout(() => {
-            setErrorMessage('')
-        }, 5000)
-        return
     }
-    reducer()
 }
 
 const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
     const [errorMessage, setErrorMessage] = useState('')
+    const [successMessage, setSuccessMessage] = useState('')
     const dispatch = useAppDispatch()
 
     const deleteDispatch = useCallback((oid: string) => {
@@ -33,7 +39,14 @@ const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
             {
                 errorMessage && (
                     <ErrorMessage
-                        message='La receta no pudo borrarse'
+                        message={errorMessage}
+                    />
+                )
+            }
+            {
+                successMessage && (
+                    <SuccessMessage
+                        message={successMessage}
                     />
                 )
             }
@@ -49,7 +62,7 @@ const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
             <SubmitButton
                 buttonText='Borrar receta'
                 className=''
-                onClick={() => borrarReceta(recipe.id, setErrorMessage, () => deleteDispatch(recipe.id))}
+                onClick={() => borrarReceta(recipe.id, setErrorMessage, setSuccessMessage, () => deleteDispatch(recipe.id))}
             />
         </section>
     )
