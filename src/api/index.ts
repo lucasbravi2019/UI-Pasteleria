@@ -27,5 +27,9 @@ export const endpoints = {
     getRecipeByOid: (oid: string) => `recipes/${oid}`,
     createRecipe: 'recipes',
     updateRecipe: (oid: string) => `recipes/${oid}`,
-    deleteRecipe: (oid: string) => `recipes/${oid}`
+    deleteRecipe: (oid: string) => `recipes/${oid}`,
+    getAllIngredients: 'ingredients',
+    createIngredient: 'ingredients',
+    editIngredient: (oid: string) => `ingredients/${oid}`,
+    deleteIngredient: (oid: string) => `ingredients/${oid}`
 }

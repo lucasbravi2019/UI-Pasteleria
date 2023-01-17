@@ -13,9 +13,10 @@ export interface RecipeIngredient {
 }
 
 export interface Ingredient {
+    id: string
     name: string
     metric: string
-    price: number
+    price: Number
 }
 
 export interface RecipeName {

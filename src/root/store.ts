@@ -1,11 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
-import homeReducer from '../containers/home/homeSlice'
-import recipeCreationFormReducer from '../containers/create-recipe/recipeSlice'
+import recipeReducer from '../reducers/recipeSlice'
+import ingredientReducer from '../reducers/ingredientSlice'
 
 export const store = configureStore({
     reducer: {
-        homeReducer,
-        recipeCreationFormReducer
+        recipeReducer,
+        ingredientReducer
     }
 })
 

@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react'
 import { deleteData, endpoints } from '../../api'
-import { deleteRecipe } from '../../containers/home/homeSlice'
+import { removeRecipe } from '../../reducers/recipeSlice'
 import { Recipe } from '../../interfaces/recipes'
 import { useAppDispatch } from '../../root/hooks'
 import ErrorMessage from '../error-message/ErrorMessage'
@@ -31,7 +31,7 @@ const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
     const dispatch = useAppDispatch()
 
     const deleteDispatch = useCallback((oid: string) => {
-        dispatch(deleteRecipe(oid))
+        dispatch(removeRecipe(oid))
     }, [])
 
     return (

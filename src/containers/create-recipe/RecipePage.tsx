@@ -1,20 +1,19 @@
 import { useCallback, useState } from "react"
 import { endpoints, postData } from "../../api"
-import RecipeForm from "../../components/recipe-form/RecipeForm"
-import { Recipe } from "../../interfaces/recipes"
-import { useAppDispatch, useAppSelector } from "../../root/hooks"
-import { createRecipe } from "../home/homeSlice"
-import { recipeCreationFormSelector } from "./recipeSlice"
+import Form from "../../components/form/Form"
+import { RecipeName } from "../../interfaces/recipes"
+import { useAppDispatch } from "../../root/hooks"
+import { addRecipe } from "../../reducers/recipeSlice"
 
-const formInputs = {
-    tituloReceta: {
+const formInputs = [
+    {
         inputName: 'name',
         inputText: 'Título de receta',
         inputType: 'text'
     }
-}
+]
 
-const resetMessages = (setSuccessMessage: Function, setErrorMessage: Function) => {
+export const resetMessages = (setSuccessMessage: Function, setErrorMessage: Function) => {
     setSuccessMessage('')
     setErrorMessage('')
 }
@@ -29,34 +28,27 @@ const sendRecipeCreation = async (body: {}, successMessage: Function, errorMessa
 }
 
 
-const CreateRecipe = () => {
-    const selector = useAppSelector(recipeCreationFormSelector)
+const RecipePage = () => {
     const dispatch = useAppDispatch()
     const [errorMessage, setErrorMessage] = useState('')
     const [successMessage, setSuccessMessage] = useState('')
 
-    const crearReceta = useCallback((recipeName: string) => {
-        const receta: Recipe = {
-            id: '',
-            ingredients: [],
-            name: recipeName,
-            price: 0
-        }
-        dispatch(createRecipe(receta))
+    const crearReceta = useCallback((receta: RecipeName) => {
+        sendRecipeCreation(receta, setSuccessMessage, setErrorMessage, () => dispatch(addRecipe(receta)))
     }, [])
 
     return (
         <section>
             <h1>Crear Receta</h1>
-            <RecipeForm
-                inputs={[formInputs.tituloReceta]}
+            <Form
+                inputs={formInputs}
                 submitText="Crear receta"
                 errorMessage={errorMessage}
                 successMessage={successMessage}
-                onSubmit={() => sendRecipeCreation(selector, setSuccessMessage, setErrorMessage, () => crearReceta(selector.name))}
+                onSubmit={crearReceta}
             />
         </section>
     )
 }
 
-export default CreateRecipe
+export default RecipePage

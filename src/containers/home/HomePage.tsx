@@ -4,25 +4,22 @@ import { useEffect } from 'react'
 import RecipeCard from "../../components/recipes-card/RecipeCard"
 import { Recipe } from '../../interfaces/recipes'
 import { useAppDispatch, useAppSelector } from '../../root/hooks'
-import { getRecipesFromApi, recipesSelector } from './homeSlice'
+import { loadRecipes, recipesSelector } from '../../reducers/recipeSlice'
 import './index.scss'
 
-const getAllRecipesFromApi = async () => {
+const getAllRecipesFromApi = () => {
     return getData(endpoints.getAllRecipes)
 }
 
 
-const Home = () => {
+const HomePage = () => {
     const selector: Recipe[] = useAppSelector(recipesSelector)
     const dispatch = useAppDispatch()
 
     useEffect(() => {
         getAllRecipesFromApi()
-            .then(data => {
-                if (data) {
-                    dispatch(getRecipesFromApi(data))
-                }
-            })
+            .then(data => dispatch(loadRecipes(data)))
+            .catch(err => console.log(err))
     }, [])
 
     return (
@@ -41,4 +38,4 @@ const Home = () => {
     )
 }
 
-export default Home
+export default HomePage

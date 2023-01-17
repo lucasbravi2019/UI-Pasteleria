@@ -1,32 +1,32 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { Recipe } from "../../interfaces/recipes";
-import { RootState } from "../../root/store";
+import { Recipe } from "../interfaces/recipes";
+import { RootState } from "../root/store";
 
 const initialState = {
     recipes: [] as Recipe[]
 }
 
-const homeSlice = createSlice({
+const recipeSlice = createSlice({
     initialState,
     name: 'homeReducer',
     reducers: {
-        getRecipesFromApi(state, action) {
+        loadRecipes(state, action) {
             state.recipes = action.payload
         },
-        createRecipe(state, action) {
+        addRecipe(state, action) {
             state.recipes = [
                 ...state.recipes,
                 action.payload
             ]
         },
-        deleteRecipe(state, action) {
+        removeRecipe(state, action) {
             state.recipes = state.recipes.filter(recipe => recipe.id !== action.payload)
         }
     }
 })
 
-export const { getRecipesFromApi, createRecipe, deleteRecipe } = homeSlice.actions
+export const { loadRecipes, addRecipe, removeRecipe } = recipeSlice.actions
 
-export const recipesSelector = (state: RootState) => state.homeReducer.recipes
+export const recipesSelector = (state: RootState) => state.recipeReducer.recipes
 
-export default homeSlice.reducer
+export default recipeSlice.reducer

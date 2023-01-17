@@ -1,4 +1,4 @@
-import { setRecipeName } from "../../containers/create-recipe/recipeSlice"
+import { useState } from "react"
 import ErrorMessage from "../error-message/ErrorMessage"
 import FormInput from "../form-input/FormInput"
 import FormLabel from "../form-label/FormLabel"
@@ -8,16 +8,18 @@ import './index.scss'
 
 
 
-const RecipeForm = ({ submitText, inputs, onSubmit, successMessage, errorMessage }:
+const Form = ({ submitText, inputs, onSubmit, successMessage, errorMessage }:
     {
-        submitText: string, inputs: [{ inputName: string, inputText: string, inputType: string }], onSubmit: Function, successMessage: string,
+        submitText: string, inputs: { inputName: string, inputText: string, inputType: string }[], onSubmit: Function, successMessage: string,
         errorMessage: string
     }) => {
+
+    const [formData, setFormData] = useState({})
 
     return (
         <form>
             {
-                inputs != null && inputs.map((input, index) => (
+                inputs && inputs.map((input, index) => (
                     <div className="form__fields" key={index}>
                         <FormLabel
                             inputName={input.inputName}
@@ -26,7 +28,9 @@ const RecipeForm = ({ submitText, inputs, onSubmit, successMessage, errorMessage
                         <FormInput
                             inputType={input.inputType}
                             inputText={input.inputText}
-                            reducer={setRecipeName}
+                            inputName={input.inputName}
+                            formData={formData}
+                            setFormData={setFormData}
                         />
                     </div>
                 ))
@@ -35,7 +39,7 @@ const RecipeForm = ({ submitText, inputs, onSubmit, successMessage, errorMessage
             <SubmitButton
                 buttonText={submitText}
                 className={'form__submit-button'}
-                onClick={() => onSubmit()}
+                onClick={() => onSubmit(formData)}
             />
             {
                 successMessage && (
@@ -55,4 +59,4 @@ const RecipeForm = ({ submitText, inputs, onSubmit, successMessage, errorMessage
     )
 }
 
-export default RecipeForm
+export default Form
