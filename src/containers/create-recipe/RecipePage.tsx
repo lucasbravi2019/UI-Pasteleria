@@ -1,9 +1,16 @@
-import { useCallback, useState } from "react"
-import { endpoints, postData } from "../../api"
-import Form from "../../components/form/Form"
-import { RecipeName } from "../../interfaces/recipes"
-import { useAppDispatch } from "../../root/hooks"
-import { addRecipe } from "../../reducers/recipeSlice"
+import {
+  useCallback,
+  useState,
+} from 'react'
+
+import {
+  endpoints,
+  postData,
+} from '../../api'
+import Form from '../../components/form/Form'
+import { RecipeName } from '../../interfaces/recipes'
+import { addRecipe } from '../../reducers/recipeSlice'
+import { useAppDispatch } from '../../root/hooks'
 
 const formInputs = [
     {

@@ -1,12 +1,17 @@
 import 'normalize.scss/normalize.scss'
 import './index.scss'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
-import ShowRecipe from '../containers/show-recipe/ShowRecipe'
-import HomePage from '../containers/home/HomePage'
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+} from 'react-router-dom'
+
 import NavigationButton from '../components/navigation-button/NavigationButton'
-import RecipePage from '../containers/create-recipe/RecipePage'
 import IngredientPage from '../containers/create-ingredient/IngredientPage'
+import RecipePage from '../containers/create-recipe/RecipePage'
+import HomePage from '../containers/home/HomePage'
+import ShowRecipe from '../containers/show-recipe/ShowRecipe'
 
 const App = () => {
     return (

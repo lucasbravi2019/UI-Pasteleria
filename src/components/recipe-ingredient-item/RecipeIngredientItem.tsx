@@ -1,5 +1,6 @@
-import { RecipeIngredient } from "../../interfaces/recipes"
 import './index.scss'
+
+import { RecipeIngredient } from '../../interfaces/recipes'
 
 const RecipeIngredientItem = ({ ingredient, index }: { ingredient: RecipeIngredient, index: number }) => {
     return (

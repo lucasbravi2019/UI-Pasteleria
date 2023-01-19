@@ -1,12 +1,12 @@
-import { useState } from "react"
-import ErrorMessage from "../error-message/ErrorMessage"
-import FormInput from "../form-input/FormInput"
-import FormLabel from "../form-label/FormLabel"
-import SubmitButton from "../submit-button/SubmitButton"
-import SuccessMessage from "../success-message/SuccessMessage"
 import './index.scss'
 
+import { useState } from 'react'
 
+import ErrorMessage from '../error-message/ErrorMessage'
+import FormInput from '../form-input/FormInput'
+import FormLabel from '../form-label/FormLabel'
+import SubmitButton from '../submit-button/SubmitButton'
+import SuccessMessage from '../success-message/SuccessMessage'
 
 const Form = ({ submitText, inputs, onSubmit, successMessage, errorMessage }:
     {

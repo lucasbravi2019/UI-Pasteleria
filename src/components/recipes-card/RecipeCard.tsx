@@ -1,13 +1,21 @@
-import { useCallback, useState } from 'react'
-import { deleteData, endpoints } from '../../api'
-import { removeRecipe } from '../../reducers/recipeSlice'
+import './index.scss'
+
+import {
+  useCallback,
+  useState,
+} from 'react'
+
+import {
+  deleteData,
+  endpoints,
+} from '../../api'
 import { Recipe } from '../../interfaces/recipes'
+import { removeRecipe } from '../../reducers/recipeSlice'
 import { useAppDispatch } from '../../root/hooks'
 import ErrorMessage from '../error-message/ErrorMessage'
 import NavigationButton from '../navigation-button/NavigationButton'
 import SubmitButton from '../submit-button/SubmitButton'
 import SuccessMessage from '../success-message/SuccessMessage'
-import './index.scss'
 
 const resetMessages = (setSuccessMessage: Function, setErrorMessage: Function) => {
     setSuccessMessage('')

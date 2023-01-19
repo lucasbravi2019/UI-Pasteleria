@@ -1,4 +1,4 @@
-import { Ingredient } from "../../interfaces/recipes"
+import { Ingredient } from '../../interfaces/recipes'
 
 const IngredientItem = ({ ingredient }: { ingredient: Ingredient }) => {
     return (

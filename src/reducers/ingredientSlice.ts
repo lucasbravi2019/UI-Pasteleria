@@ -1,6 +1,7 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { Ingredient } from "../interfaces/recipes";
-import { RootState } from "../root/store";
+import { createSlice } from '@reduxjs/toolkit'
+
+import { Ingredient } from '../interfaces/recipes'
+import { RootState } from '../root/store'
 
 const initialState = {
     ingredients: [] as Ingredient[]

@@ -1,11 +1,21 @@
-import { endpoints, getData } from '../../api'
+import './index.scss'
 
 import { useEffect } from 'react'
-import RecipeCard from "../../components/recipes-card/RecipeCard"
+
+import {
+  endpoints,
+  getData,
+} from '../../api'
+import RecipeCard from '../../components/recipes-card/RecipeCard'
 import { Recipe } from '../../interfaces/recipes'
-import { useAppDispatch, useAppSelector } from '../../root/hooks'
-import { loadRecipes, recipesSelector } from '../../reducers/recipeSlice'
-import './index.scss'
+import {
+  loadRecipes,
+  recipesSelector,
+} from '../../reducers/recipeSlice'
+import {
+  useAppDispatch,
+  useAppSelector,
+} from '../../root/hooks'
 
 const getAllRecipesFromApi = () => {
     return getData(endpoints.getAllRecipes)

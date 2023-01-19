@@ -1,9 +1,19 @@
-import RecipeDetailedCard from "../../components/recipe-detailed-card/RecipeDetailedCard"
-import { useParams } from 'react-router-dom'
-import { endpoints, getData } from "../../api"
-import { useEffect, useState } from "react"
-import { Recipe } from "../../interfaces/recipes"
 import './index.scss'
+
+import {
+  useEffect,
+  useState,
+} from 'react'
+
+import { useParams } from 'react-router-dom'
+
+import {
+  endpoints,
+  getData,
+} from '../../api'
+import RecipeDetailedCard
+  from '../../components/recipe-detailed-card/RecipeDetailedCard'
+import { Recipe } from '../../interfaces/recipes'
 
 const getRecipeByOid = (oid: string) => {
     return getData(endpoints.getRecipeByOid(oid))

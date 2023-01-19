@@ -1,4 +1,10 @@
-import { baseUrl, GET, POST, PUT, DELETE } from "./config";
+import {
+  baseUrl,
+  DELETE,
+  GET,
+  POST,
+  PUT,
+} from './config'
 
 const callApi = async (endpoint: string, verb: {}) => {
     try {
