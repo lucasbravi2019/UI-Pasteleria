@@ -62,16 +62,18 @@ const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
             {recipe.price && (
                 <p className="recipe-card__paragraph"><strong>Precio: </strong>$ {recipe.price}</p>
             )}
-            <NavigationButton
-                link={`/recipe-show/${recipe.id}`}
-                routeName="Ver receta"
-                className="navigation-bar__link"
-            />
-            <SubmitButton
-                buttonText='Borrar receta'
-                className=''
-                onClick={() => borrarReceta(recipe.id, setErrorMessage, setSuccessMessage, () => deleteDispatch(recipe.id))}
-            />
+            <section className="recipe-card__buttons">
+                <NavigationButton
+                    link={`/recipe-show/${recipe.id}`}
+                    routeName="Ver receta"
+                    className="navigation-bar__link"
+                />
+                <SubmitButton
+                    buttonText='Borrar receta'
+                    className='recipe-card__submit-button'
+                    onClick={() => borrarReceta(recipe.id, setErrorMessage, setSuccessMessage, () => deleteDispatch(recipe.id))}
+                />
+            </section>
         </section>
     )
 }

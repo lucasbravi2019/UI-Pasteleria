@@ -17,7 +17,7 @@ const Form = ({ submitText, inputs, onSubmit, successMessage, errorMessage }:
     const [formData, setFormData] = useState({})
 
     return (
-        <form>
+        <form className="form">
             {
                 inputs && inputs.map((input, index) => (
                     <div className="form__fields" key={index}>
