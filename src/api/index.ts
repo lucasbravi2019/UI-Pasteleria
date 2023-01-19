@@ -1,8 +1,14 @@
-import { baseUrl, GET, POST, PUT, DELETE } from "./config";
+import {
+  baseUrl,
+  DELETE,
+  GET,
+  POST,
+  PUT,
+} from './config'
 
 const callApi = async (endpoint: string, verb: {}) => {
-    const response = await fetch(`${baseUrl}/${endpoint}`, verb)
     try {
+        const response = await fetch(`${baseUrl}/${endpoint}`, verb)
         switch (response.status) {
             case 200:
                 return await response.json()
@@ -10,8 +16,7 @@ const callApi = async (endpoint: string, verb: {}) => {
                 return await response.json()
         }
     } catch (error) {
-        console.log(error);
-        throw error
+        return
     }
 }
 
@@ -28,5 +33,9 @@ export const endpoints = {
     getRecipeByOid: (oid: string) => `recipes/${oid}`,
     createRecipe: 'recipes',
     updateRecipe: (oid: string) => `recipes/${oid}`,
-    deleteRecipe: (oid: string) => `recipes/${oid}`
+    deleteRecipe: (oid: string) => `recipes/${oid}`,
+    getAllIngredients: 'ingredients',
+    createIngredient: 'ingredients',
+    editIngredient: (oid: string) => `ingredients/${oid}`,
+    deleteIngredient: (oid: string) => `ingredients/${oid}`
 }

@@ -1,34 +1,41 @@
-import { endpoints, getData } from '../../api'
-
-import { useEffect } from 'react'
-import RecipeCard from "../../components/recipes-card/RecipeCard"
-import { Recipe } from '../../interfaces/recipes'
-import { useAppDispatch, useAppSelector } from '../../root/hooks'
-import { getRecipesFromApi, recipesSelector } from './homeSlice'
 import './index.scss'
 
-const getAllRecipesFromApi = async () => {
+import { useEffect } from 'react'
+
+import {
+  endpoints,
+  getData,
+} from '../../api'
+import RecipeCard from '../../components/recipes-card/RecipeCard'
+import { Recipe } from '../../interfaces/recipes'
+import {
+  loadRecipes,
+  recipesSelector,
+} from '../../reducers/recipeSlice'
+import {
+  useAppDispatch,
+  useAppSelector,
+} from '../../root/hooks'
+
+const getAllRecipesFromApi = () => {
     return getData(endpoints.getAllRecipes)
 }
 
 
-const Home = () => {
+const HomePage = () => {
     const selector: Recipe[] = useAppSelector(recipesSelector)
     const dispatch = useAppDispatch()
 
     useEffect(() => {
         getAllRecipesFromApi()
-            .then(data => {
-                if (data) {
-                    dispatch(getRecipesFromApi(data))
-                }
-            })
+            .then(data => dispatch(loadRecipes(data)))
+            .catch(err => console.log(err))
     }, [])
 
     return (
         <div className="recipes__container">
             {
-                selector ? selector.map((recipe, index) => (
+                selector && selector.length > 0 ? selector.map((recipe, index) => (
                     <RecipeCard
                         key={index}
                         recipe={recipe}
@@ -41,4 +48,4 @@ const Home = () => {
     )
 }
 
-export default Home
+export default HomePage

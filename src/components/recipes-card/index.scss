@@ -11,3 +11,10 @@
         text-align: center;
     }
 }
+
+.recipe-card__buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}

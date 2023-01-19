@@ -1,11 +1,17 @@
 import 'normalize.scss/normalize.scss'
 import './index.scss'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
-import ShowRecipe from '../containers/show-recipe/ShowRecipe'
-import Home from '../containers/home/Home'
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+} from 'react-router-dom'
+
 import NavigationButton from '../components/navigation-button/NavigationButton'
-import CreateRecipe from '../containers/create-recipe/CreateRecipe'
+import IngredientPage from '../containers/create-ingredient/IngredientPage'
+import RecipePage from '../containers/create-recipe/RecipePage'
+import HomePage from '../containers/home/HomePage'
+import ShowRecipe from '../containers/show-recipe/ShowRecipe'
 
 const App = () => {
     return (
@@ -32,9 +38,10 @@ const App = () => {
                 </aside>
                 <main>
                     <Switch>
-                        <Route exact path="/" component={Home} />
+                        <Route exact path="/" component={HomePage} />
                         <Route path="/recipe-show/:recipeId" component={ShowRecipe} />
-                        <Route path="/recipes" component={CreateRecipe} />
+                        <Route path="/recipes" component={RecipePage} />
+                        <Route exact path="/ingredients" component={IngredientPage} />
                     </Switch>
                 </main>
             </section>

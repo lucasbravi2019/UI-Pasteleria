@@ -1,31 +1,45 @@
-import { useCallback, useState } from 'react'
-import { deleteData, endpoints } from '../../api'
-import { deleteRecipe } from '../../containers/home/homeSlice'
+import './index.scss'
+
+import {
+  useCallback,
+  useState,
+} from 'react'
+
+import {
+  deleteData,
+  endpoints,
+} from '../../api'
 import { Recipe } from '../../interfaces/recipes'
+import { removeRecipe } from '../../reducers/recipeSlice'
 import { useAppDispatch } from '../../root/hooks'
 import ErrorMessage from '../error-message/ErrorMessage'
 import NavigationButton from '../navigation-button/NavigationButton'
 import SubmitButton from '../submit-button/SubmitButton'
-import './index.scss'
+import SuccessMessage from '../success-message/SuccessMessage'
 
-const borrarReceta = async (oid: string, setErrorMessage: Function, reducer: () => void) => {
+const resetMessages = (setSuccessMessage: Function, setErrorMessage: Function) => {
+    setSuccessMessage('')
+    setErrorMessage('')
+}
+
+const borrarReceta = async (oid: string, setErrorMessage: Function, setSuccessMessage: Function, reducer: () => void) => {
+    resetMessages(setSuccessMessage, setErrorMessage)
     const response = await deleteData(endpoints.deleteRecipe(oid))
-    if (!response) {
+    if (response) {
+        setSuccessMessage('La receta pudo borrarse satisfactoriamente')
+        reducer()
+    } else {
         setErrorMessage('La receta no pudo borrarse')
-        setTimeout(() => {
-            setErrorMessage('')
-        }, 5000)
-        return
     }
-    reducer()
 }
 
 const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
     const [errorMessage, setErrorMessage] = useState('')
+    const [successMessage, setSuccessMessage] = useState('')
     const dispatch = useAppDispatch()
 
     const deleteDispatch = useCallback((oid: string) => {
-        dispatch(deleteRecipe(oid))
+        dispatch(removeRecipe(oid))
     }, [])
 
     return (
@@ -33,7 +47,14 @@ const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
             {
                 errorMessage && (
                     <ErrorMessage
-                        message='La receta no pudo borrarse'
+                        message={errorMessage}
+                    />
+                )
+            }
+            {
+                successMessage && (
+                    <SuccessMessage
+                        message={successMessage}
                     />
                 )
             }
@@ -41,16 +62,18 @@ const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
             {recipe.price && (
                 <p className="recipe-card__paragraph"><strong>Precio: </strong>$ {recipe.price}</p>
             )}
-            <NavigationButton
-                link={`/recipe-show/${recipe.id}`}
-                routeName="Ver receta"
-                className="navigation-bar__link"
-            />
-            <SubmitButton
-                buttonText='Borrar receta'
-                className=''
-                onClick={() => borrarReceta(recipe.id, setErrorMessage, () => deleteDispatch(recipe.id))}
-            />
+            <section className="recipe-card__buttons">
+                <NavigationButton
+                    link={`/recipe-show/${recipe.id}`}
+                    routeName="Ver receta"
+                    className="navigation-bar__link"
+                />
+                <SubmitButton
+                    buttonText='Borrar receta'
+                    className='recipe-card__submit-button'
+                    onClick={() => borrarReceta(recipe.id, setErrorMessage, setSuccessMessage, () => deleteDispatch(recipe.id))}
+                />
+            </section>
         </section>
     )
 }
