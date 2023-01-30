@@ -38,6 +38,11 @@ const inputs = [
         inputName: 'price',
         inputText: 'Precio',
         inputType: 'number'
+    },
+    {
+        inputName: 'quantity',
+        inputText: 'Cantidad',
+        inputType: 'number'
     }
 ]
 
@@ -48,10 +53,12 @@ const getIngredients = () => {
 const createIngredient = async (body: {}, setSuccessMessage: Function, setErrorMessage: Function, reducer: Function) => {
     resetMessages(setSuccessMessage, setErrorMessage)
     const response = await postData(endpoints.createIngredient, body)
-    if (response) {
+    if (response.hasOwnProperty('error')) {
+        setErrorMessage('No pudo crearse el ingrediente')
+    } else {
         setSuccessMessage('El ingrediente fue creado satisfactoriamente')
-        reducer()
-    } else setErrorMessage('No pudo crearse el ingrediente')
+        reducer(response)
+    }
 
 }
 
@@ -67,20 +74,13 @@ const IngredientPage = () => {
             price: Number(ingredient.price)
         }
 
-        createIngredient(ingredient, setSuccessMessage, setErrorMessage, () => dispatch(addIngredient(ingredient)))
+        createIngredient(ingredient, setSuccessMessage, setErrorMessage, (id: string) => dispatch(addIngredient({ ...ingredient, id: id })))
     }, [])
 
     useEffect(() => {
         getIngredients()
-            .then(data => {
-                console.log(data);
-                dispatch(loadIngredients(data))
-            })
+            .then(data => dispatch(loadIngredients(data)))
     }, [])
-
-    useEffect(() => {
-        console.log(selector);
-    }, [selector])
 
     return (
         <section>
@@ -97,6 +97,8 @@ const IngredientPage = () => {
                     <IngredientItem
                         ingredient={ingredient}
                         key={index}
+                        setSuccessMessage={setSuccessMessage}
+                        setErrorMessage={setErrorMessage}
                     />
                 ) : (
                     <h3>No hay ingredientes</h3>

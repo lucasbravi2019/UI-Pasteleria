@@ -16,8 +16,10 @@ const Form = ({ submitText, inputs, onSubmit, successMessage, errorMessage }:
 
     const [formData, setFormData] = useState({})
 
+
+
     return (
-        <form className="form">
+        <form className="form" onSubmit={() => setFormData({})}>
             {
                 inputs && inputs.map((input, index) => (
                     <div className="form__fields" key={index}>
@@ -39,7 +41,12 @@ const Form = ({ submitText, inputs, onSubmit, successMessage, errorMessage }:
             <SubmitButton
                 buttonText={submitText}
                 className={'form__submit-button'}
-                onClick={() => onSubmit(formData)}
+                onClick={() => {
+                    console.log(formData);
+
+                    onSubmit(formData)
+                    setFormData({})
+                }}
             />
             {
                 successMessage && (

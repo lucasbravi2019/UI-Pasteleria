@@ -27,3 +27,7 @@ h2 {
 h3 {
     font-size: 22px;
 }
+
+button:focus {
+    background-color: transparent;
+}

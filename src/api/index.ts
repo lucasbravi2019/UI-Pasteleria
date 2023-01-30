@@ -10,6 +10,17 @@ const callApi = async (endpoint: string, verb: {}) => {
     try {
         const response = await fetch(`${baseUrl}/${endpoint}`, verb)
         switch (response.status) {
+            case 500:
+                return { error: true }
+            case 404:
+                return { error: true }
+            case 400:
+                return { error: true }
+            case 201:
+                return await response.json()
+            case 202:
+            case 204:
+                return { error: false }
             case 200:
                 return await response.json()
             default:

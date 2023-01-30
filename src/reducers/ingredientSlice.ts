@@ -9,20 +9,23 @@ const initialState = {
 
 const ingredientSlice = createSlice({
     initialState,
-    name: 'createIngredientReducer',
+    name: 'ingredientReducer',
     reducers: {
         loadIngredients(state, action) {
             state.ingredients = action.payload
         },
         addIngredient(state, action) {
-            console.log(action.payload);
-
-            state.ingredients = [...state.ingredients, action.payload]
+            state.ingredients = [
+                ...state.ingredients,
+                action.payload]
+        },
+        removeIngredient(state, action) {
+            state.ingredients = state.ingredients.filter(ingredient => ingredient.id !== action.payload)
         }
     }
 })
 
-export const { loadIngredients, addIngredient } = ingredientSlice.actions
+export const { loadIngredients, addIngredient, removeIngredient } = ingredientSlice.actions
 
 export const ingredientsSelector = (state: RootState) => state.ingredientReducer.ingredients
 

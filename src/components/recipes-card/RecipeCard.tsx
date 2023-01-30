@@ -25,11 +25,11 @@ const resetMessages = (setSuccessMessage: Function, setErrorMessage: Function) =
 const borrarReceta = async (oid: string, setErrorMessage: Function, setSuccessMessage: Function, reducer: () => void) => {
     resetMessages(setSuccessMessage, setErrorMessage)
     const response = await deleteData(endpoints.deleteRecipe(oid))
-    if (response) {
+    if (response.error) {
+        setErrorMessage('La receta no pudo borrarse')
+    } else {
         setSuccessMessage('La receta pudo borrarse satisfactoriamente')
         reducer()
-    } else {
-        setErrorMessage('La receta no pudo borrarse')
     }
 }
 
