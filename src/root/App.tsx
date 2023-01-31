@@ -8,6 +8,7 @@ import {
 } from 'react-router-dom'
 
 import NavigationButton from '../components/navigation-button/NavigationButton'
+import VersionLabel from '../components/version-label/VersionLabel'
 import IngredientPage from '../containers/create-ingredient/IngredientPage'
 import RecipePage from '../containers/create-recipe/RecipePage'
 import HomePage from '../containers/home/HomePage'
@@ -19,7 +20,7 @@ const App = () => {
     return (
         <Router>
             <section className="container">
-                <aside>
+                <aside className="navigation-container">
                     <nav className="navigation-bar">
                         <NavigationButton
                             link="/"
@@ -42,6 +43,7 @@ const App = () => {
                             className="navigation-bar__link"
                         />
                     </nav>
+                    <VersionLabel />
                 </aside>
                 <main>
                     <Switch>

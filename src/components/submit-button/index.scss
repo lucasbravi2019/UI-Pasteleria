@@ -8,6 +8,10 @@
     font-weight: 700;
 }
 
+.form__submit-button:focus {
+    background-color: white;
+}
+
 .form__submit-button:hover {
     color: black;
 }
@@ -24,6 +28,10 @@
     background-color: red;
 
     transition: background-color .3s linear;
+}
+
+.recipe-card__submit-button:focus {
+    background-color: red;
 }
 
 .recipe-card__submit-button:hover {
