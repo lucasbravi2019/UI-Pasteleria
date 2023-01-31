@@ -1,7 +1,13 @@
+<<<<<<< HEAD
 import { createSlice } from '@reduxjs/toolkit'
 
 import { Recipe } from '../interfaces/recipes'
 import { RootState } from '../root/store'
+=======
+import { createSlice } from "@reduxjs/toolkit";
+import { Recipe } from "../interfaces/recipes";
+import { RootState } from "../root/store";
+>>>>>>> 08a91cdf8322477aab983bd7ae31860b66c05a50
 
 const initialState = {
     recipes: [] as Recipe[]
@@ -9,7 +15,11 @@ const initialState = {
 
 const recipeSlice = createSlice({
     initialState,
+<<<<<<< HEAD
     name: 'recipeReducer',
+=======
+    name: 'homeReducer',
+>>>>>>> 08a91cdf8322477aab983bd7ae31860b66c05a50
     reducers: {
         loadRecipes(state, action) {
             state.recipes = action.payload

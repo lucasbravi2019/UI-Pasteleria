@@ -17,8 +17,6 @@ const Form = ({ submitText, inputs, onSubmit, successMessage, errorMessage }:
 
     const [formData, setFormData] = useState({})
 
-
-
     return (
         <form className="form" onSubmit={() => setFormData({})}>
             {
