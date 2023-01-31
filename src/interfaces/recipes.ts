@@ -17,10 +17,7 @@ export interface Ingredient {
     name: string
     metric: string
     price: Number
-<<<<<<< HEAD
     quantity: Number
-=======
->>>>>>> 08a91cdf8322477aab983bd7ae31860b66c05a50
 }
 
 export interface RecipeName {

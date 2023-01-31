@@ -73,31 +73,14 @@ const IngredientPage = () => {
             price: Number(ingredient.price)
         }
 
-<<<<<<< HEAD
         createIngredient(ingredient, setSuccessMessage, setErrorMessage, (id: string) => dispatch(addIngredient({ ...ingredient, id: id })))
-=======
-        createIngredient(ingredient, setSuccessMessage, setErrorMessage, () => dispatch(addIngredient(ingredient)))
->>>>>>> 08a91cdf8322477aab983bd7ae31860b66c05a50
     }, [])
 
     useEffect(() => {
         getIngredients()
-<<<<<<< HEAD
             .then(data => dispatch(loadIngredients(data)))
     }, [])
 
-=======
-            .then(data => {
-                console.log(data);
-                dispatch(loadIngredients(data))
-            })
-    }, [])
-
-    useEffect(() => {
-        console.log(selector);
-    }, [selector])
-
->>>>>>> 08a91cdf8322477aab983bd7ae31860b66c05a50
     return (
         <section>
             <h1>Crear Ingrediente</h1>
@@ -113,11 +96,8 @@ const IngredientPage = () => {
                     <IngredientItem
                         ingredient={ingredient}
                         key={index}
-<<<<<<< HEAD
                         setSuccessMessage={setSuccessMessage}
                         setErrorMessage={setErrorMessage}
-=======
->>>>>>> 08a91cdf8322477aab983bd7ae31860b66c05a50
                     />
                 ) : (
                     <h3>No hay ingredientes</h3>
