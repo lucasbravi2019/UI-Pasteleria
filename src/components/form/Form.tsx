@@ -63,8 +63,6 @@ const Form = ({ submitText, inputs, onSubmit, successMessage, errorMessage }:
                 buttonText={submitText}
                 className={'form__submit-button'}
                 onClick={() => {
-                    console.log(formData);
-
                     onSubmit(formData)
                     setFormData({})
                 }}

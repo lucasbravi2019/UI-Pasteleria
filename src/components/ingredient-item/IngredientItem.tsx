@@ -26,7 +26,6 @@ const IngredientItem = ({ ingredient, setSuccessMessage, setErrorMessage }:
             <p>Nombre: {ingredient.name}</p>
             <p>Cantidad: {ingredient.quantity} {ingredient.metric}</p>
             <p>Precio: $ {ingredient.price}</p>
-            <p>ID - {ingredient.id}</p>
             <SubmitButton
                 buttonText='Borrar Ingrediente'
                 className='recipe-card__submit-button'
