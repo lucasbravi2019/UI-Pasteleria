@@ -8,7 +8,10 @@ import {
   postData,
 } from '../../api'
 import Form from '../../components/form/Form'
-import { RecipeName } from '../../interfaces/recipes'
+import {
+  Recipe,
+  RecipeName,
+} from '../../interfaces/recipes'
 import { addRecipe } from '../../reducers/recipeSlice'
 import { useAppDispatch } from '../../root/hooks'
 
@@ -27,11 +30,13 @@ export const resetMessages = (setSuccessMessage: Function, setErrorMessage: Func
 
 const sendRecipeCreation = async (body: {}, successMessage: Function, errorMessage: Function, reducer: Function) => {
     resetMessages(successMessage, errorMessage)
-    const creation = await postData(endpoints.createRecipe, body)
-    if (creation) {
+    const response = await postData(endpoints.createRecipe, body)
+    if (response.error) {
+        errorMessage('No se pudo crear la receta')
+    } else {
         successMessage('Se creó la receta correctamente')
-        reducer()
-    } else errorMessage('No se pudo crear la receta')
+        reducer(response)
+    }
 }
 
 
@@ -41,7 +46,7 @@ const RecipePage = () => {
     const [successMessage, setSuccessMessage] = useState('')
 
     const crearReceta = useCallback((receta: RecipeName) => {
-        sendRecipeCreation(receta, setSuccessMessage, setErrorMessage, () => dispatch(addRecipe(receta)))
+        sendRecipeCreation(receta, setSuccessMessage, setErrorMessage, (id: string) => dispatch(addRecipe({ id: id, name: receta.name } as Recipe)))
     }, [])
 
     return (

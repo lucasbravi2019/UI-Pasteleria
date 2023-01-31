@@ -15,7 +15,7 @@ const ErrorMessage = ({ message }: { message: string }) => {
             {
                 message && (
                     <p
-                        className="success-message"
+                        className="error-message"
                         id={id}
                     >{message}</p>
                 )}
