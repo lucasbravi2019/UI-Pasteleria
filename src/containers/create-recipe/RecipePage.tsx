@@ -31,8 +31,6 @@ export const resetMessages = (setSuccessMessage: Function, setErrorMessage: Func
 const sendRecipeCreation = async (body: {}, successMessage: Function, errorMessage: Function, reducer: Function) => {
     resetMessages(successMessage, errorMessage)
     const response = await postData(endpoints.createRecipe, body)
-    console.log(response);
-
     if (response.error) {
         errorMessage('No se pudo crear la receta')
     } else {
