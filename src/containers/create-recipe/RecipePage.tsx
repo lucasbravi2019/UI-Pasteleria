@@ -1,19 +1,10 @@
-import {
-  useCallback,
-  useState,
-} from 'react'
-
-import {
-  endpoints,
-  postData,
-} from '../../api'
 import Form from '../../components/form/Form'
+import { messagesSelector } from '../../reducers/messageSlice'
+import { runAddRecipe } from '../../reducers/recipeSlice'
 import {
-  Recipe,
-  RecipeName,
-} from '../../interfaces/recipes'
-import { addRecipe } from '../../reducers/recipeSlice'
-import { useAppDispatch } from '../../root/hooks'
+  useAppDispatch,
+  useAppSelector,
+} from '../../root/hooks'
 
 const formInputs = [
     {
@@ -23,31 +14,11 @@ const formInputs = [
     }
 ]
 
-export const resetMessages = (setSuccessMessage: Function, setErrorMessage: Function) => {
-    setSuccessMessage('')
-    setErrorMessage('')
-}
-
-const sendRecipeCreation = async (body: {}, successMessage: Function, errorMessage: Function, reducer: Function) => {
-    resetMessages(successMessage, errorMessage)
-    const response = await postData(endpoints.createRecipe, body)
-    if (response.error) {
-        errorMessage('No se pudo crear la receta')
-    } else {
-        successMessage('Se creó la receta correctamente')
-        reducer(response)
-    }
-}
-
-
 const RecipePage = () => {
     const dispatch = useAppDispatch()
-    const [errorMessage, setErrorMessage] = useState('')
-    const [successMessage, setSuccessMessage] = useState('')
+    const messageSelector = useAppSelector(messagesSelector)
 
-    const crearReceta = useCallback((receta: RecipeName) => {
-        sendRecipeCreation(receta, setSuccessMessage, setErrorMessage, (id: string) => dispatch(addRecipe({ id: id, name: receta.name } as Recipe)))
-    }, [])
+    const handleRecipeCreation = (recipeName: void) => dispatch(runAddRecipe(recipeName))
 
     return (
         <section>
@@ -55,9 +26,9 @@ const RecipePage = () => {
             <Form
                 inputs={formInputs}
                 submitText="Crear receta"
-                errorMessage={errorMessage}
-                successMessage={successMessage}
-                onSubmit={crearReceta}
+                errorMessage={messageSelector.errorMessage}
+                successMessage={messageSelector.successMessage}
+                onSubmit={(recipeName: void) => handleRecipeCreation(recipeName)}
             />
         </section>
     )

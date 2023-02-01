@@ -1,15 +1,33 @@
-import { configureStore } from '@reduxjs/toolkit'
+import createSagaMiddleware from '@redux-saga/core'
+import {
+  configureStore,
+  getDefaultMiddleware,
+} from '@reduxjs/toolkit'
 
 import ingredientReducer from '../reducers/ingredientSlice'
+import messageReducer from '../reducers/messageSlice'
 import recipeReducer from '../reducers/recipeSlice'
+import { rootSaga } from './sagas'
 
-export const store = configureStore({
+const sagaMiddleware = createSagaMiddleware()
+
+const storeConfig = () => {
+  const config = configureStore({
     reducer: {
-        recipeReducer,
-        ingredientReducer
-    }
-})
+      recipeReducer,
+      ingredientReducer,
+      messageReducer
+    },
+    middleware: [...getDefaultMiddleware({ thunk: false }), sagaMiddleware]
+  })
 
-export type AppDispatch = typeof store.dispatch
-export type RootState = ReturnType<typeof store.getState>
+  sagaMiddleware.run(rootSaga)
+
+  return { store: config, dispatch: config.dispatch, state: config.getState }
+}
+
+export const { store, dispatch, state } = storeConfig()
+
+export type AppDispatch = typeof dispatch
+export type RootState = ReturnType<typeof state>
 

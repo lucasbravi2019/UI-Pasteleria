@@ -19,14 +19,25 @@ const recipeSlice = createSlice({
                 ...state.recipes,
                 action.payload
             ]
+            console.log(state.recipes);
+
         },
         removeRecipe(state, action) {
             state.recipes = state.recipes.filter(recipe => recipe.id !== action.payload)
+        },
+        runLoadRecipes(state) {
+            return state
+        },
+        runAddRecipe(state) {
+            return state
+        },
+        runDeleteRecipe(state) {
+            return state
         }
     }
 })
 
-export const { loadRecipes, addRecipe, removeRecipe } = recipeSlice.actions
+export const { loadRecipes, addRecipe, removeRecipe, runLoadRecipes, runAddRecipe, runDeleteRecipe } = recipeSlice.actions
 
 export const recipesSelector = (state: RootState) => state.recipeReducer.recipes
 

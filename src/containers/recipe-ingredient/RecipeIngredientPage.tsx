@@ -56,11 +56,6 @@ const inputs = (recetas: Recipe[], ingredientes: Ingredient[]): FormInterface[] 
         }
     ]
 }
-
-const getAllRecipesFromApi = () => {
-    return getData(endpoints.getAllRecipes)
-}
-
 const getIngredients = () => {
     return getData(endpoints.getAllIngredients)
 }
@@ -74,9 +69,7 @@ const RecipeIngredientPage = () => {
     const [successMessage, setSuccessMessage] = useState('')
 
     useEffect(() => {
-        getAllRecipesFromApi()
-            .then(data => dispatch(loadRecipes(data)))
-            .catch(err => console.log(err))
+        dispatch(loadRecipes)
 
         getIngredients()
             .then(data => dispatch(loadIngredients(data)))

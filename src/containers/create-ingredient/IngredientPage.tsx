@@ -1,27 +1,10 @@
-import {
-  useCallback,
-  useEffect,
-  useState,
-} from 'react'
+import { useState } from 'react'
 
-import {
-  endpoints,
-  getData,
-  postData,
-} from '../../api'
 import Form from '../../components/form/Form'
 import IngredientItem from '../../components/ingredient-item/IngredientItem'
 import { Ingredient } from '../../interfaces/recipes'
-import {
-  addIngredient,
-  ingredientsSelector,
-  loadIngredients,
-} from '../../reducers/ingredientSlice'
-import {
-  useAppDispatch,
-  useAppSelector,
-} from '../../root/hooks'
-import { resetMessages } from '../create-recipe/RecipePage'
+import { ingredientsSelector } from '../../reducers/ingredientSlice'
+import { useAppSelector } from '../../root/hooks'
 
 const inputs = [
     {
@@ -46,40 +29,11 @@ const inputs = [
     }
 ]
 
-const getIngredients = () => {
-    return getData(endpoints.getAllIngredients)
-}
-
-const createIngredient = async (body: {}, setSuccessMessage: Function, setErrorMessage: Function, reducer: Function) => {
-    resetMessages(setSuccessMessage, setErrorMessage)
-    const response = await postData(endpoints.createIngredient, body)
-    if (response.hasOwnProperty('error')) {
-        setErrorMessage('No pudo crearse el ingrediente')
-    } else {
-        setSuccessMessage('El ingrediente fue creado satisfactoriamente')
-        reducer(response)
-    }
-}
-
 const IngredientPage = () => {
     const selector: Ingredient[] = useAppSelector(ingredientsSelector)
-    const dispatch = useAppDispatch()
+    // const dispatch = useAppDispatch()
     const [successMessage, setSuccessMessage] = useState('')
     const [errorMessage, setErrorMessage] = useState('')
-
-    const crearIngrediente = useCallback((ingredient: Ingredient) => {
-        ingredient = {
-            ...ingredient,
-            price: Number(ingredient.price)
-        }
-
-        createIngredient(ingredient, setSuccessMessage, setErrorMessage, (id: string) => dispatch(addIngredient({ ...ingredient, id: id })))
-    }, [])
-
-    useEffect(() => {
-        getIngredients()
-            .then(data => dispatch(loadIngredients(data)))
-    }, [])
 
     return (
         <section>
@@ -89,7 +43,7 @@ const IngredientPage = () => {
                 submitText={'Crear ingrediente'}
                 successMessage={successMessage}
                 errorMessage={errorMessage}
-                onSubmit={crearIngrediente}
+                onSubmit={() => console.log('ingrediente')}
             />
             {
                 selector && selector.length > 0 ? selector.map((ingredient, index) =>
