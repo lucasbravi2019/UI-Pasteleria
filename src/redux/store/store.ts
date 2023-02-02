@@ -4,10 +4,10 @@ import {
   getDefaultMiddleware,
 } from '@reduxjs/toolkit'
 
+import { rootSaga } from '../../saga/rootSaga'
 import ingredientReducer from '../reducers/ingredientSlice'
 import messageReducer from '../reducers/messageSlice'
 import recipeReducer from '../reducers/recipeSlice'
-import { rootSaga } from './sagas'
 
 const sagaMiddleware = createSagaMiddleware()
 

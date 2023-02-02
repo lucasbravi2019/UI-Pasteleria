@@ -3,9 +3,9 @@ import {
   endpoints,
 } from '../../api'
 import { Ingredient } from '../../interfaces/recipes'
-import { removeIngredient } from '../../reducers/ingredientSlice'
-import { useAppDispatch } from '../../root/hooks'
-import SubmitButton from '../submit-button/SubmitButton'
+import { useAppDispatch } from '../../redux/hooks/hooks'
+import { removeIngredient } from '../../redux/reducers/ingredientSlice'
+import SubmitButton from '../submit-button'
 
 const borrarIngrediente = async (oid: string, setErrorMessage: Function, setSuccessMessage: Function, dispatch: Function) => {
     const response = await deleteData(endpoints.deleteIngredient(oid))

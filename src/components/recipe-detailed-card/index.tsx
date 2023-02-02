@@ -2,7 +2,7 @@ import './index.scss'
 
 import { Recipe } from '../../interfaces/recipes'
 import RecipeIngredientItem
-  from '../recipe-ingredient-item/RecipeIngredientItem'
+  from '../recipe-ingredient-item'
 
 const RecipeDetailedCard = ({ recipe }: { recipe: Recipe }) => {
     return (

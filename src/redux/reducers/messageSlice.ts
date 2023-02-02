@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-import { RootState } from '../root/store'
+import { RootState } from '../store/store'
 
 const initialState = {
     successMessage: '',

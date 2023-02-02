@@ -7,14 +7,13 @@ import {
   Switch,
 } from 'react-router-dom'
 
-import NavigationButton from '../components/navigation-button/NavigationButton'
-import VersionLabel from '../components/version-label/VersionLabel'
-import IngredientPage from '../containers/create-ingredient/IngredientPage'
-import RecipePage from '../containers/create-recipe/RecipePage'
-import HomePage from '../containers/home/HomePage'
-import RecipeIngredientPage
-  from '../containers/recipe-ingredient/RecipeIngredientPage'
-import ShowRecipe from '../containers/show-recipe/ShowRecipe'
+import NavigationButton from '../components/navigation-button'
+import VersionLabel from '../components/version-label'
+import IngredientPage from '../pages/create-ingredient'
+import RecipePage from '../pages/create-recipe'
+import HomePage from '../pages/home'
+import RecipeIngredientPage from '../pages/recipe-ingredient'
+import ShowRecipe from '../pages/show-recipe'
 
 const App = () => {
     return (
