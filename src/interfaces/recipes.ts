@@ -1,8 +1,8 @@
 export interface Recipe {
     id: string
     name: string
-    price: number
-    ingredients: RecipeIngredient[]
+    price?: number
+    ingredients?: RecipeIngredient[]
 }
 
 export interface RecipeIngredient {
@@ -13,9 +13,11 @@ export interface RecipeIngredient {
 }
 
 export interface Ingredient {
+    id: string
     name: string
     metric: string
-    price: number
+    price: Number
+    quantity: Number
 }
 
 export interface RecipeName {

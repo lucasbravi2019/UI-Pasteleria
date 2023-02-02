@@ -1,6 +1,8 @@
-import { Recipe } from '../../interfaces/recipes'
-import IngredientItem from '../ingredient-item/IngredientItem'
 import './index.scss'
+
+import { Recipe } from '../../interfaces/recipes'
+import RecipeIngredientItem
+  from '../recipe-ingredient-item'
 
 const RecipeDetailedCard = ({ recipe }: { recipe: Recipe }) => {
     return (
@@ -11,7 +13,7 @@ const RecipeDetailedCard = ({ recipe }: { recipe: Recipe }) => {
                 <section className="recipe-detailed-card__ingredients-list__container">
                     {
                         recipe.ingredients.map((ingredient, index) => (
-                            <IngredientItem
+                            <RecipeIngredientItem
                                 ingredient={ingredient}
                                 index={index}
                                 key={index}

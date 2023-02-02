@@ -3,6 +3,13 @@
     grid-template-columns: 20% 80%;
 }
 
+.navigation-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 100vh;
+}
+
 .navigation-bar {
     display: block;
     border: none;

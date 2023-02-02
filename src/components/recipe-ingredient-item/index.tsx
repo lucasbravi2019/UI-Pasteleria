@@ -1,7 +1,8 @@
-import { RecipeIngredient } from "../../interfaces/recipes"
 import './index.scss'
 
-const IngredientItem = ({ ingredient, index }: { ingredient: RecipeIngredient, index: number }) => {
+import { RecipeIngredient } from '../../interfaces/recipes'
+
+const RecipeIngredientItem = ({ ingredient, index }: { ingredient: RecipeIngredient, index: number }) => {
     return (
         <ul key={index} className="ingredients-list">
             {ingredient.ingredient.name ? (
@@ -23,4 +24,4 @@ const IngredientItem = ({ ingredient, index }: { ingredient: RecipeIngredient, i
     )
 }
 
-export default IngredientItem
+export default RecipeIngredientItem

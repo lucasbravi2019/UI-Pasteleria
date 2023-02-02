@@ -1,0 +1,15 @@
+.form {
+    border: 1px solid gray;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 5px;
+}
+
+.form__fields {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.form__select {
+    margin: 10px auto;
+}
