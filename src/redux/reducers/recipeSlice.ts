@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-import { Recipe } from '../../interfaces/recipes'
+import { Recipe } from '../../interfaces/recipe'
 import { RootState } from '../store/store'
 
 const initialState = {

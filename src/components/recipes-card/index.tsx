@@ -1,6 +1,6 @@
 import './index.scss'
 
-import { Recipe } from '../../interfaces/recipes'
+import { Recipe } from '../../interfaces/recipe'
 import {
   useAppDispatch,
   useAppSelector,
@@ -36,7 +36,7 @@ const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
             }
             <h3 className="recipe-card__title"><strong>Receta:</strong> {recipe.name}</h3>
             {recipe.price && (
-                <p className="recipe-card__paragraph"><strong>Precio: </strong>$ {recipe.price}</p>
+                <p className="recipe-card__paragraph"><strong>Precio: </strong>$ {recipe.price.toFixed(2)}</p>
             )}
             <section className="recipe-card__buttons">
                 <NavigationButton

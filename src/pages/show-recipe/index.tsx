@@ -12,7 +12,7 @@ import {
   getData,
 } from '../../api'
 import RecipeDetailedCard from '../../components/recipe-detailed-card'
-import { Recipe } from '../../interfaces/recipes'
+import { Recipe } from '../../interfaces/recipe'
 
 const getRecipeByOid = (oid: string) => {
     return getData(endpoints.getRecipeByOid(oid))

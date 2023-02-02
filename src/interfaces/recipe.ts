@@ -23,3 +23,8 @@ export interface Ingredient {
 export interface RecipeName {
     name: string
 }
+
+export interface IngredientDetails {
+    metric: string
+    quantity: Number
+}

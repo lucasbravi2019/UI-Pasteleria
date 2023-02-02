@@ -3,7 +3,7 @@ import './index.scss'
 import { useEffect } from 'react'
 
 import RecipeCard from '../../components/recipes-card'
-import { Recipe } from '../../interfaces/recipes'
+import { Recipe } from '../../interfaces/recipe'
 import {
   useAppDispatch,
   useAppSelector,

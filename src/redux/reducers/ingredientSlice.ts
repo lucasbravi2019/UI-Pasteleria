@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-import { Ingredient } from '../../interfaces/recipes'
+import { Ingredient } from '../../interfaces/recipe'
 import { RootState } from '../store/store'
 
 const initialState = {
@@ -21,11 +21,20 @@ const ingredientSlice = createSlice({
         },
         removeIngredient(state, action) {
             state.ingredients = state.ingredients.filter(ingredient => ingredient.id !== action.payload)
+        },
+        runLoadIngredients(state) {
+            return state
+        },
+        runAddIngredient(state) {
+            return state
+        },
+        runDeleteIngredient(state) {
+            return state
         }
     }
 })
 
-export const { loadIngredients, addIngredient, removeIngredient } = ingredientSlice.actions
+export const { loadIngredients, addIngredient, removeIngredient, runLoadIngredients, runAddIngredient, runDeleteIngredient } = ingredientSlice.actions
 
 export const ingredientsSelector = (state: RootState) => state.ingredientReducer.ingredients
 
