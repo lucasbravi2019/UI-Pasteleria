@@ -10,13 +10,13 @@ import {
   endpoints,
   getData,
   postData,
-} from '../../api/index'
-import { Recipe } from '../../interfaces/recipes'
+} from '../api/index'
+import { Recipe } from '../interfaces/recipes'
 import {
   resetMessages,
   setErrorMessage,
   setSuccessMessage,
-} from '../../reducers/messageSlice'
+} from '../redux/reducers/messageSlice'
 import {
   addRecipe,
   loadRecipes,
@@ -24,7 +24,7 @@ import {
   runAddRecipe,
   runDeleteRecipe,
   runLoadRecipes,
-} from '../../reducers/recipeSlice'
+} from '../redux/reducers/recipeSlice'
 
 export function* getRecipeSaga(): Generator<any> {
   try {
@@ -70,7 +70,7 @@ export function* deleteRecipeSaga(action: any): Generator<any> {
   }
 }
 
-export default function* homeSaga() {
+export default function* recipeSaga() {
   yield takeLatest(runLoadRecipes.type, getRecipeSaga)
   yield takeLatest(runAddRecipe.type, createRecipeSaga)
   yield takeLatest(runDeleteRecipe.type, deleteRecipeSaga)

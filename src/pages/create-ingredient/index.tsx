@@ -1,10 +1,10 @@
 import { useState } from 'react'
 
-import Form from '../../components/form/Form'
-import IngredientItem from '../../components/ingredient-item/IngredientItem'
+import Form from '../../components/form'
+import IngredientItem from '../../components/ingredient-item'
 import { Ingredient } from '../../interfaces/recipes'
-import { ingredientsSelector } from '../../reducers/ingredientSlice'
-import { useAppSelector } from '../../root/hooks'
+import { useAppSelector } from '../../redux/hooks/hooks'
+import { ingredientsSelector } from '../../redux/reducers/ingredientSlice'
 
 const inputs = [
     {

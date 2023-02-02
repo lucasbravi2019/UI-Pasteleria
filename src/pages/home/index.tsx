@@ -2,16 +2,16 @@ import './index.scss'
 
 import { useEffect } from 'react'
 
-import RecipeCard from '../../components/recipes-card/RecipeCard'
+import RecipeCard from '../../components/recipes-card'
 import { Recipe } from '../../interfaces/recipes'
-import {
-  recipesSelector,
-  runLoadRecipes,
-} from '../../reducers/recipeSlice'
 import {
   useAppDispatch,
   useAppSelector,
-} from '../../root/hooks'
+} from '../../redux/hooks/hooks'
+import {
+  recipesSelector,
+  runLoadRecipes,
+} from '../../redux/reducers/recipeSlice'
 
 const HomePage = () => {
     const recipeSelector: Recipe[] = useAppSelector(recipesSelector)

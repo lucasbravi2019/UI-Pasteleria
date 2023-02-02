@@ -11,8 +11,7 @@ import {
   endpoints,
   getData,
 } from '../../api'
-import RecipeDetailedCard
-  from '../../components/recipe-detailed-card/RecipeDetailedCard'
+import RecipeDetailedCard from '../../components/recipe-detailed-card'
 import { Recipe } from '../../interfaces/recipes'
 
 const getRecipeByOid = (oid: string) => {

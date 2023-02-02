@@ -1,9 +1,9 @@
 import { all } from 'redux-saga/effects'
 
-import homeSaga from '../containers/home/homeSaga'
+import recipeSaga from './recipeSaga'
 
 export function* rootSaga(): Generator<any> {
     yield all([
-        homeSaga()
+        recipeSaga()
     ])
 }

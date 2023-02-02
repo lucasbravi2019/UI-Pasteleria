@@ -1,16 +1,16 @@
 import './index.scss'
 
 import { Recipe } from '../../interfaces/recipes'
-import { messagesSelector } from '../../reducers/messageSlice'
-import { runDeleteRecipe } from '../../reducers/recipeSlice'
 import {
   useAppDispatch,
   useAppSelector,
-} from '../../root/hooks'
-import ErrorMessage from '../error-message/ErrorMessage'
-import NavigationButton from '../navigation-button/NavigationButton'
-import SubmitButton from '../submit-button/SubmitButton'
-import SuccessMessage from '../success-message/SuccessMessage'
+} from '../../redux/hooks/hooks'
+import { messagesSelector } from '../../redux/reducers/messageSlice'
+import { runDeleteRecipe } from '../../redux/reducers/recipeSlice'
+import ErrorMessage from '../error-message'
+import NavigationButton from '../navigation-button'
+import SubmitButton from '../submit-button'
+import SuccessMessage from '../success-message'
 
 const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
     const dispatch = useAppDispatch()

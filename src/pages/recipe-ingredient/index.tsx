@@ -7,24 +7,24 @@ import {
   endpoints,
   getData,
 } from '../../api'
-import Form from '../../components/form/Form'
+import Form from '../../components/form'
 import { FormInterface } from '../../interfaces/formInterface'
 import {
   Ingredient,
   Recipe,
 } from '../../interfaces/recipes'
 import {
+  useAppDispatch,
+  useAppSelector,
+} from '../../redux/hooks/hooks'
+import {
   ingredientsSelector,
   loadIngredients,
-} from '../../reducers/ingredientSlice'
+} from '../../redux/reducers/ingredientSlice'
 import {
   loadRecipes,
   recipesSelector,
-} from '../../reducers/recipeSlice'
-import {
-  useAppDispatch,
-  useAppSelector,
-} from '../../root/hooks'
+} from '../../redux/reducers/recipeSlice'
 
 const inputs = (recetas: Recipe[], ingredientes: Ingredient[]): FormInterface[] => {
     const recipeOptions = recetas.map(receta => {
