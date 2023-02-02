@@ -1,29 +1,28 @@
-import {
-  useEffect,
-  useState,
-} from 'react'
+import { useEffect } from 'react'
 
-import {
-  endpoints,
-  getData,
-} from '../../api'
+import { metrics } from '../../api/config'
 import Form from '../../components/form'
-import { FormInterface } from '../../interfaces/formInterface'
+import { FormInterface } from '../../interfaces/form'
+import { Messages } from '../../interfaces/message'
 import {
-  Ingredient,
-  Recipe,
-} from '../../interfaces/recipes'
+    Ingredient,
+    Recipe,
+} from '../../interfaces/recipe'
 import {
-  useAppDispatch,
-  useAppSelector,
+    useAppDispatch,
+    useAppSelector,
 } from '../../redux/hooks/hooks'
 import {
-  ingredientsSelector,
-  loadIngredients,
+    ingredientsSelector,
+    runLoadIngredients,
 } from '../../redux/reducers/ingredientSlice'
+import { messagesSelector } from '../../redux/reducers/messageSlice'
 import {
-  loadRecipes,
-  recipesSelector,
+    runAddIngredientToRecipe,
+} from '../../redux/reducers/recipeIngredientSlice'
+import {
+    recipesSelector,
+    runLoadRecipes,
 } from '../../redux/reducers/recipeSlice'
 
 const inputs = (recetas: Recipe[], ingredientes: Ingredient[]): FormInterface[] => {
@@ -41,6 +40,13 @@ const inputs = (recetas: Recipe[], ingredientes: Ingredient[]): FormInterface[] 
         }
     })
 
+    const metricOptions = metrics.map(metric => {
+        return {
+            id: metric,
+            nombre: metric
+        }
+    })
+
     return [
         {
             inputText: 'Receta',
@@ -53,29 +59,32 @@ const inputs = (recetas: Recipe[], ingredientes: Ingredient[]): FormInterface[] 
             inputName: 'ingredientId',
             inputType: 'select',
             options: ingredientOptions
+        },
+        {
+            inputText: 'Unidad de medida',
+            inputName: 'metric',
+            inputType: 'select',
+            options: metricOptions
+        },
+        {
+            inputText: 'Cantidad',
+            inputName: 'quantity',
+            inputType: 'number'
         }
     ]
-}
-const getIngredients = () => {
-    return getData(endpoints.getAllIngredients)
 }
 
 const RecipeIngredientPage = () => {
     const recipeSelector: Recipe[] = useAppSelector(recipesSelector)
     const ingredientSelector: Ingredient[] = useAppSelector(ingredientsSelector)
+    const messageSelector: Messages = useAppSelector(messagesSelector)
     const dispatch = useAppDispatch()
 
-    const [errorMessage, setErrorMessage] = useState('')
-    const [successMessage, setSuccessMessage] = useState('')
+    const handleSubmit = (payload: any) => dispatch(runAddIngredientToRecipe(payload))
 
     useEffect(() => {
-        dispatch(loadRecipes)
-
-        getIngredients()
-            .then(data => dispatch(loadIngredients(data)))
-
-        setErrorMessage('')
-        setSuccessMessage('')
+        dispatch(runLoadRecipes())
+        dispatch(runLoadIngredients())
     }, [])
 
     return (
@@ -83,10 +92,10 @@ const RecipeIngredientPage = () => {
             <h1>Agregar Ingredientes a Receta</h1>
             <Form
                 inputs={inputs(recipeSelector, ingredientSelector)}
-                errorMessage={errorMessage}
-                successMessage={successMessage}
+                errorMessage={messageSelector.errorMessage}
+                successMessage={messageSelector.successMessage}
                 submitText={'Agregar ingrediente'}
-                onSubmit={() => console.log('submit')}
+                onSubmit={handleSubmit}
             />
         </section>
     )

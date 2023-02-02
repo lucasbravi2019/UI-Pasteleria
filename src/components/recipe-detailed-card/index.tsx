@@ -1,8 +1,7 @@
 import './index.scss'
 
-import { Recipe } from '../../interfaces/recipes'
-import RecipeIngredientItem
-  from '../recipe-ingredient-item'
+import { Recipe } from '../../interfaces/recipe'
+import RecipeIngredientItem from '../recipe-ingredient-item'
 
 const RecipeDetailedCard = ({ recipe }: { recipe: Recipe }) => {
     return (
@@ -25,7 +24,7 @@ const RecipeDetailedCard = ({ recipe }: { recipe: Recipe }) => {
                 <p className="recipe-detailed-card__paragraph">Esta receta no tiene ingredientes</p>
             )}
             {recipe.price ? (
-                <p className="recipe-detailed-card__paragraph"><strong>Precio: </strong>$ {recipe.price}</p>
+                <p className="recipe-detailed-card__paragraph"><strong>Precio: </strong>$ {recipe.price.toFixed(2)}</p>
             ) : (
                 <p className="recipe-detailed-card__paragraph">Esta receta no tiene precio total</p>
             )}
