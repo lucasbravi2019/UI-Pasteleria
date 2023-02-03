@@ -26,19 +26,27 @@ import {
 } from '../../redux/reducers/recipeSlice'
 
 const inputs = (recetas: Recipe[], ingredientes: Ingredient[]): FormInterface[] => {
-    const recipeOptions = recetas.map(receta => {
-        return {
-            id: receta.id,
-            nombre: receta.name
-        }
-    })
+    let recipeOptions
 
-    const ingredientOptions = ingredientes.map(ingrediente => {
-        return {
-            id: ingrediente.id,
-            nombre: ingrediente.name
-        }
-    })
+    if (recetas) {
+        recipeOptions = recetas.map(receta => {
+            return {
+                id: receta.id,
+                nombre: receta.name
+            }
+        })
+    }
+
+    let ingredientOptions
+
+    if (ingredientes) {
+        ingredientOptions = ingredientes.map(ingrediente => {
+            return {
+                id: ingrediente.id,
+                nombre: ingrediente.name
+            }
+        })
+    }
 
     const metricOptions = metrics.map(metric => {
         return {
