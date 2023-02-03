@@ -20,5 +20,16 @@ export const DELETE = () => {
     return { method: 'DELETE' }
 }
 
+export const metrics = [
+    'g',
+    'kg',
+    'mg',
+    'ml',
+    'l',
+    'cda',
+    'unidad/es',
+    'docena',
+]
+
 export const baseUrl = 'http://localhost:8080'
 

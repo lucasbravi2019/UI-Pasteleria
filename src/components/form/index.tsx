@@ -1,8 +1,11 @@
 import './index.scss'
 
-import { useState } from 'react'
+import {
+    useEffect,
+    useState,
+} from 'react'
 
-import { FormInterface } from '../../interfaces/formInterface'
+import { FormInterface } from '../../interfaces/form'
 import ErrorMessage from '../error-message'
 import FormInput from '../form-input'
 import FormLabel from '../form-label'
@@ -16,6 +19,13 @@ const Form = ({ submitText, inputs, onSubmit, successMessage, errorMessage }:
     }) => {
 
     const [formData, setFormData] = useState({})
+    const [selected, setSelected] = useState<any>({})
+
+    useEffect(() => {
+        if (Object.keys(selected).length !== 0) {
+            setFormData({ ...formData, ...selected })
+        }
+    }, [selected])
 
     return (
         <form className="form" onSubmit={() => setFormData({})}>
@@ -29,10 +39,28 @@ const Form = ({ submitText, inputs, onSubmit, successMessage, errorMessage }:
                                         inputName={input.inputName}
                                         inputText={input.inputText}
                                     />
-                                    <select name={input.inputName} title={input.inputText} className="form__select">
+                                    <select
+                                        name={input.inputName}
+                                        title={input.inputText}
+                                        className="form__select"
+                                        value={selected[input.inputName] ? selected[input.inputName] : ''}
+                                        onChange={(e) => setSelected({ ...selected, [input.inputName]: e.target.value })}
+                                    >
+                                        <option value="" disabled>-- Seleccionar una opcion --</option>
                                         {
-                                            input.options && input.options.map((option, ind) => (
-                                                <option key={ind} value={option.id}>{option.nombre}</option>
+                                            input.options && typeof input.options === 'function' && (
+                                                <option
+                                                    value={input.options(selected)}
+                                                >{input.options(selected)}
+                                                </option>
+                                            )
+                                        }
+                                        {
+                                            input.options && typeof input.options !== 'function' && input.options.map((option, ind) => (
+                                                <option
+                                                    key={ind}
+                                                    value={option.id}
+                                                >{option.nombre}</option>
                                             ))
                                         }
                                     </select>
@@ -63,6 +91,7 @@ const Form = ({ submitText, inputs, onSubmit, successMessage, errorMessage }:
                 onClick={() => {
                     onSubmit(formData)
                     setFormData({})
+                    setSelected({})
                 }}
             />
             {

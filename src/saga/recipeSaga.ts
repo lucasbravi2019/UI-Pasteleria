@@ -11,7 +11,7 @@ import {
   getData,
   postData,
 } from '../api/index'
-import { Recipe } from '../interfaces/recipes'
+import { Recipe } from '../interfaces/recipe'
 import {
   resetMessages,
   setErrorMessage,
