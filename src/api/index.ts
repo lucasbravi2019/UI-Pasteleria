@@ -1,9 +1,9 @@
 import {
-  baseUrl,
-  DELETE,
-  GET,
-  POST,
-  PUT,
+    baseUrl,
+    DELETE,
+    GET,
+    POST,
+    PUT,
 } from './config'
 
 const callApi = async (endpoint: string, verb: {}) => {
@@ -49,5 +49,9 @@ export const endpoints = {
     getAllIngredients: 'ingredients',
     createIngredient: 'ingredients',
     editIngredient: (oid: string) => `ingredients/${oid}`,
-    deleteIngredient: (oid: string) => `ingredients/${oid}`
+    deleteIngredient: (oid: string) => `ingredients/${oid}`,
+    getAllPackages: 'package',
+    createPackage: 'package',
+    updatePackage: (oid: string) => `package/${oid}`,
+    deletePackage: (oid: string) => `package/${oid}`
 }

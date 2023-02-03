@@ -1,10 +1,10 @@
-import Form from '../../components/form'
+import Form from '../../../components/form'
 import {
-  useAppDispatch,
-  useAppSelector,
-} from '../../redux/hooks/hooks'
-import { messagesSelector } from '../../redux/reducers/messageSlice'
-import { runAddRecipe } from '../../redux/reducers/recipeSlice'
+    useAppDispatch,
+    useAppSelector,
+} from '../../../redux/hooks/hooks'
+import { messagesSelector } from '../../../redux/reducers/messageSlice'
+import { runAddRecipe } from '../../../redux/reducers/recipeSlice'
 
 const formInputs = [
     {

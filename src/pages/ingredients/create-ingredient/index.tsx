@@ -2,22 +2,22 @@ import './index.scss'
 
 import { useEffect } from 'react'
 
-import { metrics } from '../../api/config'
-import Form from '../../components/form'
-import IngredientItem from '../../components/ingredient-item'
-import { FormInterface } from '../../interfaces/form'
-import { Messages } from '../../interfaces/message'
-import { Ingredient } from '../../interfaces/recipe'
+import { metrics } from '../../../api/config'
+import Form from '../../../components/form'
+import IngredientItem from '../../../components/ingredient-item'
+import { FormInterface } from '../../../interfaces/form'
+import { Messages } from '../../../interfaces/message'
+import { Ingredient } from '../../../interfaces/recipe'
 import {
-  useAppDispatch,
-  useAppSelector,
-} from '../../redux/hooks/hooks'
+    useAppDispatch,
+    useAppSelector,
+} from '../../../redux/hooks/hooks'
 import {
-  ingredientsSelector,
-  runAddIngredient,
-  runLoadIngredients,
-} from '../../redux/reducers/ingredientSlice'
-import { messagesSelector } from '../../redux/reducers/messageSlice'
+    ingredientsSelector,
+    runAddIngredient,
+    runLoadIngredients,
+} from '../../../redux/reducers/ingredientSlice'
+import { messagesSelector } from '../../../redux/reducers/messageSlice'
 
 const inputs = (): FormInterface[] => {
     const metricOptions = metrics.map(metric => {

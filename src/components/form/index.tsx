@@ -1,8 +1,8 @@
 import './index.scss'
 
 import {
-  useEffect,
-  useState,
+    useEffect,
+    useState,
 } from 'react'
 
 import { FormInterface } from '../../interfaces/form'
