@@ -1,9 +1,14 @@
+import { useEffect } from 'react'
+
 import Form from '../../../components/form'
 import {
     useAppDispatch,
     useAppSelector,
 } from '../../../redux/hooks/hooks'
-import { messagesSelector } from '../../../redux/reducers/messageSlice'
+import {
+    messagesSelector,
+    resetMessages,
+} from '../../../redux/reducers/messageSlice'
 import { runAddRecipe } from '../../../redux/reducers/recipeSlice'
 
 const formInputs = [
@@ -14,11 +19,15 @@ const formInputs = [
     }
 ]
 
+
 const RecipePage = () => {
     const dispatch = useAppDispatch()
     const messageSelector = useAppSelector(messagesSelector)
 
     const handleRecipeCreation = (recipeName: void) => dispatch(runAddRecipe(recipeName))
+    useEffect(() => {
+        dispatch(resetMessages())
+    }, [])
 
     return (
         <section>

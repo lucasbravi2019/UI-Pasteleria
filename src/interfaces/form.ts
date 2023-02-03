@@ -2,9 +2,8 @@ export interface FormInterface {
     inputName: string
     inputType: string
     inputText: string
-    options?:
-    {
+    options?: {
         id: string
         nombre: string
-    }[]
+    }[] | Function
 }
