@@ -10,7 +10,10 @@ import {
     useAppDispatch,
     useAppSelector,
 } from '../../redux/hooks/hooks'
-import { messagesSelector } from '../../redux/reducers/messageSlice'
+import {
+    messagesSelector,
+    resetMessages,
+} from '../../redux/reducers/messageSlice'
 import {
     packagesSelector,
     runAddPackage,
@@ -53,6 +56,7 @@ const Package = () => {
     const handleCreatePackage = (body: any) => dispatch(runAddPackage(body))
 
     useEffect(() => {
+        dispatch(resetMessages())
         dispatch(runLoadPackages())
     }, [])
 

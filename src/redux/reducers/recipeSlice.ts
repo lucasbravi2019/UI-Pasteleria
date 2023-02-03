@@ -19,8 +19,6 @@ const recipeSlice = createSlice({
                 ...state.recipes,
                 action.payload
             ]
-            console.log(state.recipes);
-
         },
         removeRecipe(state, action) {
             state.recipes = state.recipes.filter(recipe => recipe.id !== action.payload)

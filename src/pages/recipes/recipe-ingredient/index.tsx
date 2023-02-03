@@ -1,6 +1,5 @@
 import { useEffect } from 'react'
 
-import { metrics } from '../../../api/config'
 import Form from '../../../components/form'
 import { FormInterface } from '../../../interfaces/form'
 import { Messages } from '../../../interfaces/message'
@@ -37,7 +36,7 @@ const inputs = (recetas: Recipe[], ingredientes: Ingredient[]): FormInterface[] 
         })
     }
 
-    let ingredientOptions
+    let ingredientOptions: any
 
     if (ingredientes) {
         ingredientOptions = ingredientes.map(ingrediente => {
@@ -48,12 +47,15 @@ const inputs = (recetas: Recipe[], ingredientes: Ingredient[]): FormInterface[] 
         })
     }
 
-    const metricOptions = metrics.map(metric => {
-        return {
-            id: metric,
-            nombre: metric
+    const metricOptions = (selected: any) => {
+        if (selected && selected.ingredientId) {
+            const ingredient = ingredientes.filter(ingrediente => ingrediente.id === selected.ingredientId)
+            if (ingredient.length > 0) {
+                return ingredient[0].metric
+            }
         }
-    })
+        return ''
+    }
 
     return [
         {
