@@ -1,29 +1,29 @@
 import { useEffect } from 'react'
 
-import { metrics } from '../../api/config'
-import Form from '../../components/form'
-import { FormInterface } from '../../interfaces/form'
-import { Messages } from '../../interfaces/message'
+import { metrics } from '../../../api/config'
+import Form from '../../../components/form'
+import { FormInterface } from '../../../interfaces/form'
+import { Messages } from '../../../interfaces/message'
 import {
     Ingredient,
     Recipe,
-} from '../../interfaces/recipe'
+} from '../../../interfaces/recipe'
 import {
     useAppDispatch,
     useAppSelector,
-} from '../../redux/hooks/hooks'
+} from '../../../redux/hooks/hooks'
 import {
     ingredientsSelector,
     runLoadIngredients,
-} from '../../redux/reducers/ingredientSlice'
-import { messagesSelector } from '../../redux/reducers/messageSlice'
+} from '../../../redux/reducers/ingredientSlice'
+import { messagesSelector } from '../../../redux/reducers/messageSlice'
 import {
     runAddIngredientToRecipe,
-} from '../../redux/reducers/recipeIngredientSlice'
+} from '../../../redux/reducers/recipeIngredientSlice'
 import {
     recipesSelector,
     runLoadRecipes,
-} from '../../redux/reducers/recipeSlice'
+} from '../../../redux/reducers/recipeSlice'
 
 const inputs = (recetas: Recipe[], ingredientes: Ingredient[]): FormInterface[] => {
     let recipeOptions

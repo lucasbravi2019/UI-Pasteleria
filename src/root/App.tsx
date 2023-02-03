@@ -2,18 +2,19 @@ import 'normalize.scss/normalize.scss'
 import './index.scss'
 
 import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
+    BrowserRouter as Router,
+    Route,
+    Switch,
 } from 'react-router-dom'
 
 import NavigationButton from '../components/navigation-button'
 import VersionLabel from '../components/version-label'
-import IngredientPage from '../pages/create-ingredient'
-import RecipePage from '../pages/create-recipe'
 import HomePage from '../pages/home'
-import RecipeIngredientPage from '../pages/recipe-ingredient'
-import ShowRecipe from '../pages/show-recipe'
+import IngredientPage from '../pages/ingredients/create-ingredient'
+import Package from '../pages/packages'
+import RecipePage from '../pages/recipes/create-recipe'
+import RecipeIngredientPage from '../pages/recipes/recipe-ingredient'
+import ShowRecipe from '../pages/recipes/show-recipe'
 
 const App = () => {
     return (
@@ -41,6 +42,11 @@ const App = () => {
                             routeName="Agregar ingredientes"
                             className="navigation-bar__link"
                         />
+                        <NavigationButton
+                            link="/packages"
+                            routeName="Agregar envases"
+                            className="navigation-bar__link"
+                        />
                     </nav>
                     <VersionLabel />
                 </aside>
@@ -51,6 +57,7 @@ const App = () => {
                         <Route exact path="/recipes" component={RecipePage} />
                         <Route exact path="/ingredients" component={IngredientPage} />
                         <Route exact path="/recipe-ingredients" component={RecipeIngredientPage} />
+                        <Route exact path="/packages" component={Package} />
                     </Switch>
                 </main>
             </section>

@@ -7,6 +7,7 @@ import {
 import { rootSaga } from '../../saga/rootSaga'
 import ingredientReducer from '../reducers/ingredientSlice'
 import messageReducer from '../reducers/messageSlice'
+import packageReducer from '../reducers/packageSlice'
 import recipeReducer from '../reducers/recipeSlice'
 
 const sagaMiddleware = createSagaMiddleware()
@@ -16,7 +17,8 @@ const storeConfig = () => {
     reducer: {
       recipeReducer,
       ingredientReducer,
-      messageReducer
+      messageReducer,
+      packageReducer
     },
     middleware: [...getDefaultMiddleware({ thunk: false }), sagaMiddleware]
   })
