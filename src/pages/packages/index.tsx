@@ -71,14 +71,20 @@ const Package = () => {
                 submitText={'Crear Envase'}
             />
             {
-                packageSelector.packages && packageSelector.packages.map(envase => (
-                    <PackageItem
-                        metric={envase.metric}
-                        quantity={envase.quantity}
-                        id={envase.id}
-                        key={envase.id}
-                    />
-                ))
+                packageSelector.packages && (
+                    <section className='package__container'>
+                        {
+                            packageSelector.packages.map(envase => (
+                                <PackageItem
+                                    metric={envase.metric}
+                                    quantity={envase.quantity}
+                                    id={envase.id}
+                                    key={envase.id}
+                                />
+                            ))
+                        }
+                    </section>
+                )
             }
         </section>
     )

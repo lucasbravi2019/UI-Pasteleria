@@ -46,7 +46,7 @@ const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
                 />
                 <SubmitButton
                     buttonText='Borrar receta'
-                    className='recipe-card__submit-button'
+                    className='card__submit-button'
                     onClick={() => handleDeleteRecipe(recipe.id)}
                 />
             </section>

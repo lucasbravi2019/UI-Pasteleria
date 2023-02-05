@@ -17,7 +17,7 @@ const IngredientItem = ({ ingredient }: { ingredient: Ingredient }) => {
             <p>Precio: $ {ingredient.price}</p>
             <SubmitButton
                 buttonText='Borrar Ingrediente'
-                className='recipe-card__submit-button'
+                className='card__submit-button'
                 onClick={() => handleDeleteIngredient(ingredient.id)}
             />
         </section>
