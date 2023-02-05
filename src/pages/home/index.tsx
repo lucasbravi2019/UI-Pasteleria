@@ -5,12 +5,12 @@ import { useEffect } from 'react'
 import RecipeCard from '../../components/recipes-card'
 import { Recipe } from '../../interfaces/recipe'
 import {
-  useAppDispatch,
-  useAppSelector,
+    useAppDispatch,
+    useAppSelector,
 } from '../../redux/hooks/hooks'
 import {
-  recipesSelector,
-  runLoadRecipes,
+    recipesSelector,
+    runLoadRecipes,
 } from '../../redux/reducers/recipeSlice'
 
 const HomePage = () => {
