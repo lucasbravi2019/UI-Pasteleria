@@ -9,13 +9,18 @@ import {
     endpoints,
     getData,
     postData,
+    putData,
 } from '../api/index'
-import { Ingredient } from '../interfaces/recipe'
+import {
+    IngredientMultiPackage,
+    PackagePrice,
+} from '../interfaces/recipe'
 import {
     addIngredient,
     loadIngredients,
     removeIngredient,
     runAddIngredient,
+    runAddPackageToIngredient,
     runDeleteIngredient,
     runLoadIngredients,
 } from '../redux/reducers/ingredientSlice'
@@ -28,7 +33,7 @@ import {
 export function* getIngredientsSaga() {
     try {
         yield put(resetMessages())
-        const response: Ingredient[] = yield call(getData, endpoints.getAllIngredients)
+        const response: IngredientMultiPackage[] = yield call(getData, endpoints.getAllIngredients)
         if (response) {
             yield put(loadIngredients(response))
         }
@@ -43,14 +48,7 @@ export function* createIngredientSaga(action: any): Generator<any> {
         if (response.hasOwnProperty('error') && response.error) {
             yield put(setErrorMessage('El ingrediente no se pudo crear'))
         } else {
-            const ingredient: Ingredient = {
-                id: response,
-                metric: action.payload.metric,
-                name: action.payload.name,
-                price: action.payload.price,
-                quantity: action.payload.quantity
-            }
-            yield put(addIngredient(ingredient))
+            yield put(addIngredient(response))
             yield put(setSuccessMessage('El ingrediente fue crado con éxito'))
         }
     } catch (error) {
@@ -74,8 +72,29 @@ export function* deleteIngredientSaga(action: any): Generator<any> {
     }
 }
 
+export function* AddPackageToIngredientSaga(action: any): Generator<any> {
+    try {
+        const ingredientId = action.payload.ingredientId
+        const packageId = action.payload.packageId
+        const price: PackagePrice = {
+            price: action.payload.price
+        }
+
+        const response: any = yield call(putData, endpoints.addPackageToIngredient(ingredientId, packageId), price)
+        if (response.hasOwnProperty('error')) {
+            yield put(setErrorMessage('No se pudo agregar el envase al ingrediente'))
+        } else {
+            yield put(setSuccessMessage('Se pudo agregar el envase correctamente'))
+        }
+    } catch (error) {
+        console.log(error);
+        yield put(setErrorMessage('No se pudo agregar el envase al ingrediente'))
+    }
+}
+
 export default function* ingredientSaga() {
     yield takeLatest(runLoadIngredients.type, getIngredientsSaga)
     yield takeLatest(runAddIngredient.type, createIngredientSaga)
     yield takeLatest(runDeleteIngredient.type, deleteIngredientSaga)
+    yield takeLatest(runAddPackageToIngredient.type, AddPackageToIngredientSaga)
 }

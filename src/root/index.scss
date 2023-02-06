@@ -3,6 +3,12 @@
     grid-template-columns: 20% 80%;
 }
 
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
 .navigation-container {
     display: flex;
     flex-direction: column;
@@ -11,7 +17,10 @@
 }
 
 .navigation-bar {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
     border: none;
     background-color: white;
     box-shadow: none;

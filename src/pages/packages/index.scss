@@ -10,11 +10,7 @@
         grid-template-columns: repeat(4, 1fr);
     }
 
-    @media (min-width: 996px) {
-        grid-template-columns: repeat(5, 1fr);
-    }
-
     @media (min-width: 1200px) {
-        grid-template-columns: repeat(6, 1fr);
+        grid-template-columns: repeat(5, 1fr);
     }
 }

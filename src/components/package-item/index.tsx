@@ -15,7 +15,7 @@ const PackageItem = ({ metric, quantity, id }: { metric: string, quantity: numbe
             <p>Unidad: {metric}</p>
             <SubmitButton
                 buttonText="Borrar Envase"
-                className="card__submit-button"
+                className="card__delete-button"
                 onClick={() => handleDeletePackage(id)}
             />
         </section>

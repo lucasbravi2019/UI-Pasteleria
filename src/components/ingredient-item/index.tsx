@@ -1,11 +1,12 @@
 import './index.scss'
 
-import { Ingredient } from '../../interfaces/recipe'
+import { IngredientMultiPackage } from '../../interfaces/recipe'
 import { useAppDispatch } from '../../redux/hooks/hooks'
 import { runDeleteIngredient } from '../../redux/reducers/ingredientSlice'
+import IngredientPackageItem from '../ingredient-package-item'
 import SubmitButton from '../submit-button'
 
-const IngredientItem = ({ ingredient }: { ingredient: Ingredient }) => {
+const IngredientItem = ({ ingredient }: { ingredient: IngredientMultiPackage }) => {
     const dispatch = useAppDispatch()
 
     const handleDeleteIngredient = (id: any) => dispatch(runDeleteIngredient(id))
@@ -13,11 +14,24 @@ const IngredientItem = ({ ingredient }: { ingredient: Ingredient }) => {
     return (
         <section className='ingredient__item'>
             <p>Nombre: {ingredient.name}</p>
-            <p>Cantidad: {ingredient.quantity} {ingredient.metric}</p>
-            <p>Precio: $ {ingredient.price}</p>
+            {
+                ingredient.packages && (
+                    <section className="ingredient-package__container">
+                        <p>Envases</p>
+                        {
+                            ingredient.packages && ingredient.packages.map(envase => (
+                                <IngredientPackageItem
+                                    envase={envase}
+                                    key={envase.package.id}
+                                />
+                            ))
+                        }
+                    </section>
+                )
+            }
             <SubmitButton
                 buttonText='Borrar Ingrediente'
-                className='card__submit-button'
+                className='card__delete-button'
                 onClick={() => handleDeleteIngredient(ingredient.id)}
             />
         </section>

@@ -12,7 +12,7 @@ import NavigationButton from '../navigation-button'
 import SubmitButton from '../submit-button'
 import SuccessMessage from '../success-message'
 
-const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
+const RecipeCard = ({ recipe, updatable, deletable }: { recipe: Recipe, updatable: boolean, deletable: boolean }) => {
     const dispatch = useAppDispatch()
     const messageSelector = useAppSelector(messagesSelector)
 
@@ -44,11 +44,24 @@ const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
                     routeName="Ver receta"
                     className="navigation-bar__link"
                 />
-                <SubmitButton
-                    buttonText='Borrar receta'
-                    className='card__submit-button'
-                    onClick={() => handleDeleteRecipe(recipe.id)}
-                />
+                {
+                    updatable && (
+                        <SubmitButton
+                            buttonText='Editar Receta'
+                            className='card__edit-button'
+                            onClick={() => console.log('edit')}
+                        />
+                    )
+                }
+                {
+                    deletable && (
+                        <SubmitButton
+                            buttonText='Borrar Receta'
+                            className='card__delete-button'
+                            onClick={() => handleDeleteRecipe(recipe.id)}
+                        />
+                    )
+                }
             </section>
         </section>
     )
