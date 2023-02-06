@@ -48,10 +48,11 @@ const IngredientPage = () => {
             <section className='ingredient__container'>
                 {
                     ingredientSelector && ingredientSelector.length > 0 ? ingredientSelector.map(ingredient =>
-                        <IngredientItem
-                            ingredient={ingredient}
-                            key={ingredient.id}
-                        />
+                        <section key={ingredient.id}>
+                            <IngredientItem
+                                ingredient={ingredient}
+                            />
+                        </section>
                     ) : (
                         <h3>No hay ingredientes</h3>
                     )

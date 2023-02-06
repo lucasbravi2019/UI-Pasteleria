@@ -33,7 +33,7 @@ const Form = ({ submitText, inputs, onSubmit, successMessage, errorMessage }:
                 inputs && inputs.map((input, index) =>
                     <div className="form__fields" key={index}>
                         {
-                            input.inputType === 'select' ? (
+                            input.inputType === 'select' && (
                                 <>
                                     <FormLabel
                                         inputName={input.inputName}
@@ -66,7 +66,25 @@ const Form = ({ submitText, inputs, onSubmit, successMessage, errorMessage }:
                                         }
                                     </select>
                                 </>
-                            ) : (
+                            )
+                        }
+                        {
+                            input.inputType === 'hidden' && (
+                                <>
+                                    <FormInput
+                                        inputType={input.inputType}
+                                        inputText={input.inputText}
+                                        inputName={input.inputName}
+                                        inputVal={input.inputValue}
+                                        formData={formData}
+                                        setFormData={setFormData}
+                                    />
+                                </>
+                            )
+                        }
+                        {
+                            input.inputType !== 'hidden' && input.inputType !== 'select' &&
+                            (
                                 <>
                                     <FormLabel
                                         inputName={input.inputName}
