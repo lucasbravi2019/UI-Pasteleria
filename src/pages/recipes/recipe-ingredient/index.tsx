@@ -4,7 +4,7 @@ import Form from '../../../components/form'
 import { FormInterface } from '../../../interfaces/form'
 import { Messages } from '../../../interfaces/message'
 import {
-    Ingredient,
+    IngredientMultiPackage,
     Recipe,
 } from '../../../interfaces/recipe'
 import {
@@ -24,7 +24,7 @@ import {
     runLoadRecipes,
 } from '../../../redux/reducers/recipeSlice'
 
-const inputs = (recetas: Recipe[], ingredientes: Ingredient[]): FormInterface[] => {
+const inputs = (recetas: Recipe[], ingredientes: IngredientMultiPackage[]): FormInterface[] => {
     let recipeOptions
 
     if (recetas) {
@@ -51,10 +51,10 @@ const inputs = (recetas: Recipe[], ingredientes: Ingredient[]): FormInterface[] 
         if (selected && selected.ingredientId) {
             const ingredient = ingredientes.filter(ingrediente => ingrediente.id === selected.ingredientId)
             if (ingredient.length > 0) {
-                return ingredient[0].metric
+                return ingredient[0].packages.map(envase => `${envase.package.quantity} ${envase.package.metric}`)
             }
         }
-        return ''
+        return []
     }
 
     return [
@@ -71,7 +71,7 @@ const inputs = (recetas: Recipe[], ingredientes: Ingredient[]): FormInterface[] 
             options: ingredientOptions
         },
         {
-            inputText: 'Unidad de medida',
+            inputText: 'Envase',
             inputName: 'metric',
             inputType: 'select',
             options: metricOptions
@@ -86,7 +86,7 @@ const inputs = (recetas: Recipe[], ingredientes: Ingredient[]): FormInterface[] 
 
 const RecipeIngredientPage = () => {
     const recipeSelector: Recipe[] = useAppSelector(recipesSelector)
-    const ingredientSelector: Ingredient[] = useAppSelector(ingredientsSelector)
+    const ingredientSelector: IngredientMultiPackage[] = useAppSelector(ingredientsSelector)
     const messageSelector: Messages = useAppSelector(messagesSelector)
     const dispatch = useAppDispatch()
 

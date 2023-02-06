@@ -48,12 +48,13 @@ const Form = ({ submitText, inputs, onSubmit, successMessage, errorMessage }:
                                     >
                                         <option value="" disabled>-- Seleccionar una opcion --</option>
                                         {
-                                            input.options && typeof input.options === 'function' && (
+                                            input.options && typeof input.options === 'function' && input.options(selected).map((option: string) => (
                                                 <option
-                                                    value={input.options(selected)}
-                                                >{input.options(selected)}
+                                                    value={option}
+                                                    key={option}
+                                                >{option}
                                                 </option>
-                                            )
+                                            ))
                                         }
                                         {
                                             input.options && typeof input.options !== 'function' && input.options.map((option, ind) => (

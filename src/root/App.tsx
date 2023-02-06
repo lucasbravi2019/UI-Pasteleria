@@ -11,6 +11,7 @@ import NavigationButton from '../components/navigation-button'
 import VersionLabel from '../components/version-label'
 import HomePage from '../pages/home'
 import IngredientPage from '../pages/ingredients/create-ingredient'
+import AddPackageToIngredientPage from '../pages/ingredients/ingredient-package'
 import Package from '../pages/packages'
 import RecipePage from '../pages/recipes/create-recipe'
 import RecipeIngredientPage from '../pages/recipes/recipe-ingredient'
@@ -38,13 +39,18 @@ const App = () => {
                             className="navigation-bar__link"
                         />
                         <NavigationButton
-                            link="/recipe-ingredients"
-                            routeName="Agregar ingredientes"
+                            link="/packages"
+                            routeName="Envases"
                             className="navigation-bar__link"
                         />
                         <NavigationButton
-                            link="/packages"
-                            routeName="Agregar envases"
+                            link="/recipe-ingredients"
+                            routeName="Agregar ingrediente a receta"
+                            className="navigation-bar__link"
+                        />
+                        <NavigationButton
+                            link="/ingredients-packages"
+                            routeName="Agregar envase a ingrediente"
                             className="navigation-bar__link"
                         />
                     </nav>
@@ -58,6 +64,7 @@ const App = () => {
                         <Route exact path="/ingredients" component={IngredientPage} />
                         <Route exact path="/recipe-ingredients" component={RecipeIngredientPage} />
                         <Route exact path="/packages" component={Package} />
+                        <Route exact path="/ingredients-packages" component={AddPackageToIngredientPage} />
                     </Switch>
                 </main>
             </section>

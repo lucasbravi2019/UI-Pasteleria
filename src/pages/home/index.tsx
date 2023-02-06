@@ -27,6 +27,8 @@ const HomePage = () => {
                 recipeSelector && recipeSelector.length > 0 ? recipeSelector.map((recipe, index) => (
                     <RecipeCard
                         key={index}
+                        deletable={false}
+                        updatable={false}
                         recipe={recipe}
                     />
                 )) : (
