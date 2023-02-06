@@ -20,7 +20,7 @@ const RecipeIngredientItem = ({ ingredient, index }: { ingredient: RecipeIngredi
             ) : (
                 <li className="ingredients-item">El ingrediente no tiene precio</li>
             )}
-        </ul>
+        </ul >
     )
 }
 
