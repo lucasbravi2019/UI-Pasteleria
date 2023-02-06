@@ -31,8 +31,6 @@ const inputs = (): FormInterface[] => {
 
     return [
         {
-
-
             inputName: 'metric',
             inputText: 'Unidad de medida',
             inputType: 'select',
@@ -45,9 +43,6 @@ const inputs = (): FormInterface[] => {
         }
     ]
 }
-
-
-
 
 const Package = () => {
     const dispatch = useAppDispatch()
@@ -71,14 +66,20 @@ const Package = () => {
                 submitText={'Crear Envase'}
             />
             {
-                packageSelector.packages && packageSelector.packages.map(envase => (
-                    <PackageItem
-                        metric={envase.metric}
-                        quantity={envase.quantity}
-                        id={envase.id}
-                        key={envase.id}
-                    />
-                ))
+                packageSelector && (
+                    <section className='package__container'>
+                        {
+                            packageSelector.map(envase => (
+                                <PackageItem
+                                    metric={envase.metric}
+                                    quantity={envase.quantity}
+                                    id={envase.id}
+                                    key={envase.id}
+                                />
+                            ))
+                        }
+                    </section>
+                )
             }
         </section>
     )

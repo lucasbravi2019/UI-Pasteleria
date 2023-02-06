@@ -1,10 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-import { Ingredient } from '../../interfaces/recipe'
+import { IngredientMultiPackage } from '../../interfaces/recipe'
 import { RootState } from '../store/store'
 
 const initialState = {
-    ingredients: [] as Ingredient[]
+    ingredients: [] as IngredientMultiPackage[]
 }
 
 const ingredientSlice = createSlice({
@@ -30,11 +30,22 @@ const ingredientSlice = createSlice({
         },
         runDeleteIngredient(state) {
             return state
+        },
+        runAddPackageToIngredient(state) {
+            return state
         }
     }
 })
 
-export const { loadIngredients, addIngredient, removeIngredient, runLoadIngredients, runAddIngredient, runDeleteIngredient } = ingredientSlice.actions
+export const {
+    loadIngredients,
+    addIngredient,
+    removeIngredient,
+    runLoadIngredients,
+    runAddIngredient,
+    runDeleteIngredient,
+    runAddPackageToIngredient
+} = ingredientSlice.actions
 
 export const ingredientsSelector = (state: RootState) => state.ingredientReducer.ingredients
 

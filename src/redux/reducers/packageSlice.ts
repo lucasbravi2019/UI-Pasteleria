@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-import { Package } from '../../interfaces/package'
+import { Package } from '../../interfaces/recipe'
 import { RootState } from '../store/store'
 
 const initialState = {
@@ -37,6 +37,6 @@ const packageSlice = createSlice({
 
 export const { loadPackages, addPackage, removePackage, runLoadPackages, runAddPackage, runRemovePackage } = packageSlice.actions
 
-export const packagesSelector = (state: RootState) => state.packageReducer
+export const packagesSelector = (state: RootState) => state.packageReducer.packages
 
 export default packageSlice.reducer

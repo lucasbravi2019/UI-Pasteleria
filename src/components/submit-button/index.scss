@@ -16,7 +16,29 @@
     color: black;
 }
 
-.recipe-card__submit-button {
+.card__edit-button {
+    display: block;
+    margin: 10px auto;
+    padding: 5px;
+    border-radius: 5px;
+    font-weight: 700;
+    background-color: white;
+    border: none;
+    color: white;
+    background-color: green;
+
+    transition: background-color .3s linear;
+}
+
+.card__edit-button:focus {
+    background-color: green;
+}
+
+.card__edit-button:hover {
+    background-color: rgb(0, 92, 31);
+}
+
+.card__delete-button {
     display: block;
     margin: 10px auto;
     padding: 5px;
@@ -30,10 +52,10 @@
     transition: background-color .3s linear;
 }
 
-.recipe-card__submit-button:focus {
+.card__delete-button:focus {
     background-color: red;
 }
 
-.recipe-card__submit-button:hover {
+.card__delete-button:hover {
     background-color: rgb(150, 0, 0);
 }

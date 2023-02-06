@@ -45,13 +45,14 @@ export const endpoints = {
     createRecipe: 'recipes',
     updateRecipe: (oid: string) => `recipes/${oid}`,
     deleteRecipe: (oid: string) => `recipes/${oid}`,
-    addIngredientToRecipe: (recipeId: string, ingredientId: string): string => `/recipes/${recipeId}/ingredient/${ingredientId}`,
+    addIngredientToRecipe: (recipeId: string, ingredientId: string): string => `/recipes/${recipeId}/ingredients/${ingredientId}`,
     getAllIngredients: 'ingredients',
     createIngredient: 'ingredients',
     editIngredient: (oid: string) => `ingredients/${oid}`,
     deleteIngredient: (oid: string) => `ingredients/${oid}`,
-    getAllPackages: 'package',
-    createPackage: 'package',
-    updatePackage: (oid: string) => `package/${oid}`,
-    deletePackage: (oid: string) => `package/${oid}`
+    addPackageToIngredient: (ingredientId: string, packageId: string) => `ingredients/${ingredientId}/packages/${packageId}`,
+    getAllPackages: 'packages',
+    createPackage: 'packages',
+    updatePackage: (oid: string) => `packages/${oid}`,
+    deletePackage: (oid: string) => `packages/${oid}`
 }
