@@ -12,29 +12,34 @@ const IngredientItem = ({ ingredient }: { ingredient: IngredientMultiPackage }) 
     const handleDeleteIngredient = (id: any) => dispatch(runDeleteIngredient(id))
 
     return (
-        <section className='ingredient__item'>
-            <p>Nombre: {ingredient.name}</p>
-            {
-                ingredient.packages && (
-                    <section className="ingredient-package__container">
-                        <p>Envases</p>
-                        {
-                            ingredient.packages && ingredient.packages.map(envase => (
-                                <IngredientPackageItem
-                                    envase={envase}
-                                    key={envase.package.id}
-                                />
-                            ))
-                        }
-                    </section>
-                )
-            }
-            <SubmitButton
-                buttonText='Borrar Ingrediente'
-                className='card__delete-button'
-                onClick={() => handleDeleteIngredient(ingredient.id)}
-            />
-        </section>
+        <>
+            <section className='ingredient__item'>
+                <p>Nombre: {ingredient.name}</p>
+                {
+                    ingredient.packages && (
+                        <>
+                            <p className="ingredient-package__title">Envases</p>
+                            <section className="ingredient-package__container">
+                                {
+                                    ingredient.packages && ingredient.packages.map(envase => (
+                                        <section key={envase.id}>
+                                            <IngredientPackageItem
+                                                envase={envase}
+                                            />
+                                        </section>
+                                    ))
+                                }
+                            </section>
+                        </>
+                    )
+                }
+                <SubmitButton
+                    buttonText='Borrar Ingrediente'
+                    className='card__delete-button'
+                    onClick={() => handleDeleteIngredient(ingredient.id)}
+                />
+            </section>
+        </>
     )
 }
 

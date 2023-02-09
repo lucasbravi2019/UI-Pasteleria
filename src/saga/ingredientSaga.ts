@@ -49,7 +49,7 @@ export function* createIngredientSaga(action: any): Generator<any> {
             yield put(setErrorMessage('El ingrediente no se pudo crear'))
         } else {
             yield put(addIngredient(response))
-            yield put(setSuccessMessage('El ingrediente fue crado con éxito'))
+            yield put(setSuccessMessage('El ingrediente fue creado con éxito'))
         }
     } catch (error) {
         console.log(error);

@@ -51,6 +51,7 @@ export const endpoints = {
     editIngredient: (oid: string) => `ingredients/${oid}`,
     deleteIngredient: (oid: string) => `ingredients/${oid}`,
     addPackageToIngredient: (ingredientId: string, packageId: string) => `ingredients/${ingredientId}/packages/${packageId}`,
+    changeIngredientPackagePrice: (ingredientPackageId: string) => `ingredients/${ingredientPackageId}/price`,
     getAllPackages: 'packages',
     createPackage: 'packages',
     updatePackage: (oid: string) => `packages/${oid}`,

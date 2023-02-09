@@ -19,8 +19,17 @@ const ingredientSlice = createSlice({
                 ...state.ingredients,
                 action.payload]
         },
+        addIngredients(state, action) {
+            state.ingredients = [
+                ...state.ingredients,
+                ...action.payload
+            ]
+        },
         removeIngredient(state, action) {
             state.ingredients = state.ingredients.filter(ingredient => ingredient.id !== action.payload)
+        },
+        removeIngredients(state, action) {
+            state.ingredients = state.ingredients.filter(ingredient => !action.payload.includes(ingredient.id))
         },
         runLoadIngredients(state) {
             return state
@@ -40,7 +49,9 @@ const ingredientSlice = createSlice({
 export const {
     loadIngredients,
     addIngredient,
+    addIngredients,
     removeIngredient,
+    removeIngredients,
     runLoadIngredients,
     runAddIngredient,
     runDeleteIngredient,

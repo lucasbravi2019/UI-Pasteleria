@@ -31,11 +31,22 @@ const packageSlice = createSlice({
         },
         runRemovePackage(state) {
             return state
+        },
+        runChangePackagePrice(state) {
+            return state
         }
     }
 })
 
-export const { loadPackages, addPackage, removePackage, runLoadPackages, runAddPackage, runRemovePackage } = packageSlice.actions
+export const {
+    loadPackages,
+    addPackage,
+    removePackage,
+    runLoadPackages,
+    runAddPackage,
+    runRemovePackage,
+    runChangePackagePrice
+} = packageSlice.actions
 
 export const packagesSelector = (state: RootState) => state.packageReducer.packages
 

@@ -9,7 +9,13 @@ import {
     endpoints,
     getData,
     postData,
+    putData,
 } from '../api/index'
+import { PackagePrice } from '../interfaces/recipe'
+import {
+    addIngredient,
+    removeIngredient,
+} from '../redux/reducers/ingredientSlice'
 import {
     resetMessages,
     setErrorMessage,
@@ -20,6 +26,7 @@ import {
     loadPackages,
     removePackage,
     runAddPackage,
+    runChangePackagePrice,
     runLoadPackages,
     runRemovePackage,
 } from '../redux/reducers/packageSlice'
@@ -65,8 +72,30 @@ export function* deletePackageSaga(action: any): Generator<any> {
     }
 }
 
+export function* changePackagePriceSaga(action: any): Generator<any> {
+    try {
+        const price: PackagePrice = {
+            price: action.payload.price
+        }
+
+        const response: any = yield call(putData, endpoints.changeIngredientPackagePrice(action.payload.packageId), price)
+        console.log(response);
+
+        if (response && response.hasOwnProperty('error')) {
+            yield put(setErrorMessage('No se pudo cambiar el precio del envase'))
+        } else {
+            yield put(setSuccessMessage('Se cambió el precio con éxito'))
+            yield put(removeIngredient(response.id))
+            yield put(addIngredient(response))
+        }
+    } catch (error) {
+        yield put(setErrorMessage('No se pudo cambiar el precio del envase'))
+    }
+}
+
 export default function* packageSaga() {
     yield takeLatest(runLoadPackages.type, getPackagesSaga)
     yield takeLatest(runAddPackage.type, addPackageSaga)
     yield takeLatest(runRemovePackage.type, deletePackageSaga)
+    yield takeLatest(runChangePackagePrice.type, changePackagePriceSaga)
 }
