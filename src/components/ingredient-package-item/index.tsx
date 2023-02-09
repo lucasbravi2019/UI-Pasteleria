@@ -1,6 +1,9 @@
 import './index.scss'
 
-import { useState } from 'react'
+import {
+    useEffect,
+    useState,
+} from 'react'
 
 import { FormInterface } from '../../interfaces/form'
 import { IngredientPackage } from '../../interfaces/recipe'
@@ -37,9 +40,13 @@ const IngredientPackageItem = ({ envase }: { envase: IngredientPackage }) => {
         setEditPackagePrice(false)
     }
 
+    useEffect(() => {
+        console.log(envase)
+    }, [envase])
+
     return (
         <section className="ingredient-package__item">
-            <p>Cantidad: {envase.package.quantity} {envase.package.metric}</p>
+            <p>Cantidad: {envase.quantity} {envase.metric}</p>
             <p>Precio: $ {envase.price}</p>
             <section>
                 {
@@ -47,7 +54,7 @@ const IngredientPackageItem = ({ envase }: { envase: IngredientPackage }) => {
                         <Form
                             errorMessage={messageSelector.errorMessage}
                             successMessage={messageSelector.successMessage}
-                            inputs={editInputs(envase.package.id)}
+                            inputs={editInputs(envase.id)}
                             onSubmit={handleEditPackage}
                             submitText={'Cambiar precio'}
                         />
@@ -55,11 +62,13 @@ const IngredientPackageItem = ({ envase }: { envase: IngredientPackage }) => {
                 }
                 {
                     editPackagePrice && (
-                        <SubmitButton
-                            buttonText='Cancelar'
-                            className='card__delete-button'
-                            onClick={() => setEditPackagePrice(false)}
-                        />
+                        <section>
+                            <SubmitButton
+                                buttonText='Cancelar'
+                                className='card__delete-button'
+                                onClick={() => setEditPackagePrice(false)}
+                            />
+                        </section>
                     )
                 }
                 <SubmitButton

@@ -1,33 +1,33 @@
 import {
-    call,
-    put,
-    takeLatest,
+  call,
+  put,
+  takeLatest,
 } from 'redux-saga/effects'
 
 import {
-    deleteData,
-    endpoints,
-    getData,
-    postData,
-    putData,
+  deleteData,
+  endpoints,
+  getData,
+  postData,
+  putData,
 } from '../api/index'
 import {
-    IngredientMultiPackage,
-    PackagePrice,
+  IngredientMultiPackage,
+  PackagePrice,
 } from '../interfaces/recipe'
 import {
-    addIngredient,
-    loadIngredients,
-    removeIngredient,
-    runAddIngredient,
-    runAddPackageToIngredient,
-    runDeleteIngredient,
-    runLoadIngredients,
+  addIngredient,
+  loadIngredients,
+  removeIngredient,
+  runAddIngredient,
+  runAddPackageToIngredient,
+  runDeleteIngredient,
+  runLoadIngredients,
 } from '../redux/reducers/ingredientSlice'
 import {
-    resetMessages,
-    setErrorMessage,
-    setSuccessMessage,
+  resetMessages,
+  setErrorMessage,
+  setSuccessMessage,
 } from '../redux/reducers/messageSlice'
 
 export function* getIngredientsSaga() {
@@ -35,6 +35,8 @@ export function* getIngredientsSaga() {
         yield put(resetMessages())
         const response: IngredientMultiPackage[] = yield call(getData, endpoints.getAllIngredients)
         if (response) {
+            console.log(response);
+
             yield put(loadIngredients(response))
         }
     } catch (error) {
@@ -49,7 +51,7 @@ export function* createIngredientSaga(action: any): Generator<any> {
             yield put(setErrorMessage('El ingrediente no se pudo crear'))
         } else {
             yield put(addIngredient(response))
-            yield put(setSuccessMessage('El ingrediente fue crado con éxito'))
+            yield put(setSuccessMessage('El ingrediente fue creado con éxito'))
         }
     } catch (error) {
         console.log(error);
