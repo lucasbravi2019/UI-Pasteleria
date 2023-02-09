@@ -17,18 +17,20 @@ const IngredientItem = ({ ingredient }: { ingredient: IngredientMultiPackage }) 
                 <p>Nombre: {ingredient.name}</p>
                 {
                     ingredient.packages && (
-                        <section className="ingredient-package__container">
-                            <p>Envases</p>
-                            {
-                                ingredient.packages && ingredient.packages.map(envase => (
-                                    <section key={envase.package.id}>
-                                        <IngredientPackageItem
-                                            envase={envase}
-                                        />
-                                    </section>
-                                ))
-                            }
-                        </section>
+                        <>
+                            <p className="ingredient-package__title">Envases</p>
+                            <section className="ingredient-package__container">
+                                {
+                                    ingredient.packages && ingredient.packages.map(envase => (
+                                        <section key={envase.id}>
+                                            <IngredientPackageItem
+                                                envase={envase}
+                                            />
+                                        </section>
+                                    ))
+                                }
+                            </section>
+                        </>
                     )
                 }
                 <SubmitButton

@@ -15,7 +15,10 @@ import {
     runAddPackageToIngredient,
     runLoadIngredients,
 } from '../../../redux/reducers/ingredientSlice'
-import { messagesSelector } from '../../../redux/reducers/messageSlice'
+import {
+    messagesSelector,
+    resetMessages,
+} from '../../../redux/reducers/messageSlice'
 import {
     packagesSelector,
     runLoadPackages,
@@ -68,6 +71,7 @@ const AddPackageToIngredientPage = () => {
     const dispatch = useAppDispatch()
 
     useEffect(() => {
+        dispatch(resetMessages())
         dispatch(runLoadIngredients())
         dispatch(runLoadPackages())
     }, [])

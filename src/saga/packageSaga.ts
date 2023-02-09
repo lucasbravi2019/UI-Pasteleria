@@ -11,13 +11,10 @@ import {
     postData,
     putData,
 } from '../api/index'
+import { PackagePrice } from '../interfaces/recipe'
 import {
-    IngredientMultiPackage,
-    PackagePrice,
-} from '../interfaces/recipe'
-import {
-    addIngredients,
-    removeIngredients,
+    addIngredient,
+    removeIngredient,
 } from '../redux/reducers/ingredientSlice'
 import {
     resetMessages,
@@ -82,18 +79,16 @@ export function* changePackagePriceSaga(action: any): Generator<any> {
         }
 
         const response: any = yield call(putData, endpoints.changeIngredientPackagePrice(action.payload.packageId), price)
-        if (response && response.hasOwnProperty('error') && response.error) {
+        console.log(response);
+
+        if (response && response.hasOwnProperty('error')) {
             yield put(setErrorMessage('No se pudo cambiar el precio del envase'))
         } else {
             yield put(setSuccessMessage('Se cambió el precio con éxito'))
-            const ingredientIds = response.map((ingredient: IngredientMultiPackage) => ingredient.id)
-            yield put(removeIngredients(ingredientIds))
-            console.log(response);
-
-            yield put(addIngredients(response))
+            yield put(removeIngredient(response.id))
+            yield put(addIngredient(response))
         }
     } catch (error) {
-        console.log(error);
         yield put(setErrorMessage('No se pudo cambiar el precio del envase'))
     }
 }
