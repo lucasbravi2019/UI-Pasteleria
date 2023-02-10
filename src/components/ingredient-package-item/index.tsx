@@ -47,7 +47,7 @@ const IngredientPackageItem = ({ envase }: { envase: IngredientPackage }) => {
     return (
         <section className="ingredient-package__item">
             <p>Cantidad: {envase.quantity} {envase.metric}</p>
-            <p>Precio: $ {envase.price}</p>
+            {/* <p>Precio: $ {envase.price}</p> */}
             <section>
                 {
                     editPackagePrice && (

@@ -1,8 +1,13 @@
 import './index.scss'
 
+import { useEffect } from 'react'
+
 import { RecipeIngredient } from '../../interfaces/recipe'
 
 const RecipeIngredientItem = ({ ingredient, index }: { ingredient: RecipeIngredient, index: number }) => {
+    useEffect(() => {
+        console.log(ingredient)
+    }, [ingredient])
     return (
         <ul key={index} className="ingredients-list">
             {ingredient.name ? (
@@ -10,13 +15,13 @@ const RecipeIngredientItem = ({ ingredient, index }: { ingredient: RecipeIngredi
             ) : (
                 <li className="ingredients-item">El ingrediente no tiene nombre</li>
             )}
-            {ingredient.ingredientPackage.quantity ? (
-                <li className="ingredients-item"><strong>Cantidad:</strong> {ingredient.ingredientPackage.quantity} {ingredient.ingredientPackage.metric}</li>
+            {ingredient.quantity ? (
+                <li className="ingredients-item"><strong>Cantidad:</strong> {ingredient.quantity} {ingredient.packages.metric}</li>
             ) : (
                 <li className="ingredients-item">El ingrediente no tiene cantidad</li>
             )}
-            {ingredient.ingredientPackage.price ? (
-                <li className="ingredients-item"><strong>Precio: $</strong> {ingredient.ingredientPackage.price.toFixed(2)}</li>
+            {ingredient.price ? (
+                <li className="ingredients-item"><strong>Precio: $</strong> {ingredient.price.toFixed(2)}</li>
             ) : (
                 <li className="ingredients-item">El ingrediente no tiene precio</li>
             )}

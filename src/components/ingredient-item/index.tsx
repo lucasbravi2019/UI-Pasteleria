@@ -16,12 +16,12 @@ const IngredientItem = ({ ingredient }: { ingredient: IngredientMultiPackage }) 
             <section className='ingredient__item'>
                 <p>Nombre: {ingredient.name}</p>
                 {
-                    ingredient.packages && (
+                    ingredient.package && (
                         <>
                             <p className="ingredient-package__title">Envases</p>
                             <section className="ingredient-package__container">
                                 {
-                                    ingredient.packages && ingredient.packages.map(envase => (
+                                    ingredient.package && ingredient.package.map(envase => (
                                         <section key={envase.id}>
                                             <IngredientPackageItem
                                                 envase={envase}

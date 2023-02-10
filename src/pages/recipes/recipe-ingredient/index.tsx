@@ -27,6 +27,10 @@ import {
 const inputs = (recetas: Recipe[], ingredientes: IngredientMultiPackage[]): FormInterface[] => {
     let recipeOptions
 
+    useEffect(() => {
+        console.log(recetas)
+        console.log(ingredientes)
+    }, [recetas, ingredientes])
     if (recetas) {
         recipeOptions = recetas.map(receta => {
             return {
@@ -49,10 +53,10 @@ const inputs = (recetas: Recipe[], ingredientes: IngredientMultiPackage[]): Form
 
     const metricOptions = (selected: any) => {
         if (selected && selected.ingredientId) {
-            const ingredient = ingredientes.filter(ingrediente => ingrediente.id === selected.ingredientId)
-            if (ingredient.length > 0) {
-                return ingredient[0].packages.map(envase => `${envase.quantity} ${envase.metric}`)
-            }
+            // const ingredient = ingredientes.filter(ingrediente => ingrediente.id === selected.ingredientId)
+            // if (ingredient.length > 0) {
+            //     return ingredient[0].package.map(envase => `${envase.quantity} ${envase.metric}`)
+            // }
         }
         return []
     }

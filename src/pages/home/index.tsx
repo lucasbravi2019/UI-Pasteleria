@@ -21,6 +21,10 @@ const HomePage = () => {
         dispatch(runLoadRecipes())
     }, [])
 
+    useEffect(() => {
+        console.table(recipeSelector)
+    }, [recipeSelector])
+
     return (
         <div className="recipes__container">
             {
