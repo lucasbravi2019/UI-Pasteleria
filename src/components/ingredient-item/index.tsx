@@ -1,5 +1,7 @@
 import './index.scss'
 
+import { useEffect } from 'react'
+
 import { IngredientMultiPackage } from '../../interfaces/recipe'
 import { useAppDispatch } from '../../redux/hooks/hooks'
 import { runDeleteIngredient } from '../../redux/reducers/ingredientSlice'
@@ -11,12 +13,17 @@ const IngredientItem = ({ ingredient }: { ingredient: IngredientMultiPackage }) 
 
     const handleDeleteIngredient = (id: any) => dispatch(runDeleteIngredient(id))
 
+    useEffect(() => {
+        console.log(ingredient.package);
+
+    }, [ingredient])
+
     return (
         <>
             <section className='ingredient__item'>
                 <p>Nombre: {ingredient.name}</p>
                 {
-                    ingredient.package && (
+                    ingredient.package && ingredient.package[0]?.metric !== '' && (
                         <>
                             <p className="ingredient-package__title">Envases</p>
                             <section className="ingredient-package__container">

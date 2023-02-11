@@ -1,15 +1,15 @@
 import './index.scss'
 
 import {
-    useEffect,
-    useState,
+  useEffect,
+  useState,
 } from 'react'
 
 import { FormInterface } from '../../interfaces/form'
 import { IngredientPackage } from '../../interfaces/recipe'
 import {
-    useAppDispatch,
-    useAppSelector,
+  useAppDispatch,
+  useAppSelector,
 } from '../../redux/hooks/hooks'
 import { messagesSelector } from '../../redux/reducers/messageSlice'
 import { runChangePackagePrice } from '../../redux/reducers/packageSlice'
@@ -47,7 +47,7 @@ const IngredientPackageItem = ({ envase }: { envase: IngredientPackage }) => {
     return (
         <section className="ingredient-package__item">
             <p>Cantidad: {envase.quantity} {envase.metric}</p>
-            {/* <p>Precio: $ {envase.price}</p> */}
+            <p>Precio: $ {envase.price}</p>
             <section>
                 {
                     editPackagePrice && (

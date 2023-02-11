@@ -11,10 +11,7 @@ import {
   postData,
   putData,
 } from '../api/index'
-import {
-  IngredientMultiPackage,
-  PackagePrice,
-} from '../interfaces/recipe'
+import { PackagePrice } from '../interfaces/recipe'
 import {
   addIngredient,
   loadIngredients,
@@ -30,10 +27,10 @@ import {
   setSuccessMessage,
 } from '../redux/reducers/messageSlice'
 
-export function* getIngredientsSaga() {
+export function* getIngredientsSaga(): Generator<any> {
     try {
         yield put(resetMessages())
-        const response: IngredientMultiPackage[] = yield call(getData, endpoints.getAllIngredients)
+        const response: any = yield call(getData, endpoints.getAllIngredients)
         if (response) {
             console.log(response);
 

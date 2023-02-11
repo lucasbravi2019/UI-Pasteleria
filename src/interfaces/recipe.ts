@@ -32,6 +32,7 @@ export interface IngredientPackage {
     id: string
     metric: string
     quantity: Number
+    price: Number
 }
 
 export interface Package {

@@ -1,9 +1,11 @@
 import './index.scss'
 
+import { useEffect } from 'react'
+
 import { Recipe } from '../../interfaces/recipe'
 import {
-    useAppDispatch,
-    useAppSelector,
+  useAppDispatch,
+  useAppSelector,
 } from '../../redux/hooks/hooks'
 import { messagesSelector } from '../../redux/reducers/messageSlice'
 import { runDeleteRecipe } from '../../redux/reducers/recipeSlice'
@@ -17,6 +19,11 @@ const RecipeCard = ({ recipe, updatable, deletable }: { recipe: Recipe, updatabl
     const messageSelector = useAppSelector(messagesSelector)
 
     const handleDeleteRecipe = (id: any) => dispatch(runDeleteRecipe(id))
+
+    useEffect(() => {
+        console.log(recipe);
+
+    }, [recipe])
 
     return (
         <section className="recipe-card">
@@ -35,8 +42,10 @@ const RecipeCard = ({ recipe, updatable, deletable }: { recipe: Recipe, updatabl
                 )
             }
             <h3 className="recipe-card__title"><strong>Receta:</strong> {recipe.name}</h3>
-            {recipe.price && (
-                <p className="recipe-card__paragraph"><strong>Precio: </strong>$ {recipe.price.toFixed(2)}</p>
+            {recipe.price && recipe.price > 0 ? (
+                <p className="recipe-card__paragraph"><strong>Precio: </strong>$ {recipe.price?.toFixed(2)}</p>
+            ) : (
+                <p className="recipe-card__paragraph"><strong>Precio: </strong>$ 0</p>
             )}
             <section className="recipe-card__buttons">
                 <NavigationButton
