@@ -19,18 +19,32 @@ import {
 } from '../redux/reducers/messageSlice'
 import {
   addRecipe,
+  loadRecipe,
   loadRecipes,
   removeRecipe,
   runAddRecipe,
   runDeleteRecipe,
+  runLoadRecipe,
   runLoadRecipes,
 } from '../redux/reducers/recipeSlice'
 
 export function* getRecipeSaga(): Generator<any> {
   try {
     yield put(resetMessages())
-    const response = yield call(getData, endpoints.getAllRecipes)
-    yield put(loadRecipes(response))
+    const response: any = yield call(getData, endpoints.getAllRecipes)
+    yield put(loadRecipes(response.body))
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export function* getRecipeByIdSaga(action: any): Generator<any> {
+  try {
+    const response: any = yield call(getData, endpoints.getRecipeByOid(action.payload))
+    if (response.error) {
+      return
+    }
+    yield put(loadRecipe(response.body))
   } catch (error) {
     console.log(error);
   }
@@ -40,11 +54,11 @@ export function* createRecipeSaga(action: any): Generator<any> {
   try {
     yield put(resetMessages())
     const response: any = yield call(postData, endpoints.createRecipe, action.payload)
-    if (response.hasOwnProperty('error')) {
+    if (response.error) {
       yield put(setErrorMessage('La receta no se pudo crear'))
     } else {
       const recipe: Recipe = {
-        id: response,
+        id: response.body,
         name: action.payload.name
       }
       yield put(addRecipe(recipe))
@@ -72,6 +86,7 @@ export function* deleteRecipeSaga(action: any): Generator<any> {
 
 export default function* recipeSaga() {
   yield takeLatest(runLoadRecipes.type, getRecipeSaga)
+  yield takeLatest(runLoadRecipe.type, getRecipeByIdSaga)
   yield takeLatest(runAddRecipe.type, createRecipeSaga)
   yield takeLatest(runDeleteRecipe.type, deleteRecipeSaga)
 }

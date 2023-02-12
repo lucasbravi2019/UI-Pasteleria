@@ -35,8 +35,10 @@ const RecipeCard = ({ recipe, updatable, deletable }: { recipe: Recipe, updatabl
                 )
             }
             <h3 className="recipe-card__title"><strong>Receta:</strong> {recipe.name}</h3>
-            {recipe.price && (
-                <p className="recipe-card__paragraph"><strong>Precio: </strong>$ {recipe.price.toFixed(2)}</p>
+            {recipe.price && recipe.price > 0 ? (
+                <p className="recipe-card__paragraph"><strong>Precio: </strong>$ {recipe.price?.toFixed(2)}</p>
+            ) : (
+                <p className="recipe-card__paragraph"><strong>Precio: </strong>$ 0</p>
             )}
             <section className="recipe-card__buttons">
                 <NavigationButton

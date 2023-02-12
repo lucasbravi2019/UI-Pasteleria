@@ -50,7 +50,7 @@ const inputs = (recetas: Recipe[], ingredientes: IngredientMultiPackage[]): Form
     const metricOptions = (selected: any) => {
         if (selected && selected.ingredientId) {
             const ingredient = ingredientes.filter(ingrediente => ingrediente.id === selected.ingredientId)
-            if (ingredient.length > 0) {
+            if (ingredient.length > 0 && ingredient[0].packages) {
                 return ingredient[0].packages.map(envase => `${envase.quantity} ${envase.metric}`)
             }
         }

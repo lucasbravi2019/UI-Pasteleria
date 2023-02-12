@@ -10,13 +10,13 @@ const RecipeIngredientItem = ({ ingredient, index }: { ingredient: RecipeIngredi
             ) : (
                 <li className="ingredients-item">El ingrediente no tiene nombre</li>
             )}
-            {ingredient.ingredientPackage.quantity ? (
-                <li className="ingredients-item"><strong>Cantidad:</strong> {ingredient.ingredientPackage.quantity} {ingredient.ingredientPackage.metric}</li>
+            {ingredient.quantity ? (
+                <li className="ingredients-item"><strong>Cantidad:</strong> {ingredient.quantity} {ingredient.package.metric} </li>
             ) : (
                 <li className="ingredients-item">El ingrediente no tiene cantidad</li>
             )}
-            {ingredient.ingredientPackage.price ? (
-                <li className="ingredients-item"><strong>Precio: $</strong> {ingredient.ingredientPackage.price.toFixed(2)}</li>
+            {ingredient.price ? (
+                <li className="ingredients-item"><strong>Precio: $</strong> {ingredient.price.toFixed(2)}</li>
             ) : (
                 <li className="ingredients-item">El ingrediente no tiene precio</li>
             )}

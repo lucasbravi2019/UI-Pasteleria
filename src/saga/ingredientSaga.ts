@@ -11,10 +11,7 @@ import {
     postData,
     putData,
 } from '../api/index'
-import {
-    IngredientMultiPackage,
-    PackagePrice,
-} from '../interfaces/recipe'
+import { PackagePrice } from '../interfaces/recipe'
 import {
     addIngredient,
     loadIngredients,
@@ -30,13 +27,14 @@ import {
     setSuccessMessage,
 } from '../redux/reducers/messageSlice'
 
-export function* getIngredientsSaga() {
+export function* getIngredientsSaga(): Generator<any> {
     try {
         yield put(resetMessages())
-        const response: IngredientMultiPackage[] = yield call(getData, endpoints.getAllIngredients)
-        if (response) {
-            yield put(loadIngredients(response))
+        const response: any = yield call(getData, endpoints.getAllIngredients)
+        if (response.error) {
+            return
         }
+        yield put(loadIngredients(response.body))
     } catch (error) {
         console.log(error);
     }
@@ -45,10 +43,10 @@ export function* getIngredientsSaga() {
 export function* createIngredientSaga(action: any): Generator<any> {
     try {
         const response: any = yield call(postData, endpoints.createIngredient, action.payload)
-        if (response.hasOwnProperty('error') && response.error) {
+        if (response.error) {
             yield put(setErrorMessage('El ingrediente no se pudo crear'))
         } else {
-            yield put(addIngredient(response))
+            yield put(addIngredient(response.body))
             yield put(setSuccessMessage('El ingrediente fue creado con éxito'))
         }
     } catch (error) {
@@ -60,7 +58,7 @@ export function* createIngredientSaga(action: any): Generator<any> {
 export function* deleteIngredientSaga(action: any): Generator<any> {
     try {
         const response: any = yield call(deleteData, endpoints.deleteIngredient(action.payload))
-        if (response.hasOwnProperty('error') && response.error) {
+        if (response.error) {
             yield put(setErrorMessage('No se pudo borrar el ingrediente'))
         } else {
             yield put(removeIngredient(action.payload))
@@ -81,7 +79,7 @@ export function* AddPackageToIngredientSaga(action: any): Generator<any> {
         }
 
         const response: any = yield call(putData, endpoints.addPackageToIngredient(ingredientId, packageId), price)
-        if (response.hasOwnProperty('error')) {
+        if (response.error) {
             yield put(setErrorMessage('No se pudo agregar el envase al ingrediente'))
         } else {
             yield put(setSuccessMessage('Se pudo agregar el envase correctamente'))

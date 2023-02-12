@@ -4,7 +4,8 @@ import { Recipe } from '../../interfaces/recipe'
 import { RootState } from '../store/store'
 
 const initialState = {
-    recipes: [] as Recipe[]
+    recipes: [] as Recipe[],
+    recipe: {} as Recipe
 }
 
 const recipeSlice = createSlice({
@@ -13,6 +14,9 @@ const recipeSlice = createSlice({
     reducers: {
         loadRecipes(state, action) {
             state.recipes = action.payload
+        },
+        loadRecipe(state, action) {
+            state.recipe = action.payload
         },
         addRecipe(state, action) {
             state.recipes = [
@@ -26,6 +30,9 @@ const recipeSlice = createSlice({
         runLoadRecipes(state) {
             return state
         },
+        runLoadRecipe(state) {
+            return state
+        },
         runAddRecipe(state) {
             return state
         },
@@ -35,8 +42,9 @@ const recipeSlice = createSlice({
     }
 })
 
-export const { loadRecipes, addRecipe, removeRecipe, runLoadRecipes, runAddRecipe, runDeleteRecipe } = recipeSlice.actions
+export const { loadRecipes, loadRecipe, addRecipe, removeRecipe, runLoadRecipes, runLoadRecipe, runAddRecipe, runDeleteRecipe } = recipeSlice.actions
 
 export const recipesSelector = (state: RootState) => state.recipeReducer.recipes
+export const recipeSelector = (state: RootState) => state.recipeReducer.recipe
 
 export default recipeSlice.reducer
