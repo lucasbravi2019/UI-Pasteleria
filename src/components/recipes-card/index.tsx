@@ -1,11 +1,9 @@
 import './index.scss'
 
-import { useEffect } from 'react'
-
 import { Recipe } from '../../interfaces/recipe'
 import {
-  useAppDispatch,
-  useAppSelector,
+    useAppDispatch,
+    useAppSelector,
 } from '../../redux/hooks/hooks'
 import { messagesSelector } from '../../redux/reducers/messageSlice'
 import { runDeleteRecipe } from '../../redux/reducers/recipeSlice'
@@ -19,11 +17,6 @@ const RecipeCard = ({ recipe, updatable, deletable }: { recipe: Recipe, updatabl
     const messageSelector = useAppSelector(messagesSelector)
 
     const handleDeleteRecipe = (id: any) => dispatch(runDeleteRecipe(id))
-
-    useEffect(() => {
-        console.log(recipe);
-
-    }, [recipe])
 
     return (
         <section className="recipe-card">

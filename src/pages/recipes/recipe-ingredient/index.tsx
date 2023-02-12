@@ -4,33 +4,29 @@ import Form from '../../../components/form'
 import { FormInterface } from '../../../interfaces/form'
 import { Messages } from '../../../interfaces/message'
 import {
-  IngredientMultiPackage,
-  Recipe,
+    IngredientMultiPackage,
+    Recipe,
 } from '../../../interfaces/recipe'
 import {
-  useAppDispatch,
-  useAppSelector,
+    useAppDispatch,
+    useAppSelector,
 } from '../../../redux/hooks/hooks'
 import {
-  ingredientsSelector,
-  runLoadIngredients,
+    ingredientsSelector,
+    runLoadIngredients,
 } from '../../../redux/reducers/ingredientSlice'
 import { messagesSelector } from '../../../redux/reducers/messageSlice'
 import {
-  runAddIngredientToRecipe,
+    runAddIngredientToRecipe,
 } from '../../../redux/reducers/recipeIngredientSlice'
 import {
-  recipesSelector,
-  runLoadRecipes,
+    recipesSelector,
+    runLoadRecipes,
 } from '../../../redux/reducers/recipeSlice'
 
 const inputs = (recetas: Recipe[], ingredientes: IngredientMultiPackage[]): FormInterface[] => {
     let recipeOptions
 
-    useEffect(() => {
-        console.log(recetas)
-        console.log(ingredientes)
-    }, [recetas, ingredientes])
     if (recetas) {
         recipeOptions = recetas.map(receta => {
             return {
@@ -54,8 +50,8 @@ const inputs = (recetas: Recipe[], ingredientes: IngredientMultiPackage[]): Form
     const metricOptions = (selected: any) => {
         if (selected && selected.ingredientId) {
             const ingredient = ingredientes.filter(ingrediente => ingrediente.id === selected.ingredientId)
-            if (ingredient.length > 0) {
-                return ingredient[0].package.map(envase => `${envase.quantity} ${envase.metric}`)
+            if (ingredient.length > 0 && ingredient[0].packages) {
+                return ingredient[0].packages.map(envase => `${envase.quantity} ${envase.metric}`)
             }
         }
         return []

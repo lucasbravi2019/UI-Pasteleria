@@ -2,35 +2,24 @@ import './index.scss'
 
 import {
     useEffect,
-    useState,
 } from 'react'
 
 import { useParams } from 'react-router-dom'
 
-import {
-    endpoints,
-    getData,
-} from '../../../api'
 import RecipeDetailedCard from '../../../components/recipe-detailed-card'
-import { Recipe } from '../../../interfaces/recipe'
-
-const getRecipeByOid = (oid: string) => {
-    return getData(endpoints.getRecipeByOid(oid))
-}
+import { useAppDispatch, useAppSelector } from './../../../redux/hooks/hooks';
+import { runLoadRecipe } from '../../../redux/reducers/recipeSlice'
+import { recipeSelector } from './../../../redux/reducers/recipeSlice';
 
 const ShowRecipe = () => {
-    const { recipeId }: { recipeId: string } = useParams()
-
-    const [recipe, setRecipe] = useState<Recipe>({
-        id: '',
-        ingredients: [],
-        name: '',
-        price: 0
-    })
+    const { recipeId }: { recipeId: any } = useParams()
+    const dispatch = useAppDispatch()
+    const recipe = useAppSelector(recipeSelector)
 
     useEffect(() => {
-        getRecipeByOid(recipeId).then(resp => setRecipe(resp))
+        dispatch(runLoadRecipe(recipeId))
     }, [])
+
 
     return (
         <section className="show-recipe__container">

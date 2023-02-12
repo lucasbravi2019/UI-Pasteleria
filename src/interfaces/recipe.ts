@@ -8,7 +8,7 @@ export interface Recipe {
 export interface RecipeIngredient {
     id: string
     name: string
-    packages: IngredientPackage
+    package: Package
     price: Number
     quantity: Number
 }
@@ -16,7 +16,7 @@ export interface RecipeIngredient {
 export interface IngredientMultiPackage {
     id: string
     name: string
-    package: IngredientPackage[]
+    packages: Package[]
 }
 
 export interface RecipeName {
@@ -26,13 +26,6 @@ export interface RecipeName {
 export interface IngredientDetails {
     metric: string
     quantity: Number
-}
-
-export interface IngredientPackage {
-    id: string
-    metric: string
-    quantity: Number
-    price: Number
 }
 
 export interface Package {
