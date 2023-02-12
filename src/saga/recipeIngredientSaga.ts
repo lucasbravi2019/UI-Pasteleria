@@ -28,7 +28,7 @@ export function* addIngredientToRecipe(action: any): Generator<any> {
     }
 
     const response: any = yield call(putData, endpoints.addIngredientToRecipe(recipeId, ingredientId), body)
-    if (response.hasOwnProperty('error') && response.error) {
+    if (response.error) {
       yield put(setErrorMessage('El ingrediente no se pudo agregar a la receta'))
     } else {
       yield put(setSuccessMessage('El ingrediente fue añadido con éxito'))

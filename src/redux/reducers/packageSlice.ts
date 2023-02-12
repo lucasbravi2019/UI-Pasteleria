@@ -21,7 +21,7 @@ const packageSlice = createSlice({
             ]
         },
         removePackage(state, action) {
-            state.packages = state.packages.filter(pack => pack.id !== action.payload.id)
+            state.packages = state.packages.filter(pack => pack.id !== action.payload)
         },
         runLoadPackages(state) {
             return state

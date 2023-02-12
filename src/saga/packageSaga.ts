@@ -33,10 +33,11 @@ import {
 
 export function* getPackagesSaga(): Generator<any> {
     try {
-        const response = yield call(getData, endpoints.getAllPackages)
-        if (response) {
-            yield put(loadPackages(response))
+        const response: any = yield call(getData, endpoints.getAllPackages)
+        if (response.error) {
+            return
         }
+        yield put(loadPackages(response.body))
     } catch (error) {
         console.log(error);
     }
@@ -46,11 +47,11 @@ export function* addPackageSaga(action: any): Generator<any> {
     try {
         yield put(resetMessages())
         const response: any = yield call(postData, endpoints.createPackage, action.payload)
-        if (response.hasOwnProperty('error') && response.error) {
+        if (response.error) {
             yield put(setErrorMessage('El envase no se pudo crear'))
         } else {
             yield put(setSuccessMessage('El envase fue creado con éxito'))
-            yield put(addPackage(response))
+            yield put(addPackage(response.body))
         }
     } catch (error) {
         console.log(error);
@@ -59,13 +60,13 @@ export function* addPackageSaga(action: any): Generator<any> {
 
 export function* deletePackageSaga(action: any): Generator<any> {
     try {
-        const response: any = yield call(deleteData, endpoints.deletePackage(action.payload))
-        if (response.hasOwnProperty('error') && response.error) {
+        const packageId = action.payload
+        const deletePackageResponse: any = yield call(deleteData, endpoints.deletePackage(packageId))
+        if (deletePackageResponse.error) {
             yield put(setErrorMessage('No se pudo borrar el envase'))
-        } else {
-            yield put(setSuccessMessage('El envase fue borrado con éxito'))
-            yield put(removePackage(response))
+            return
         }
+        yield put(removePackage(packageId))
     } catch (error) {
         console.log(error);
         yield put(setErrorMessage('No se pudo borrar el envase'))
@@ -79,14 +80,12 @@ export function* changePackagePriceSaga(action: any): Generator<any> {
         }
 
         const response: any = yield call(putData, endpoints.changeIngredientPackagePrice(action.payload.packageId), price)
-        console.log(response);
-
-        if (response && response.hasOwnProperty('error')) {
+        if (response.error) {
             yield put(setErrorMessage('No se pudo cambiar el precio del envase'))
         } else {
             yield put(setSuccessMessage('Se cambió el precio con éxito'))
-            yield put(removeIngredient(response.id))
-            yield put(addIngredient(response))
+            yield put(removeIngredient(response.body.id))
+            yield put(addIngredient(response.body))
         }
     } catch (error) {
         yield put(setErrorMessage('No se pudo cambiar el precio del envase'))

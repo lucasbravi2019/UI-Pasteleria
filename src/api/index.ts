@@ -11,16 +11,16 @@ const callApi = async (endpoint: string, verb: {}) => {
         const response = await fetch(`${baseUrl}/${endpoint}`, verb)
         switch (response.status) {
             case 500:
-                return { error: true }
+                return await response.json()
             case 404:
-                return { error: true }
+                return await response.json()
             case 400:
-                return { error: true }
+                return await response.json()
             case 201:
                 return await response.json()
             case 202:
             case 204:
-                return { error: false }
+                return await response.json()
             case 200:
                 return await response.json()
             default:
@@ -45,12 +45,13 @@ export const endpoints = {
     createRecipe: 'recipes',
     updateRecipe: (oid: string) => `recipes/${oid}`,
     deleteRecipe: (oid: string) => `recipes/${oid}`,
-    addIngredientToRecipe: (recipeId: string, ingredientId: string): string => `/recipes/${recipeId}/ingredients/${ingredientId}`,
+    addIngredientToRecipe: (recipeId: string, ingredientId: string): string => `ingredients/${ingredientId}/recipes/${recipeId}`,
     getAllIngredients: 'ingredients',
     createIngredient: 'ingredients',
     editIngredient: (oid: string) => `ingredients/${oid}`,
     deleteIngredient: (oid: string) => `ingredients/${oid}`,
-    addPackageToIngredient: (ingredientId: string, packageId: string) => `ingredients/${ingredientId}/packages/${packageId}`,
+    addPackageToIngredient: (ingredientId: string, packageId: string) => `packages/${packageId}/ingredients/${ingredientId}`,
+    removePackageFromIngredients: (packageId: string) => `packages/${packageId}/ingredients`,
     changeIngredientPackagePrice: (ingredientPackageId: string) => `ingredients/${ingredientPackageId}/price`,
     getAllPackages: 'packages',
     createPackage: 'packages',

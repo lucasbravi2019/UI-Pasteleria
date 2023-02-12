@@ -1,12 +1,10 @@
 import './index.scss'
 
 import {
-    useEffect,
     useState,
 } from 'react'
 
 import { FormInterface } from '../../interfaces/form'
-import { IngredientPackage } from '../../interfaces/recipe'
 import {
     useAppDispatch,
     useAppSelector,
@@ -15,6 +13,7 @@ import { messagesSelector } from '../../redux/reducers/messageSlice'
 import { runChangePackagePrice } from '../../redux/reducers/packageSlice'
 import Form from '../form'
 import SubmitButton from '../submit-button'
+import { Package } from '../../interfaces/recipe'
 
 const editInputs: (packageId: string) => FormInterface[] = (packageId: string): FormInterface[] => [
     {
@@ -30,7 +29,7 @@ const editInputs: (packageId: string) => FormInterface[] = (packageId: string): 
     }
 ]
 
-const IngredientPackageItem = ({ envase }: { envase: IngredientPackage }) => {
+const IngredientPackageItem = ({ envase }: { envase: Package }) => {
     const dispatch = useAppDispatch()
     const messageSelector = useAppSelector(messagesSelector)
     const [editPackagePrice, setEditPackagePrice] = useState(false)
@@ -39,10 +38,6 @@ const IngredientPackageItem = ({ envase }: { envase: IngredientPackage }) => {
         dispatch(runChangePackagePrice(payload))
         setEditPackagePrice(false)
     }
-
-    useEffect(() => {
-        console.log(envase)
-    }, [envase])
 
     return (
         <section className="ingredient-package__item">

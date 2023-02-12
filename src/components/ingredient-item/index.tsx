@@ -16,7 +16,7 @@ const IngredientItem = ({ ingredient }: { ingredient: IngredientMultiPackage }) 
             <section className='ingredient__item'>
                 <p>Nombre: {ingredient.name}</p>
                 {
-                    ingredient.packages && (
+                    ingredient.packages && ingredient.packages.length > 0 && (
                         <>
                             <p className="ingredient-package__title">Envases</p>
                             <section className="ingredient-package__container">
