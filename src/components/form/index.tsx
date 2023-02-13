@@ -6,65 +6,40 @@ import {
 } from 'react'
 
 import { FormInterface } from '../../interfaces/form'
-import ErrorMessage from '../error-message'
 import FormInput from '../form-input'
 import FormLabel from '../form-label'
+import FormSelect from '../form-select'
+import MessagePopup from '../message-popup'
 import SubmitButton from '../submit-button'
-import SuccessMessage from '../success-message'
 
-const Form = ({ submitText, inputs, onSubmit, successMessage, errorMessage }:
-    {
-        submitText: string, inputs: FormInterface[], onSubmit: Function, successMessage: string,
-        errorMessage: string
-    }) => {
-
+const Form = ({ submitText, inputs, onSubmit }: { submitText: string, inputs: FormInterface[], onSubmit: Function }) => {
     const [formData, setFormData] = useState({})
-    const [selected, setSelected] = useState<any>({})
-
+    const [formInputs, setFormInputs] = useState(inputs)
     useEffect(() => {
-        if (Object.keys(selected).length !== 0) {
-            setFormData({ ...formData, ...selected })
-        }
-    }, [selected])
+        console.log(inputs);
+        console.log(formInputs);
+
+        setFormInputs(inputs)
+        console.log(formInputs);
+
+    }, [inputs])
 
     return (
         <form className="form" onSubmit={() => setFormData({})}>
             {
-                inputs && inputs.map((input, index) =>
+                inputs && inputs.map((input, index) => (
                     <div className="form__fields" key={index}>
                         {
                             input.inputType === 'select' && (
                                 <>
                                     <FormLabel
-                                        inputName={input.inputName}
-                                        inputText={input.inputText}
+                                        input={input}
                                     />
-                                    <select
-                                        name={input.inputName}
-                                        title={input.inputText}
-                                        className="form__select"
-                                        value={selected[input.inputName] ? selected[input.inputName] : ''}
-                                        onChange={(e) => setSelected({ ...selected, [input.inputName]: e.target.value })}
-                                    >
-                                        <option value="" disabled>-- Seleccionar una opcion --</option>
-                                        {
-                                            input.options && typeof input.options === 'function' && input.options(selected).map((option: string) => (
-                                                <option
-                                                    value={option}
-                                                    key={option}
-                                                >{option}
-                                                </option>
-                                            ))
-                                        }
-                                        {
-                                            input.options && typeof input.options !== 'function' && input.options.map((option, ind) => (
-                                                <option
-                                                    key={ind}
-                                                    value={option.id}
-                                                >{option.nombre}</option>
-                                            ))
-                                        }
-                                    </select>
+                                    <FormSelect
+                                        formData={formData}
+                                        setFormData={setFormData}
+                                        input={input}
+                                    />
                                 </>
                             )
                         }
@@ -72,10 +47,7 @@ const Form = ({ submitText, inputs, onSubmit, successMessage, errorMessage }:
                             input.inputType === 'hidden' && (
                                 <>
                                     <FormInput
-                                        inputType={input.inputType}
-                                        inputText={input.inputText}
-                                        inputName={input.inputName}
-                                        inputVal={input.inputValue}
+                                        input={input}
                                         formData={formData}
                                         setFormData={setFormData}
                                     />
@@ -83,17 +55,27 @@ const Form = ({ submitText, inputs, onSubmit, successMessage, errorMessage }:
                             )
                         }
                         {
-                            input.inputType !== 'hidden' && input.inputType !== 'select' &&
-                            (
+                            input.inputType == 'text' && (
                                 <>
                                     <FormLabel
-                                        inputName={input.inputName}
-                                        inputText={input.inputText}
+                                        input={input}
                                     />
                                     <FormInput
-                                        inputType={input.inputType}
-                                        inputText={input.inputText}
-                                        inputName={input.inputName}
+                                        input={input}
+                                        formData={formData}
+                                        setFormData={setFormData}
+                                    />
+                                </>
+                            )
+                        }
+                        {
+                            input.inputType == 'number' && (
+                                <>
+                                    <FormLabel
+                                        input={input}
+                                    />
+                                    <FormInput
+                                        input={input}
                                         formData={formData}
                                         setFormData={setFormData}
                                     />
@@ -101,7 +83,7 @@ const Form = ({ submitText, inputs, onSubmit, successMessage, errorMessage }:
                             )
                         }
                     </div>
-                )
+                ))
             }
 
             <SubmitButton
@@ -110,23 +92,9 @@ const Form = ({ submitText, inputs, onSubmit, successMessage, errorMessage }:
                 onClick={() => {
                     onSubmit(formData)
                     setFormData({})
-                    setSelected({})
                 }}
             />
-            {
-                successMessage && (
-                    <SuccessMessage
-                        message={successMessage}
-                    />
-                )
-            }
-            {
-                errorMessage && (
-                    <ErrorMessage
-                        message={errorMessage}
-                    />
-                )
-            }
+            <MessagePopup />
         </form>
     )
 }

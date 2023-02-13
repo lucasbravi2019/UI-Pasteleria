@@ -15,10 +15,7 @@ import {
     runAddPackageToIngredient,
     runLoadIngredients,
 } from '../../../redux/reducers/ingredientSlice'
-import {
-    messagesSelector,
-    resetMessages,
-} from '../../../redux/reducers/messageSlice'
+import { resetMessages } from '../../../redux/reducers/messageSlice'
 import {
     packagesSelector,
     runLoadPackages,
@@ -65,7 +62,6 @@ const inputs = (ingredients: IngredientMultiPackage[], envases: Package[]): Form
 }
 
 const AddPackageToIngredientPage = () => {
-    const messageSelector = useAppSelector(messagesSelector)
     const packageSelector = useAppSelector(packagesSelector)
     const ingredientSelector = useAppSelector(ingredientsSelector)
     const dispatch = useAppDispatch()
@@ -84,8 +80,6 @@ const AddPackageToIngredientPage = () => {
         <section>
             <h1>Agregar Envase a Ingrediente</h1>
             <Form
-                errorMessage={messageSelector.errorMessage}
-                successMessage={messageSelector.successMessage}
                 onSubmit={handleSubmit}
                 submitText={'Agregar Envase'}
                 inputs={inputs(ingredientSelector, packageSelector)}
