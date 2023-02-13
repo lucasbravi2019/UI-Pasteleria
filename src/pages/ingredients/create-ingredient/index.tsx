@@ -5,7 +5,6 @@ import { useEffect } from 'react'
 import Form from '../../../components/form'
 import IngredientItem from '../../../components/ingredient-item'
 import { FormInterface } from '../../../interfaces/form'
-import { Messages } from '../../../interfaces/message'
 import { IngredientMultiPackage } from '../../../interfaces/recipe'
 import {
     useAppDispatch,
@@ -16,7 +15,6 @@ import {
     runAddIngredient,
     runLoadIngredients,
 } from '../../../redux/reducers/ingredientSlice'
-import { messagesSelector } from '../../../redux/reducers/messageSlice'
 
 const inputs: FormInterface[] = [{
     inputName: 'name',
@@ -26,7 +24,6 @@ const inputs: FormInterface[] = [{
 
 const IngredientPage = () => {
     const ingredientSelector: IngredientMultiPackage[] = useAppSelector(ingredientsSelector)
-    const messageSelector: Messages = useAppSelector(messagesSelector)
     const dispatch = useAppDispatch()
 
     useEffect(() => {
@@ -41,8 +38,6 @@ const IngredientPage = () => {
             <Form
                 inputs={inputs}
                 submitText={'Crear ingrediente'}
-                successMessage={messageSelector.successMessage}
-                errorMessage={messageSelector.errorMessage}
                 onSubmit={handleIngredientCreation}
             />
             <section className='ingredient__container'>

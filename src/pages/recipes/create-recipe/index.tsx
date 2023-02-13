@@ -1,34 +1,56 @@
-import { useEffect } from 'react'
+import {
+    useEffect,
+    useState,
+} from 'react'
 
 import Form from '../../../components/form'
 import RecipeCard from '../../../components/recipes-card'
+import { FormInterface } from '../../../interfaces/form'
+import { Recipe } from '../../../interfaces/recipe'
 import {
     useAppDispatch,
     useAppSelector,
 } from '../../../redux/hooks/hooks'
-import {
-    messagesSelector,
-    resetMessages,
-} from '../../../redux/reducers/messageSlice'
+import { resetMessages } from '../../../redux/reducers/messageSlice'
 import {
     recipesSelector,
     runAddRecipe,
     runLoadRecipes,
 } from '../../../redux/reducers/recipeSlice'
 
-const formInputs = [
-    {
-        inputName: 'name',
-        inputText: 'Título de receta',
-        inputType: 'text'
+const formInputs = (recipe?: Recipe): FormInterface[] => {
+    if (recipe) {
+        return [
+            {
+                inputName: 'name',
+                inputText: 'Titulo de receta',
+                inputType: 'text',
+                inputValue: recipe.name
+            },
+            {
+                inputName: 'id',
+                inputText: 'Receta id',
+                inputType: 'hidden',
+                inputValue: recipe.id
+            }
+        ]
+    } else {
+        return [
+            {
+                inputName: 'name',
+                inputText: 'Título de receta',
+                inputType: 'text',
+                inputValue: ''
+            }
+        ]
     }
-]
-
-
+}
 const RecipePage = () => {
     const dispatch = useAppDispatch()
-    const messageSelector = useAppSelector(messagesSelector)
     const recipeSelector = useAppSelector(recipesSelector)
+    const [inputValue, setInputValue] = useState<Recipe>()
+    const [inputs, setInputs] = useState<FormInterface[]>([])
+    const [updating, setUpdating] = useState(false)
 
     const handleRecipeCreation = (recipeName: void) => dispatch(runAddRecipe(recipeName))
     useEffect(() => {
@@ -36,16 +58,20 @@ const RecipePage = () => {
         dispatch(runLoadRecipes())
     }, [])
 
+    useEffect(() => {
+        setInputs(formInputs(inputValue))
+    }, [inputValue])
+
     return (
         <section>
             <h1>Crear Receta</h1>
-            <Form
-                inputs={formInputs}
-                submitText="Crear receta"
-                errorMessage={messageSelector.errorMessage}
-                successMessage={messageSelector.successMessage}
-                onSubmit={(recipeName: void) => handleRecipeCreation(recipeName)}
-            />
+            {
+                <Form
+                    inputs={inputs}
+                    submitText={updating ? 'Editar receta' : 'Crear Receta'}
+                    onSubmit={(recipeName: void) => handleRecipeCreation(recipeName)}
+                />
+            }
             {
                 recipeSelector && (
                     <section className='recipes__container'>
@@ -55,6 +81,8 @@ const RecipePage = () => {
                                     recipe={recipe}
                                     deletable={true}
                                     updatable={true}
+                                    setValue={setInputValue}
+                                    setUpdating={setUpdating}
                                     key={recipe.id}
                                 />
                             ))

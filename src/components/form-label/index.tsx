@@ -1,8 +1,10 @@
 import './index.scss'
 
-const FormLabel = ({ inputName, inputText }: { inputName: string, inputText: string }) => {
+import { FormInterface } from '../../interfaces/form'
+
+const FormLabel = ({ input }: { input: FormInterface }) => {
     return (
-        <label htmlFor={inputName} className="form__label">{inputText}</label>
+        <label htmlFor={input.inputName} className="form__label">{input.inputText}</label>
     )
 }
 

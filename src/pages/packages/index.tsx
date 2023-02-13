@@ -10,10 +10,7 @@ import {
     useAppDispatch,
     useAppSelector,
 } from '../../redux/hooks/hooks'
-import {
-    messagesSelector,
-    resetMessages,
-} from '../../redux/reducers/messageSlice'
+import { resetMessages } from '../../redux/reducers/messageSlice'
 import {
     packagesSelector,
     runAddPackage,
@@ -46,7 +43,6 @@ const inputs = (): FormInterface[] => {
 
 const Package = () => {
     const dispatch = useAppDispatch()
-    const messageSelector = useAppSelector(messagesSelector)
     const packageSelector = useAppSelector(packagesSelector)
     const handleCreatePackage = (body: any) => dispatch(runAddPackage(body))
 
@@ -60,8 +56,6 @@ const Package = () => {
             <h1>Crear Envase</h1>
             <Form
                 inputs={inputs()}
-                errorMessage={messageSelector.errorMessage}
-                successMessage={messageSelector.successMessage}
                 onSubmit={handleCreatePackage}
                 submitText={'Crear Envase'}
             />

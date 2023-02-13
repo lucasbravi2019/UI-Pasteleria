@@ -1,19 +1,13 @@
 import './index.scss'
 
-import {
-    useState,
-} from 'react'
+import { useState } from 'react'
 
 import { FormInterface } from '../../interfaces/form'
-import {
-    useAppDispatch,
-    useAppSelector,
-} from '../../redux/hooks/hooks'
-import { messagesSelector } from '../../redux/reducers/messageSlice'
+import { Package } from '../../interfaces/recipe'
+import { useAppDispatch } from '../../redux/hooks/hooks'
 import { runChangePackagePrice } from '../../redux/reducers/packageSlice'
 import Form from '../form'
 import SubmitButton from '../submit-button'
-import { Package } from '../../interfaces/recipe'
 
 const editInputs: (packageId: string) => FormInterface[] = (packageId: string): FormInterface[] => [
     {
@@ -31,7 +25,6 @@ const editInputs: (packageId: string) => FormInterface[] = (packageId: string): 
 
 const IngredientPackageItem = ({ envase }: { envase: Package }) => {
     const dispatch = useAppDispatch()
-    const messageSelector = useAppSelector(messagesSelector)
     const [editPackagePrice, setEditPackagePrice] = useState(false)
 
     const handleEditPackage = (payload: any) => {
@@ -47,8 +40,6 @@ const IngredientPackageItem = ({ envase }: { envase: Package }) => {
                 {
                     editPackagePrice && (
                         <Form
-                            errorMessage={messageSelector.errorMessage}
-                            successMessage={messageSelector.successMessage}
                             inputs={editInputs(envase.id)}
                             onSubmit={handleEditPackage}
                             submitText={'Cambiar precio'}

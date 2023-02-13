@@ -1,36 +1,43 @@
 import './index.scss'
 
 import {
-    useCallback,
     useEffect,
+    useState,
 } from 'react'
 
-const FormInput = ({ inputType, inputText, inputName, inputVal, formData, setFormData }:
-    { inputType: string, inputText: string, inputName: string, inputVal?: any, formData: {}, setFormData: Function }) => {
+import { FormInterface } from '../../interfaces/form'
 
-    const inputValue = useCallback((): string | number => {
-        if ((formData as any)[inputName]) {
-            return (formData as any)[inputName]
-        }
-        return ''
-    }, [formData])
+const getInitialValue = (initialValue?: any) => {
+    if (initialValue) {
+        return initialValue
+    }
+    return ''
+}
+
+const FormInput = ({ input, formData, setFormData }:
+    { input: FormInterface, formData: {}, setFormData: Function }) => {
+
+    const [value, setValue] = useState(getInitialValue(input.inputValue))
 
     useEffect(() => {
-        if (inputVal) {
-            setFormData({
-                ...formData,
-                [inputName]: inputVal
-            })
+        if (input.inputValue) {
+            setValue(input.inputValue)
+            setFormData({ ...formData, [input.inputName]: value })
         }
-    }, [inputVal])
+    }, [input])
+
+    useEffect(() => {
+        setFormData({ ...formData, [input.inputName]: value })
+    }, [value])
+
 
     return (
         <input
-            type={inputType}
+            type={input.inputType}
             className="form__input"
-            placeholder={inputText}
-            value={inputVal ? inputVal : inputValue()}
-            onChange={(e) => setFormData({ ...formData, [inputName]: inputType === 'number' ? Number(e.target.value) : e.target.value })}
+            placeholder={input.inputText}
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
         />
     )
 }

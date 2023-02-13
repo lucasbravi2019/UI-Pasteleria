@@ -2,7 +2,6 @@ import { useEffect } from 'react'
 
 import Form from '../../../components/form'
 import { FormInterface } from '../../../interfaces/form'
-import { Messages } from '../../../interfaces/message'
 import {
     IngredientMultiPackage,
     Recipe,
@@ -15,7 +14,6 @@ import {
     ingredientsSelector,
     runLoadIngredients,
 } from '../../../redux/reducers/ingredientSlice'
-import { messagesSelector } from '../../../redux/reducers/messageSlice'
 import {
     runAddIngredientToRecipe,
 } from '../../../redux/reducers/recipeIngredientSlice'
@@ -87,7 +85,6 @@ const inputs = (recetas: Recipe[], ingredientes: IngredientMultiPackage[]): Form
 const RecipeIngredientPage = () => {
     const recipeSelector: Recipe[] = useAppSelector(recipesSelector)
     const ingredientSelector: IngredientMultiPackage[] = useAppSelector(ingredientsSelector)
-    const messageSelector: Messages = useAppSelector(messagesSelector)
     const dispatch = useAppDispatch()
 
     const handleSubmit = (payload: any) => dispatch(runAddIngredientToRecipe(payload))
@@ -102,8 +99,6 @@ const RecipeIngredientPage = () => {
             <h1>Agregar Ingredientes a Receta</h1>
             <Form
                 inputs={inputs(recipeSelector, ingredientSelector)}
-                errorMessage={messageSelector.errorMessage}
-                successMessage={messageSelector.successMessage}
                 submitText={'Agregar ingrediente'}
                 onSubmit={handleSubmit}
             />
