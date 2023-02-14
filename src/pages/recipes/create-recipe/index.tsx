@@ -5,6 +5,7 @@ import {
 
 import Form from '../../../components/form'
 import RecipeCard from '../../../components/recipes-card'
+import SearchInput from '../../../components/search-input'
 import { FormInterface } from '../../../interfaces/form'
 import { Recipe } from '../../../interfaces/recipe'
 import {
@@ -13,6 +14,8 @@ import {
 } from '../../../redux/hooks/hooks'
 import { resetMessages } from '../../../redux/reducers/messageSlice'
 import {
+    filterRecipesByName,
+    recipeFilterSelector,
     recipesSelector,
     runAddRecipe,
     runLoadRecipes,
@@ -48,6 +51,7 @@ const formInputs = (recipe?: Recipe): FormInterface[] => {
 const RecipePage = () => {
     const dispatch = useAppDispatch()
     const recipeSelector = useAppSelector(recipesSelector)
+    const recipeFilterSelect = useAppSelector(recipeFilterSelector)
     const [inputValue, setInputValue] = useState<Recipe>()
     const [inputs, setInputs] = useState<FormInterface[]>([])
     const [updating, setUpdating] = useState(false)
@@ -73,21 +77,48 @@ const RecipePage = () => {
                 />
             }
             {
-                recipeSelector && (
-                    <section className='recipes__container'>
+                (
+                    <>
+                        <SearchInput
+                            dispatch={(recipe: string) => dispatch(filterRecipesByName(recipe))}
+                        />
                         {
-                            recipeSelector.map(recipe => (
-                                <RecipeCard
-                                    recipe={recipe}
-                                    deletable={true}
-                                    updatable={true}
-                                    setValue={setInputValue}
-                                    setUpdating={setUpdating}
-                                    key={recipe.id}
-                                />
-                            ))
+                            recipeFilterSelect && recipeFilterSelect.length > 0 && (
+                                <section className='recipes__container'>
+                                    {
+                                        recipeFilterSelect.map(recipe => (
+                                            <RecipeCard
+                                                recipe={recipe}
+                                                deletable={true}
+                                                updatable={true}
+                                                setValue={setInputValue}
+                                                setUpdating={setUpdating}
+                                                key={recipe.id}
+                                            />
+                                        ))
+                                    }
+                                </section>
+                            )
                         }
-                    </section>
+                        {
+                            recipeSelector && recipeFilterSelect.length == 0 && (
+                                <section className='recipes__container'>
+                                    {
+                                        recipeSelector.map(recipe => (
+                                            <RecipeCard
+                                                recipe={recipe}
+                                                deletable={true}
+                                                updatable={true}
+                                                setValue={setInputValue}
+                                                setUpdating={setUpdating}
+                                                key={recipe.id}
+                                            />
+                                        ))
+                                    }
+                                </section>
+                            )
+                        }
+                    </>
                 )
             }
         </section>

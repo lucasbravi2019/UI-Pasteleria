@@ -5,7 +5,8 @@ import { RootState } from '../store/store'
 
 const initialState = {
     recipes: [] as Recipe[],
-    recipe: {} as Recipe
+    recipe: {} as Recipe,
+    recipesFiltered: [] as Recipe[]
 }
 
 const recipeSlice = createSlice({
@@ -23,6 +24,13 @@ const recipeSlice = createSlice({
                 ...state.recipes,
                 action.payload
             ]
+        },
+        filterRecipesByName(state, action) {
+            if (action.payload === '') {
+                state.recipesFiltered = []
+            } else {
+                state.recipesFiltered = state.recipes.filter(recipe => recipe.name.toLowerCase().includes(action.payload))
+            }
         },
         removeRecipe(state, action) {
             state.recipes = state.recipes.filter(recipe => recipe.id !== action.payload)
@@ -42,9 +50,10 @@ const recipeSlice = createSlice({
     }
 })
 
-export const { loadRecipes, loadRecipe, addRecipe, removeRecipe, runLoadRecipes, runLoadRecipe, runAddRecipe, runDeleteRecipe } = recipeSlice.actions
+export const { loadRecipes, loadRecipe, addRecipe, filterRecipesByName, removeRecipe, runLoadRecipes, runLoadRecipe, runAddRecipe, runDeleteRecipe } = recipeSlice.actions
 
 export const recipesSelector = (state: RootState) => state.recipeReducer.recipes
 export const recipeSelector = (state: RootState) => state.recipeReducer.recipe
+export const recipeFilterSelector = (state: RootState) => state.recipeReducer.recipesFiltered
 
 export default recipeSlice.reducer

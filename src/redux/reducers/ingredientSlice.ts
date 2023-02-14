@@ -4,7 +4,8 @@ import { IngredientMultiPackage } from '../../interfaces/recipe'
 import { RootState } from '../store/store'
 
 const initialState = {
-    ingredients: [] as IngredientMultiPackage[]
+    ingredients: [] as IngredientMultiPackage[],
+    ingredientsFiltered: [] as IngredientMultiPackage[]
 }
 
 const ingredientSlice = createSlice({
@@ -24,6 +25,13 @@ const ingredientSlice = createSlice({
                 ...state.ingredients,
                 ...action.payload
             ]
+        },
+        filterIngredients(state, action) {
+            if (action.payload === '') {
+                state.ingredientsFiltered = []
+            } else {
+                state.ingredientsFiltered = state.ingredients.filter(ingredient => ingredient.name.toLowerCase().includes(action.payload))
+            }
         },
         removeIngredient(state, action) {
             state.ingredients = state.ingredients.filter(ingredient => ingredient.id !== action.payload)
@@ -55,9 +63,11 @@ export const {
     runLoadIngredients,
     runAddIngredient,
     runDeleteIngredient,
-    runAddPackageToIngredient
+    runAddPackageToIngredient,
+    filterIngredients
 } = ingredientSlice.actions
 
 export const ingredientsSelector = (state: RootState) => state.ingredientReducer.ingredients
+export const ingredientsFilterSelector = (state: RootState) => state.ingredientReducer.ingredientsFiltered
 
 export default ingredientSlice.reducer

@@ -1,43 +1,24 @@
 import './index.scss'
 
-import {
-    useEffect,
-    useState,
-} from 'react'
+import { useEffect } from 'react'
 
 import { FormInterface } from '../../interfaces/form'
-
-const getInitialValue = (initialValue?: any) => {
-    if (initialValue) {
-        return initialValue
-    }
-    return ''
-}
 
 const FormInput = ({ input, formData, setFormData }:
     { input: FormInterface, formData: {}, setFormData: Function }) => {
 
-    const [value, setValue] = useState(getInitialValue(input.inputValue))
-
     useEffect(() => {
-        if (input.inputValue) {
-            setValue(input.inputValue)
-            setFormData({ ...formData, [input.inputName]: value })
-        }
-    }, [input])
+        console.log(formData);
 
-    useEffect(() => {
-        setFormData({ ...formData, [input.inputName]: value })
-    }, [value])
-
+    }, [formData])
 
     return (
         <input
             type={input.inputType}
             className="form__input"
             placeholder={input.inputText}
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
+            value={(formData as any)[input.inputName]}
+            onChange={(e) => setFormData({ ...formData, [input.inputName]: input.inputType === 'number' ? Number(e.target.value) : e.target.value })}
         />
     )
 }

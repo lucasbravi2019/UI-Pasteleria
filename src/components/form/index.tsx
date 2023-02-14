@@ -1,9 +1,6 @@
 import './index.scss'
 
-import {
-    useEffect,
-    useState,
-} from 'react'
+import { useState } from 'react'
 
 import { FormInterface } from '../../interfaces/form'
 import FormInput from '../form-input'
@@ -14,15 +11,6 @@ import SubmitButton from '../submit-button'
 
 const Form = ({ submitText, inputs, onSubmit }: { submitText: string, inputs: FormInterface[], onSubmit: Function }) => {
     const [formData, setFormData] = useState({})
-    const [formInputs, setFormInputs] = useState(inputs)
-    useEffect(() => {
-        console.log(inputs);
-        console.log(formInputs);
-
-        setFormInputs(inputs)
-        console.log(formInputs);
-
-    }, [inputs])
 
     return (
         <form className="form" onSubmit={() => setFormData({})}>

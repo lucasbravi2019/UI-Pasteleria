@@ -11,7 +11,6 @@ import {
   getData,
   postData,
 } from '../api/index'
-import { Recipe } from '../interfaces/recipe'
 import {
   resetMessages,
   setErrorMessage,
@@ -57,11 +56,7 @@ export function* createRecipeSaga(action: any): Generator<any> {
     if (response.error) {
       yield put(setErrorMessage('La receta no se pudo crear'))
     } else {
-      const recipe: Recipe = {
-        id: response.body,
-        name: action.payload.name
-      }
-      yield put(addRecipe(recipe))
+      yield put(addRecipe(response.body))
       yield put(setSuccessMessage('La receta fue creada con éxito'))
     }
   } catch (error) {
