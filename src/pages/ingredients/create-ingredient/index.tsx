@@ -2,10 +2,10 @@ import './index.scss'
 
 import { useEffect } from 'react'
 
-import Form from '../../../components/form'
+import FormCreateIngredient from '../../../components/form-create-ingredient'
 import IngredientItem from '../../../components/ingredient-item'
+import MessagePopup from '../../../components/message-popup'
 import SearchInput from '../../../components/search-input'
-import { FormInterface } from '../../../interfaces/form'
 import { IngredientMultiPackage } from '../../../interfaces/recipe'
 import {
     useAppDispatch,
@@ -19,12 +19,6 @@ import {
     runLoadIngredients,
 } from '../../../redux/reducers/ingredientSlice'
 
-const inputs: FormInterface[] = [{
-    inputName: 'name',
-    inputText: 'Nombre de ingrediente',
-    inputType: 'text'
-}]
-
 const IngredientPage = () => {
     const ingredientSelector: IngredientMultiPackage[] = useAppSelector(ingredientsSelector)
     const ingredientFilterSelector: IngredientMultiPackage[] = useAppSelector(ingredientsFilterSelector)
@@ -34,15 +28,14 @@ const IngredientPage = () => {
         dispatch(runLoadIngredients())
     }, [])
 
-    const handleIngredientCreation = (body: any) => dispatch(runAddIngredient(body))
+    const handleSubmit = (ingredientName: any) => dispatch(runAddIngredient(ingredientName))
 
     return (
         <section>
             <h1>Crear Ingrediente</h1>
-            <Form
-                inputs={inputs}
-                submitText={'Crear ingrediente'}
-                onSubmit={handleIngredientCreation}
+            <FormCreateIngredient
+                initialValues={{ name: '' }}
+                onSubmit={handleSubmit}
             />
             <SearchInput
                 dispatch={(name: string) => dispatch(filterIngredients(name))}
@@ -72,6 +65,7 @@ const IngredientPage = () => {
                         <h3>No hay ingredientes</h3>
                     )
                 }
+                <MessagePopup />
             </section>
         </section>
     )

@@ -2,10 +2,8 @@ import './index.scss'
 
 import { useEffect } from 'react'
 
-import { metrics } from '../../api/config'
-import Form from '../../components/form'
+import FormCreatePackage from '../../components/form-create-package'
 import PackageItem from '../../components/package-item'
-import { FormInterface } from '../../interfaces/form'
 import {
     useAppDispatch,
     useAppSelector,
@@ -17,47 +15,23 @@ import {
     runLoadPackages,
 } from '../../redux/reducers/packageSlice'
 
-const inputs = (): FormInterface[] => {
-
-    const metricOptions = metrics.map(metric => {
-        return {
-            id: metric,
-            nombre: metric
-        }
-    })
-
-    return [
-        {
-            inputName: 'metric',
-            inputText: 'Unidad de medida',
-            inputType: 'select',
-            options: metricOptions
-        },
-        {
-            inputName: 'quantity',
-            inputText: 'Cantidad',
-            inputType: 'number'
-        }
-    ]
-}
-
 const Package = () => {
     const dispatch = useAppDispatch()
     const packageSelector = useAppSelector(packagesSelector)
-    const handleCreatePackage = (body: any) => dispatch(runAddPackage(body))
 
     useEffect(() => {
         dispatch(resetMessages())
         dispatch(runLoadPackages())
     }, [])
 
+    const handleCreatePackage = (envase: any) => dispatch(runAddPackage(envase))
+
     return (
         <section>
             <h1>Crear Envase</h1>
-            <Form
-                inputs={inputs()}
+            <FormCreatePackage
+                initialValues={{ metric: '', quantity: 0 }}
                 onSubmit={handleCreatePackage}
-                submitText={'Crear Envase'}
             />
             {
                 packageSelector && (

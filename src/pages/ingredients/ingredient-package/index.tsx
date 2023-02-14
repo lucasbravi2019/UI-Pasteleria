@@ -1,11 +1,7 @@
 import { useEffect } from 'react'
 
-import Form from '../../../components/form'
-import { FormInterface } from '../../../interfaces/form'
-import {
-    IngredientMultiPackage,
-    Package,
-} from '../../../interfaces/recipe'
+import FormIngredientPackage from '../../../components/form-ingredient-package'
+import MessagePopup from '../../../components/message-popup'
 import {
     useAppDispatch,
     useAppSelector,
@@ -21,50 +17,10 @@ import {
     runLoadPackages,
 } from '../../../redux/reducers/packageSlice'
 
-const inputs = (ingredients: IngredientMultiPackage[], envases: Package[]): FormInterface[] => {
-    const ingredientsOptions = () => {
-        return ingredients.map(ingredient => {
-            return {
-                id: ingredient.id,
-                nombre: ingredient.name
-            }
-        })
-    }
-
-    const packagesOptions = () => {
-        return envases.map(envase => {
-            return {
-                id: envase.id,
-                nombre: `${envase.quantity} ${envase.metric}`
-            }
-        })
-    }
-
-    return [
-        {
-            inputName: 'ingredientId',
-            inputText: 'Ingrediente',
-            inputType: 'select',
-            options: ingredientsOptions()
-        },
-        {
-            inputName: 'packageId',
-            inputText: 'Envase',
-            inputType: 'select',
-            options: packagesOptions()
-        },
-        {
-            inputName: 'price',
-            inputText: 'Precio',
-            inputType: 'number'
-        }
-    ]
-}
-
 const AddPackageToIngredientPage = () => {
+    const dispatch = useAppDispatch()
     const packageSelector = useAppSelector(packagesSelector)
     const ingredientSelector = useAppSelector(ingredientsSelector)
-    const dispatch = useAppDispatch()
 
     useEffect(() => {
         dispatch(resetMessages())
@@ -72,18 +28,22 @@ const AddPackageToIngredientPage = () => {
         dispatch(runLoadPackages())
     }, [])
 
-    const handleSubmit = (body: any) => {
-        dispatch(runAddPackageToIngredient(body))
-    }
+    const handleSubmit = (body: any) => dispatch(runAddPackageToIngredient(body))
 
     return (
         <section>
             <h1>Agregar Envase a Ingrediente</h1>
-            <Form
+            <FormIngredientPackage
+                envases={packageSelector.map(envase => {
+                    return { id: envase.id, name: `${envase.quantity} ${envase.metric}` }
+                })}
+                ingredientes={ingredientSelector.map(ingredient => {
+                    return { id: ingredient.id, name: ingredient.name }
+                })}
+                initialValues={{ ingredientId: '', packageId: '', price: 0 }}
                 onSubmit={handleSubmit}
-                submitText={'Agregar Envase'}
-                inputs={inputs(ingredientSelector, packageSelector)}
             />
+            <MessagePopup />
         </section>
     )
 }
