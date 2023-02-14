@@ -5,6 +5,11 @@ export interface Recipe {
     ingredients?: RecipeIngredient[]
 }
 
+export interface RecipeField {
+    id: string
+    name: string
+}
+
 export interface RecipeIngredient {
     id: string
     name: string
@@ -37,4 +42,11 @@ export interface Package {
 
 export interface PackagePrice {
     price: Number
+}
+
+export interface RecipeIngredientForm {
+    recipeId: string
+    ingredientId: string
+    metric: string
+    quantity: number
 }

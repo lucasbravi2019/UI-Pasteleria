@@ -1,6 +1,7 @@
 .package__container {
     display: grid;
     gap: 10px;
+    margin: 30px 10px;
 
     @media (min-width: 468px) {
         grid-template-columns: repeat(2, 1fr);

@@ -79,6 +79,9 @@ export function* changePackagePriceSaga(action: any): Generator<any> {
             price: action.payload.price
         }
 
+        console.log(action.payload);
+
+
         const response: any = yield call(putData, endpoints.changeIngredientPackagePrice(action.payload.packageId), price)
         if (response.error) {
             yield put(setErrorMessage('No se pudo cambiar el precio del envase'))

@@ -2,61 +2,70 @@ import './index.scss'
 
 import { useEffect } from 'react'
 
-import Form from '../../../components/form'
+import FormCreateIngredient from '../../../components/form-create-ingredient'
 import IngredientItem from '../../../components/ingredient-item'
-import { FormInterface } from '../../../interfaces/form'
-import { Messages } from '../../../interfaces/message'
+import MessagePopup from '../../../components/message-popup'
+import SearchInput from '../../../components/search-input'
 import { IngredientMultiPackage } from '../../../interfaces/recipe'
 import {
     useAppDispatch,
     useAppSelector,
 } from '../../../redux/hooks/hooks'
 import {
+    filterIngredients,
+    ingredientsFilterSelector,
     ingredientsSelector,
     runAddIngredient,
     runLoadIngredients,
 } from '../../../redux/reducers/ingredientSlice'
-import { messagesSelector } from '../../../redux/reducers/messageSlice'
-
-const inputs: FormInterface[] = [{
-    inputName: 'name',
-    inputText: 'Nombre de ingrediente',
-    inputType: 'text'
-}]
 
 const IngredientPage = () => {
     const ingredientSelector: IngredientMultiPackage[] = useAppSelector(ingredientsSelector)
-    const messageSelector: Messages = useAppSelector(messagesSelector)
+    const ingredientFilterSelector: IngredientMultiPackage[] = useAppSelector(ingredientsFilterSelector)
     const dispatch = useAppDispatch()
 
     useEffect(() => {
         dispatch(runLoadIngredients())
     }, [])
 
-    const handleIngredientCreation = (body: any) => dispatch(runAddIngredient(body))
+    const handleSubmit = (ingredientName: any) => dispatch(runAddIngredient(ingredientName))
 
     return (
         <section>
             <h1>Crear Ingrediente</h1>
-            <Form
-                inputs={inputs}
-                submitText={'Crear ingrediente'}
-                successMessage={messageSelector.successMessage}
-                errorMessage={messageSelector.errorMessage}
-                onSubmit={handleIngredientCreation}
+            <FormCreateIngredient
+                initialValues={{ name: '' }}
+                onSubmit={handleSubmit}
+            />
+            <SearchInput
+                dispatch={(name: string) => dispatch(filterIngredients(name))}
             />
             <section className='ingredient__container'>
                 {
-                    ingredientSelector && ingredientSelector.length > 0 ? ingredientSelector.map(ingredient =>
+                    ingredientFilterSelector && ingredientFilterSelector.length > 0 && ingredientFilterSelector.map(ingredient =>
                         <section key={ingredient.id}>
                             <IngredientItem
                                 ingredient={ingredient}
                             />
                         </section>
-                    ) : (
+                    )
+                }
+                {
+                    ingredientSelector && ingredientFilterSelector.length === 0 && ingredientSelector.length > 0
+                    && ingredientSelector.map(ingredient =>
+                        <section key={ingredient.id}>
+                            <IngredientItem
+                                ingredient={ingredient}
+                            />
+                        </section>
+                    )
+                }
+                {
+                    ingredientSelector.length === 0 && (
                         <h3>No hay ingredientes</h3>
                     )
                 }
+                <MessagePopup />
             </section>
         </section>
     )
