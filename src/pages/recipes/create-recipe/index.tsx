@@ -3,10 +3,9 @@ import {
     useState,
 } from 'react'
 
-import Form from '../../../components/form'
+import FormCreateRecipe from '../../../components/form-create-recipe'
 import RecipeCard from '../../../components/recipes-card'
 import SearchInput from '../../../components/search-input'
-import { FormInterface } from '../../../interfaces/form'
 import { Recipe } from '../../../interfaces/recipe'
 import {
     useAppDispatch,
@@ -21,59 +20,27 @@ import {
     runLoadRecipes,
 } from '../../../redux/reducers/recipeSlice'
 
-const formInputs = (recipe?: Recipe): FormInterface[] => {
-    if (recipe) {
-        return [
-            {
-                inputName: 'name',
-                inputText: 'Titulo de receta',
-                inputType: 'text',
-                inputValue: recipe.name
-            },
-            {
-                inputName: 'id',
-                inputText: 'Receta id',
-                inputType: 'hidden',
-                inputValue: recipe.id
-            }
-        ]
-    } else {
-        return [
-            {
-                inputName: 'name',
-                inputText: 'Título de receta',
-                inputType: 'text',
-                inputValue: ''
-            }
-        ]
-    }
-}
 const RecipePage = () => {
     const dispatch = useAppDispatch()
     const recipeSelector = useAppSelector(recipesSelector)
     const recipeFilterSelect = useAppSelector(recipeFilterSelector)
-    const [inputValue, setInputValue] = useState<Recipe>()
-    const [inputs, setInputs] = useState<FormInterface[]>([])
-    const [updating, setUpdating] = useState(false)
+    const [, setInputValue] = useState<Recipe>()
+    const [, setUpdating] = useState(false)
 
-    const handleRecipeCreation = (recipeName: void) => dispatch(runAddRecipe(recipeName))
     useEffect(() => {
         dispatch(resetMessages())
         dispatch(runLoadRecipes())
     }, [])
 
-    useEffect(() => {
-        setInputs(formInputs(inputValue))
-    }, [inputValue])
+    const handleCreateRecipe = (recipeName: any) => dispatch(runAddRecipe(recipeName))
 
     return (
         <section>
             <h1>Crear Receta</h1>
             {
-                <Form
-                    inputs={inputs}
-                    submitText={updating ? 'Editar receta' : 'Crear Receta'}
-                    onSubmit={(recipeName: void) => handleRecipeCreation(recipeName)}
+                <FormCreateRecipe
+                    initialValues={{ name: '' }}
+                    onSubmit={handleCreateRecipe}
                 />
             }
             {

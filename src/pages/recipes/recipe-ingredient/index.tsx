@@ -1,11 +1,8 @@
 import { useEffect } from 'react'
 
-import Form from '../../../components/form'
-import { FormInterface } from '../../../interfaces/form'
-import {
-    IngredientMultiPackage,
-    Recipe,
-} from '../../../interfaces/recipe'
+import FormRecipeIngredient from '../../../components/form-recipe-ingredient'
+import MessagePopup from '../../../components/message-popup'
+import { IngredientMultiPackage } from '../../../interfaces/recipe'
 import {
     useAppDispatch,
     useAppSelector,
@@ -22,72 +19,25 @@ import {
     runLoadRecipes,
 } from '../../../redux/reducers/recipeSlice'
 
-const inputs = (recetas: Recipe[], ingredientes: IngredientMultiPackage[]): FormInterface[] => {
-    let recipeOptions
-
-    if (recetas) {
-        recipeOptions = recetas.map(receta => {
+const getPackageByIngredientId = (ingredientId: string, ingredients: IngredientMultiPackage[]) => {
+    const ingredient = ingredients.filter(ingrediente => ingrediente.id === ingredientId)
+    if (ingredient.length > 0 && ingredient[0].packages) {
+        return ingredient[0].packages.map(envase => {
             return {
-                id: receta.id,
-                nombre: receta.name
+                id: `${envase.quantity} ${envase.metric}`,
+                name: `${envase.quantity} ${envase.metric}`
             }
         })
     }
-
-    let ingredientOptions: any
-
-    if (ingredientes) {
-        ingredientOptions = ingredientes.map(ingrediente => {
-            return {
-                id: ingrediente.id,
-                nombre: ingrediente.name
-            }
-        })
-    }
-
-    const metricOptions = (selected: any) => {
-        if (selected && selected.ingredientId) {
-            const ingredient = ingredientes.filter(ingrediente => ingrediente.id === selected.ingredientId)
-            if (ingredient.length > 0 && ingredient[0].packages) {
-                return ingredient[0].packages.map(envase => `${envase.quantity} ${envase.metric}`)
-            }
-        }
-        return []
-    }
-
-    return [
-        {
-            inputText: 'Receta',
-            inputName: 'recipeId',
-            inputType: 'select',
-            options: recipeOptions
-        },
-        {
-            inputText: 'Ingrediente',
-            inputName: 'ingredientId',
-            inputType: 'select',
-            options: ingredientOptions
-        },
-        {
-            inputText: 'Envase',
-            inputName: 'metric',
-            inputType: 'select',
-            options: metricOptions
-        },
-        {
-            inputText: 'Cantidad',
-            inputName: 'quantity',
-            inputType: 'number'
-        }
-    ]
+    return []
 }
 
 const RecipeIngredientPage = () => {
-    const recipeSelector: Recipe[] = useAppSelector(recipesSelector)
-    const ingredientSelector: IngredientMultiPackage[] = useAppSelector(ingredientsSelector)
     const dispatch = useAppDispatch()
+    const ingredientSelector = useAppSelector(ingredientsSelector)
+    const recipeSelector = useAppSelector(recipesSelector)
 
-    const handleSubmit = (payload: any) => dispatch(runAddIngredientToRecipe(payload))
+    const handleSubmit = (body: any) => dispatch(runAddIngredientToRecipe(body))
 
     useEffect(() => {
         dispatch(runLoadRecipes())
@@ -97,11 +47,14 @@ const RecipeIngredientPage = () => {
     return (
         <section>
             <h1>Agregar Ingredientes a Receta</h1>
-            <Form
-                inputs={inputs(recipeSelector, ingredientSelector)}
-                submitText={'Agregar ingrediente'}
+            <FormRecipeIngredient
+                ingredientes={ingredientSelector}
+                initialValues={{ ingredientId: '', metric: '', quantity: 0, recipeId: '' }}
                 onSubmit={handleSubmit}
+                recetas={recipeSelector}
+                packageSelector={getPackageByIngredientId}
             />
+            <MessagePopup />
         </section>
     )
 }
