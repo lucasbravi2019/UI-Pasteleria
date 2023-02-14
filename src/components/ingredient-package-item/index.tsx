@@ -57,11 +57,11 @@ const IngredientPackageItem = ({ envase }: { envase: Package }) => {
                         </section>
                     )
                 }
-                <SubmitButton
+                {/* <SubmitButton
                     buttonText='Cambiar Precio'
                     className='card__edit-button'
                     onClick={() => setEditPackagePrice(true)}
-                />
+                /> */}
             </section>
         </section>
     )

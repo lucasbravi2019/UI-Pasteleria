@@ -14,6 +14,12 @@ const FormSelect = ({ input, formData, setFormData }: { input: FormInterface, fo
         }
     }, [selected])
 
+    useEffect(() => {
+        if (Object.entries(formData).length === 0) {
+            setSelected({})
+        }
+    }, [formData])
+
     return (
         <select
             name={input.inputName}

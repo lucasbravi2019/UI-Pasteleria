@@ -4,6 +4,7 @@ import { useEffect } from 'react'
 
 import Form from '../../../components/form'
 import IngredientItem from '../../../components/ingredient-item'
+import SearchInput from '../../../components/search-input'
 import { FormInterface } from '../../../interfaces/form'
 import { IngredientMultiPackage } from '../../../interfaces/recipe'
 import {
@@ -11,6 +12,8 @@ import {
     useAppSelector,
 } from '../../../redux/hooks/hooks'
 import {
+    filterIngredients,
+    ingredientsFilterSelector,
     ingredientsSelector,
     runAddIngredient,
     runLoadIngredients,
@@ -24,6 +27,7 @@ const inputs: FormInterface[] = [{
 
 const IngredientPage = () => {
     const ingredientSelector: IngredientMultiPackage[] = useAppSelector(ingredientsSelector)
+    const ingredientFilterSelector: IngredientMultiPackage[] = useAppSelector(ingredientsFilterSelector)
     const dispatch = useAppDispatch()
 
     useEffect(() => {
@@ -40,15 +44,31 @@ const IngredientPage = () => {
                 submitText={'Crear ingrediente'}
                 onSubmit={handleIngredientCreation}
             />
+            <SearchInput
+                dispatch={(name: string) => dispatch(filterIngredients(name))}
+            />
             <section className='ingredient__container'>
                 {
-                    ingredientSelector && ingredientSelector.length > 0 ? ingredientSelector.map(ingredient =>
+                    ingredientFilterSelector && ingredientFilterSelector.length > 0 && ingredientFilterSelector.map(ingredient =>
                         <section key={ingredient.id}>
                             <IngredientItem
                                 ingredient={ingredient}
                             />
                         </section>
-                    ) : (
+                    )
+                }
+                {
+                    ingredientSelector && ingredientFilterSelector.length === 0 && ingredientSelector.length > 0
+                    && ingredientSelector.map(ingredient =>
+                        <section key={ingredient.id}>
+                            <IngredientItem
+                                ingredient={ingredient}
+                            />
+                        </section>
+                    )
+                }
+                {
+                    ingredientSelector.length === 0 && (
                         <h3>No hay ingredientes</h3>
                     )
                 }

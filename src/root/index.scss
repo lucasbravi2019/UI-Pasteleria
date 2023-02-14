@@ -1,6 +1,7 @@
 .container {
     display: grid;
     grid-template-columns: 20% 80%;
+    width: 100vw;
 }
 
 main {
@@ -19,9 +20,10 @@ main {
 .navigation-bar {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: flex-start;
     border: none;
+    margin-top: 100px;
     background-color: white;
     box-shadow: none;
     height: 100%;
