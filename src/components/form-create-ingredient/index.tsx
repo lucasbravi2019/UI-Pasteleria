@@ -2,9 +2,10 @@ import { Formik } from 'formik'
 
 import { IngredientNameDTO } from '../../interfaces/ingredient'
 
-const FormCreateIngredient = ({ initialValues, onSubmit }: { initialValues: IngredientNameDTO, onSubmit: Function }) => {
+const FormCreateIngredient = ({ initialValues, onSubmit, updating }: { initialValues: IngredientNameDTO, onSubmit: Function, updating: boolean }) => {
     return (
         <Formik
+            enableReinitialize={true}
             initialValues={initialValues}
             onSubmit={(values, { setSubmitting, resetForm }) => {
                 onSubmit(values);
@@ -39,7 +40,7 @@ const FormCreateIngredient = ({ initialValues, onSubmit }: { initialValues: Ingr
                             )
                         }
                     </section>
-                    <button type="submit" className='form__submit-button'>Crear Ingrediente</button>
+                    <button type="submit" className='form__submit-button'>{updating ? 'Actualizar Ingrediente' : 'Crear Ingrediente'}</button>
                 </form>
             )}
 

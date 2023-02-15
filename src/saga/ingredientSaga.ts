@@ -11,6 +11,7 @@ import {
     postData,
     putData,
 } from '../api/index'
+import { IngredientNameDTO } from '../interfaces/ingredient'
 import { PackagePrice } from '../interfaces/recipe'
 import {
     addIngredient,
@@ -20,6 +21,7 @@ import {
     runAddPackageToIngredient,
     runDeleteIngredient,
     runLoadIngredients,
+    runUpdateIngredient,
 } from '../redux/reducers/ingredientSlice'
 import {
     resetMessages,
@@ -90,9 +92,29 @@ export function* AddPackageToIngredientSaga(action: any): Generator<any> {
     }
 }
 
+export function* UpdateIngredientSaga(action: any): Generator<any> {
+    try {
+        const ingredientId = action.payload.id
+        const name: IngredientNameDTO = {
+            name: action.payload.name
+        }
+        const response: any = yield call(putData, endpoints.editIngredient(ingredientId), name)
+        if (response.error) {
+            yield put(setErrorMessage('No se pudo actualizar el ingrediente'))
+            return
+        }
+        yield put(setSuccessMessage('Se actualizó el ingrediente'))
+        yield put(removeIngredient(ingredientId))
+        yield put(addIngredient(response.body))
+    } catch (error) {
+        yield put(setErrorMessage('No se pudo actualizar el ingrediente'))
+    }
+}
+
 export default function* ingredientSaga() {
     yield takeLatest(runLoadIngredients.type, getIngredientsSaga)
     yield takeLatest(runAddIngredient.type, createIngredientSaga)
     yield takeLatest(runDeleteIngredient.type, deleteIngredientSaga)
     yield takeLatest(runAddPackageToIngredient.type, AddPackageToIngredientSaga)
+    yield takeLatest(runUpdateIngredient.type, UpdateIngredientSaga)
 }

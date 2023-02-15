@@ -50,6 +50,9 @@ const ingredientSlice = createSlice({
         },
         runAddPackageToIngredient(state) {
             return state
+        },
+        runUpdateIngredient(state) {
+            return state
         }
     }
 })
@@ -64,7 +67,8 @@ export const {
     runAddIngredient,
     runDeleteIngredient,
     runAddPackageToIngredient,
-    filterIngredients
+    filterIngredients,
+    runUpdateIngredient
 } = ingredientSlice.actions
 
 export const ingredientsSelector = (state: RootState) => state.ingredientReducer.ingredients
