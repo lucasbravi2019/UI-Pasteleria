@@ -51,7 +51,7 @@ const IngredientPackageItem = ({ envase }: { envase: Package }) => {
                 className='card__edit-button'
                 onClick={() => setEditPackagePrice(true)}
             />
-        </section>
+        </section >
     )
 }
 
