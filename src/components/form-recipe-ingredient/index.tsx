@@ -46,7 +46,7 @@ const FormRecipeIngredient = ({ initialValues, onSubmit, recetas, ingredientes, 
                 isSubmitting
             }) => (
                 <form onSubmit={handleSubmit} className="form__container">
-                    <fieldset>
+                    <section className="form__field">
                         <label htmlFor="recipeId">Nombre receta</label>
                         <Field name="recipeId" as="select">
                             <option value="" disabled>-- Seleccione una receta --</option>
@@ -63,6 +63,8 @@ const FormRecipeIngredient = ({ initialValues, onSubmit, recetas, ingredientes, 
                                 </section>
                             )
                         }
+                    </section>
+                    <section className="form__field">
                         <label htmlFor="ingredientId">Nombre Ingrediente</label>
                         <Field name="ingredientId" as="select">
                             <option value="" disabled>-- Seleccione un ingrediente --</option>
@@ -79,6 +81,8 @@ const FormRecipeIngredient = ({ initialValues, onSubmit, recetas, ingredientes, 
                                 </section>
                             )
                         }
+                    </section>
+                    <section className="form__field">
                         <label htmlFor="metric">Unidad</label>
                         <Field name="metric" as="select">
                             <option value="" disabled>-- Seleccione un envase --</option>
@@ -95,6 +99,8 @@ const FormRecipeIngredient = ({ initialValues, onSubmit, recetas, ingredientes, 
                                 </section>
                             )
                         }
+                    </section>
+                    <section className="form__field">
                         <label htmlFor="quantity">Cantidad</label>
                         <input step={0.01} type="number" name='quantity' onChange={handleChange} onBlur={handleBlur} value={values.quantity} />
                         {
@@ -104,7 +110,7 @@ const FormRecipeIngredient = ({ initialValues, onSubmit, recetas, ingredientes, 
                                 </section>
                             )
                         }
-                    </fieldset>
+                    </section>
                     <button type="submit" disabled={isSubmitting} className='form__submit-button'>Crear receta</button>
                 </form>
             )}

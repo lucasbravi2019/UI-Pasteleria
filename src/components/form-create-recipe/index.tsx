@@ -34,19 +34,21 @@ const FormCreateRecipe = ({ initialValues, onSubmit, update, setUpdate }:
                 isSubmitting
             }) => (
                 <form onSubmit={handleSubmit} className="form__container">
-                    <label htmlFor="name">Nombre receta</label>
-                    <input
-                        type="text"
-                        name="name"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={values.name}
-                    />
-                    {errors.name && touched.name && (
-                        <section className="validation-error">
-                            <p>{errors.name}</p>
-                        </section>
-                    )}
+                    <section className="form__field">
+                        <label htmlFor="name">Nombre receta</label>
+                        <input
+                            type="text"
+                            name="name"
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            value={values.name}
+                        />
+                        {errors.name && touched.name && (
+                            <section className="validation-error">
+                                <p>{errors.name}</p>
+                            </section>
+                        )}
+                    </section>
                     <button
                         type='submit'
                         className='form__submit-button'

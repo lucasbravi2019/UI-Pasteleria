@@ -6,6 +6,18 @@
     max-width: max-content;
 }
 
+.form__field {
+    margin: 15px;
+
+    label {
+        padding: 5px;
+        display: block;
+        margin: 0 auto;
+        font-size: 17px;
+        text-align: center;
+    }
+}
+
 .validation-error {
     border: 2px solid red;
     border-radius: 5px;
