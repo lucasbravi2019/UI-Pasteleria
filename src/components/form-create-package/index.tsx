@@ -10,8 +10,9 @@ const FormCreatePackage = ({ initialValues, onSubmit }: { initialValues: Package
     return (
         <Formik
             initialValues={initialValues}
-            onSubmit={(values, { setSubmitting }) => {
+            onSubmit={(values, { setSubmitting, resetForm }) => {
                 onSubmit(values)
+                resetForm()
                 setSubmitting(false)
             }}
             validate={(values) => {
@@ -36,33 +37,37 @@ const FormCreatePackage = ({ initialValues, onSubmit }: { initialValues: Package
                 isSubmitting
             }) => (
                 <form onSubmit={handleSubmit} className="form__container">
-                    <label htmlFor="metric">Unidad</label>
-                    <Field
-                        name="metric" as="select"
-                    >
-                        <option value="" disabled>-- Seleccione una unidad --</option>
+                    <section className="form__field">
+                        <label htmlFor="metric">Unidad</label>
+                        <Field
+                            name="metric" as="select"
+                        >
+                            <option value="" disabled>-- Seleccione una unidad --</option>
+                            {
+                                metrics.map(metric => (
+                                    <option key={metric} value={metric}>{metric}</option>
+                                ))
+                            }
+                        </Field>
                         {
-                            metrics.map(metric => (
-                                <option key={metric} value={metric}>{metric}</option>
-                            ))
+                            errors.metric && touched.metric && (
+                                <section className='validation-error'>
+                                    <p>{errors.metric}</p>
+                                </section>
+                            )
                         }
-                    </Field>
-                    {
-                        errors.metric && touched.metric && (
-                            <section className='validation-error'>
-                                <p>{errors.metric}</p>
-                            </section>
-                        )
-                    }
-                    <label htmlFor="quantity">Cantidad</label>
-                    <input step={0.01} name="quantity" type="number" value={values.quantity} onChange={handleChange} onBlur={handleBlur} />
-                    {
-                        errors.quantity && touched.quantity && (
-                            <section className='validation-error'>
-                                <p>{errors.quantity}</p>
-                            </section>
-                        )
-                    }
+                    </section>
+                    <section className="form__field">
+                        <label htmlFor="quantity">Cantidad</label>
+                        <input step={0.01} name="quantity" type="number" value={values.quantity} onChange={handleChange} onBlur={handleBlur} />
+                        {
+                            errors.quantity && touched.quantity && (
+                                <section className='validation-error'>
+                                    <p>{errors.quantity}</p>
+                                </section>
+                            )
+                        }
+                    </section>
                     <button className='form__submit-button' type="submit" disabled={isSubmitting}>Crear envase</button>
                 </form>
             )}

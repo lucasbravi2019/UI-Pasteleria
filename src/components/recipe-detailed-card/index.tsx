@@ -24,7 +24,7 @@ const RecipeDetailedCard = ({ recipe }: { recipe: Recipe }) => {
                 <p className="recipe-detailed-card__paragraph">Esta receta no tiene ingredientes</p>
             )}
             {recipe.price ? (
-                <p className="recipe-detailed-card__paragraph"><strong>Precio: </strong>$ {recipe.price.toFixed(2)}</p>
+                <p className="recipe-detailed-card__paragraph"><strong>Precio: </strong>$ {recipe.price.toFixed(2)} (x3)</p>
             ) : (
                 <p className="recipe-detailed-card__paragraph">Esta receta no tiene precio total</p>
             )}
