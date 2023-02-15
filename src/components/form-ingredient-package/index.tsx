@@ -14,8 +14,9 @@ const FormIngredientPackage = ({ initialValues, ingredientes, envases, onSubmit 
     return (
         <Formik
             initialValues={initialValues}
-            onSubmit={(values, { setSubmitting }) => {
+            onSubmit={(values, { setSubmitting, resetForm }) => {
                 onSubmit(values)
+                resetForm()
                 setSubmitting(false)
             }}
             validate={(values) => {
@@ -42,47 +43,53 @@ const FormIngredientPackage = ({ initialValues, ingredientes, envases, onSubmit 
                 handleBlur
             }) => (
                 <form onSubmit={handleSubmit} className="form__container">
-                    <label htmlFor="ingredientId">Ingrediente</label>
-                    <Field as="select" name="ingredientId" >
-                        <option value="" disabled>-- Seleccione un ingrediente --</option>
+                    <section className="form__field">
+                        <label htmlFor="ingredientId">Ingrediente</label>
+                        <Field as="select" name="ingredientId" >
+                            <option value="" disabled>-- Seleccione un ingrediente --</option>
+                            {
+                                ingredientes.map(ingrediente => (
+                                    <option key={ingrediente.id} value={ingrediente.id}>{ingrediente.name}</option>
+                                ))
+                            }
+                        </Field>
                         {
-                            ingredientes.map(ingrediente => (
-                                <option key={ingrediente.id} value={ingrediente.id}>{ingrediente.name}</option>
-                            ))
+                            errors.ingredientId && touched.ingredientId && (
+                                <section className='validation-error'>
+                                    <p>{errors.ingredientId}</p>
+                                </section>
+                            )
                         }
-                    </Field>
-                    {
-                        errors.ingredientId && touched.ingredientId && (
-                            <section className='validation-error'>
-                                <p>{errors.ingredientId}</p>
-                            </section>
-                        )
-                    }
-                    <label htmlFor="packageId">Envase</label>
-                    <Field as="select" name="packageId" >
-                        <option value="" disabled>-- Seleccione un envase --</option>
+                    </section>
+                    <section className="form__field">
+                        <label htmlFor="packageId">Envase</label>
+                        <Field as="select" name="packageId" >
+                            <option value="" disabled>-- Seleccione un envase --</option>
+                            {
+                                envases.map(envase => (
+                                    <option key={envase.id} value={envase.id}>{envase.name}</option>
+                                ))
+                            }
+                        </Field>
                         {
-                            envases.map(envase => (
-                                <option key={envase.id} value={envase.id}>{envase.name}</option>
-                            ))
+                            errors.packageId && touched.packageId && (
+                                <section className='validation-error'>
+                                    <p>{errors.packageId}</p>
+                                </section>
+                            )
                         }
-                    </Field>
-                    {
-                        errors.packageId && touched.packageId && (
-                            <section className='validation-error'>
-                                <p>{errors.packageId}</p>
-                            </section>
-                        )
-                    }
-                    <label htmlFor="price">Precio</label>
-                    <input type="number" name="price" value={values.price} onChange={handleChange} onBlur={handleBlur} />
-                    {
-                        errors.price && touched.price && (
-                            <section className='validation-error'>
-                                <p>{errors.price}</p>
-                            </section>
-                        )
-                    }
+                    </section>
+                    <section className="form__field">
+                        <label htmlFor="price">Precio</label>
+                        <input type="number" name="price" value={values.price} onChange={handleChange} onBlur={handleBlur} />
+                        {
+                            errors.price && touched.price && (
+                                <section className='validation-error'>
+                                    <p>{errors.price}</p>
+                                </section>
+                            )
+                        }
+                    </section>
                     <button type="submit" className='form__submit-button' disabled={isSubmitting}>Agregar Envase</button>
                 </form>
             )}

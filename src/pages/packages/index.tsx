@@ -34,6 +34,11 @@ const Package = () => {
                 onSubmit={handleCreatePackage}
             />
             {
+                packageSelector.length === 0 && (
+                    <h3>No hay Envases</h3>
+                )
+            }
+            {
                 packageSelector && (
                     <section className='package__container'>
                         {

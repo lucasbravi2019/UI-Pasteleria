@@ -30,6 +30,11 @@ const HomePage = () => {
             <SearchInput
                 dispatch={(recipe: string) => dispatch(filterRecipesByName(recipe))}
             />
+            {
+                recipeSelector.length < 1 && (
+                    <h1>Actualmente no hay recetas</h1>
+                )
+            }
             <div className="recipes__container">
                 {
                     recipeFilterSelect && recipeFilterSelect.length > 0 && recipeFilterSelect.map((recipe, index) => (
@@ -50,11 +55,6 @@ const HomePage = () => {
                             recipe={recipe}
                         />
                     ))
-                }
-                {
-                    recipeSelector.length < 1 && (
-                        <h1>Actualmente no hay recetas</h1>
-                    )
                 }
             </div>
         </>

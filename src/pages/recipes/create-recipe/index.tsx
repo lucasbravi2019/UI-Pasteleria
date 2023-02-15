@@ -18,14 +18,20 @@ import {
     recipesSelector,
     runAddRecipe,
     runLoadRecipes,
+    runUpdateRecipe,
 } from '../../../redux/reducers/recipeSlice'
+
+const initialValue = {
+    id: '',
+    name: ''
+}
 
 const RecipePage = () => {
     const dispatch = useAppDispatch()
     const recipeSelector = useAppSelector(recipesSelector)
     const recipeFilterSelect = useAppSelector(recipeFilterSelector)
-    const [, setInputValue] = useState<Recipe>()
-    const [, setUpdating] = useState(false)
+    const [inputValue, setInputValue] = useState<Recipe>(initialValue)
+    const [updating, setUpdating] = useState(false)
 
     useEffect(() => {
         dispatch(resetMessages())
@@ -33,59 +39,69 @@ const RecipePage = () => {
     }, [])
 
     const handleCreateRecipe = (recipeName: any) => dispatch(runAddRecipe(recipeName))
+    const handleUpdateRecipe = (recipeName: any) => {
+        dispatch(runUpdateRecipe(recipeName))
+        setUpdating(false)
+        setInputValue(initialValue)
+    }
+
+    useEffect(() => {
+        if (!updating) {
+            setInputValue(initialValue)
+        }
+    }, [updating])
 
     return (
         <section>
             <h1>Crear Receta</h1>
+            <FormCreateRecipe
+                initialValues={inputValue}
+                onSubmit={updating ? handleUpdateRecipe : handleCreateRecipe}
+                update={updating}
+                setUpdate={setUpdating}
+            />
+            <SearchInput
+                dispatch={(recipe: string) => dispatch(filterRecipesByName(recipe))}
+            />
             {
-                <FormCreateRecipe
-                    initialValues={{ name: '' }}
-                    onSubmit={handleCreateRecipe}
-                />
+                recipeSelector.length === 0 && (
+                    <h3>No hay Recetas</h3>
+                )
             }
             {
-                (
-                    <>
-                        <SearchInput
-                            dispatch={(recipe: string) => dispatch(filterRecipesByName(recipe))}
-                        />
+                recipeFilterSelect && recipeFilterSelect.length > 0 && (
+                    <section className='recipes__container'>
                         {
-                            recipeFilterSelect && recipeFilterSelect.length > 0 && (
-                                <section className='recipes__container'>
-                                    {
-                                        recipeFilterSelect.map(recipe => (
-                                            <RecipeCard
-                                                recipe={recipe}
-                                                deletable={true}
-                                                updatable={true}
-                                                setValue={setInputValue}
-                                                setUpdating={setUpdating}
-                                                key={recipe.id}
-                                            />
-                                        ))
-                                    }
-                                </section>
-                            )
+                            recipeFilterSelect.map(recipe => (
+                                <RecipeCard
+                                    recipe={recipe}
+                                    deletable={true}
+                                    updatable={true}
+                                    setValue={setInputValue}
+                                    setUpdating={setUpdating}
+                                    key={recipe.id}
+                                />
+                            ))
                         }
+                    </section>
+                )
+            }
+            {
+                recipeSelector && recipeFilterSelect.length == 0 && (
+                    <section className='recipes__container'>
                         {
-                            recipeSelector && recipeFilterSelect.length == 0 && (
-                                <section className='recipes__container'>
-                                    {
-                                        recipeSelector.map(recipe => (
-                                            <RecipeCard
-                                                recipe={recipe}
-                                                deletable={true}
-                                                updatable={true}
-                                                setValue={setInputValue}
-                                                setUpdating={setUpdating}
-                                                key={recipe.id}
-                                            />
-                                        ))
-                                    }
-                                </section>
-                            )
+                            recipeSelector.map(recipe => (
+                                <RecipeCard
+                                    recipe={recipe}
+                                    deletable={true}
+                                    updatable={true}
+                                    setValue={setInputValue}
+                                    setUpdating={setUpdating}
+                                    key={recipe.id}
+                                />
+                            ))
                         }
-                    </>
+                    </section>
                 )
             }
         </section>

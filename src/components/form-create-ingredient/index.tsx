@@ -6,8 +6,9 @@ const FormCreateIngredient = ({ initialValues, onSubmit }: { initialValues: Ingr
     return (
         <Formik
             initialValues={initialValues}
-            onSubmit={(values, { setSubmitting }) => {
+            onSubmit={(values, { setSubmitting, resetForm }) => {
                 onSubmit(values);
+                resetForm()
                 setSubmitting(false)
             }}
             validate={(values) => {
@@ -27,15 +28,17 @@ const FormCreateIngredient = ({ initialValues, onSubmit }: { initialValues: Ingr
                 handleBlur
             }) => (
                 <form onSubmit={handleSubmit} className="form__container">
-                    <label htmlFor="name">Ingrediente</label>
-                    <input type="text" name="name" onChange={handleChange} onBlur={handleBlur} value={values.name} />
-                    {
-                        errors.name && touched.name && (
-                            <section className='validation-error'>
-                                <p>{errors.name}</p>
-                            </section>
-                        )
-                    }
+                    <section className="form__field">
+                        <label htmlFor="name">Ingrediente</label>
+                        <input type="text" name="name" onChange={handleChange} onBlur={handleBlur} value={values.name} />
+                        {
+                            errors.name && touched.name && (
+                                <section className='validation-error'>
+                                    <p>{errors.name}</p>
+                                </section>
+                            )
+                        }
+                    </section>
                     <button type="submit" className='form__submit-button'>Crear Ingrediente</button>
                 </form>
             )}
