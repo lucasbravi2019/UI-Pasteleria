@@ -4,12 +4,15 @@ import { Formik } from 'formik'
 
 import { RecipeName } from '../../interfaces/recipe'
 
-const FormCreateRecipe = ({ initialValues, onSubmit }: { initialValues: RecipeName, onSubmit: Function }) => {
+const FormCreateRecipe = ({ initialValues, onSubmit, update, setUpdate }:
+    { initialValues: RecipeName, onSubmit: Function, update: boolean, setUpdate: Function }) => {
     return (
         <Formik
+            enableReinitialize={true}
             initialValues={initialValues}
-            onSubmit={(values, { setSubmitting }) => {
+            onSubmit={(values, { setSubmitting, resetForm }) => {
                 onSubmit(values)
+                resetForm()
                 setSubmitting(false)
             }}
             validate={(values) => {
@@ -27,6 +30,7 @@ const FormCreateRecipe = ({ initialValues, onSubmit }: { initialValues: RecipeNa
                 handleSubmit,
                 handleChange,
                 handleBlur,
+                resetForm,
                 isSubmitting
             }) => (
                 <form onSubmit={handleSubmit} className="form__container">
@@ -47,7 +51,19 @@ const FormCreateRecipe = ({ initialValues, onSubmit }: { initialValues: RecipeNa
                         type='submit'
                         className='form__submit-button'
                         disabled={isSubmitting}
-                    >Crear Receta</button>
+                    >{update ? 'Actualizar Receta' : 'Crear Receta'}</button>
+                    {
+                        update &&
+                        <button
+                            className='form__submit-button'
+                            onClick={() => {
+                                resetForm()
+                                setUpdate(false)
+                            }}
+                        >
+                            Cancelar
+                        </button>
+                    }
                 </form>
             )}
 

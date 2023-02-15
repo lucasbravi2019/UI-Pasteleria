@@ -40,6 +40,11 @@ const IngredientPage = () => {
             <SearchInput
                 dispatch={(name: string) => dispatch(filterIngredients(name))}
             />
+            {
+                ingredientSelector.length === 0 && (
+                    <h3>No hay ingredientes</h3>
+                )
+            }
             <section className='ingredient__container'>
                 {
                     ingredientFilterSelector && ingredientFilterSelector.length > 0 && ingredientFilterSelector.map(ingredient =>
@@ -58,11 +63,6 @@ const IngredientPage = () => {
                                 ingredient={ingredient}
                             />
                         </section>
-                    )
-                }
-                {
-                    ingredientSelector.length === 0 && (
-                        <h3>No hay ingredientes</h3>
                     )
                 }
                 <MessagePopup />

@@ -14,8 +14,9 @@ const FormIngredientPackage = ({ initialValues, ingredientes, envases, onSubmit 
     return (
         <Formik
             initialValues={initialValues}
-            onSubmit={(values, { setSubmitting }) => {
+            onSubmit={(values, { setSubmitting, resetForm }) => {
                 onSubmit(values)
+                resetForm()
                 setSubmitting(false)
             }}
             validate={(values) => {

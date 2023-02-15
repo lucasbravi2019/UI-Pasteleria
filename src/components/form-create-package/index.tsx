@@ -10,8 +10,9 @@ const FormCreatePackage = ({ initialValues, onSubmit }: { initialValues: Package
     return (
         <Formik
             initialValues={initialValues}
-            onSubmit={(values, { setSubmitting }) => {
+            onSubmit={(values, { setSubmitting, resetForm }) => {
                 onSubmit(values)
+                resetForm()
                 setSubmitting(false)
             }}
             validate={(values) => {

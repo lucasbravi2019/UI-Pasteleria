@@ -46,11 +46,25 @@ const recipeSlice = createSlice({
         },
         runDeleteRecipe(state) {
             return state
+        },
+        runUpdateRecipe(state) {
+            return state
         }
     }
 })
 
-export const { loadRecipes, loadRecipe, addRecipe, filterRecipesByName, removeRecipe, runLoadRecipes, runLoadRecipe, runAddRecipe, runDeleteRecipe } = recipeSlice.actions
+export const {
+    loadRecipes,
+    loadRecipe,
+    addRecipe,
+    filterRecipesByName,
+    removeRecipe,
+    runLoadRecipes,
+    runLoadRecipe,
+    runAddRecipe,
+    runDeleteRecipe,
+    runUpdateRecipe
+} = recipeSlice.actions
 
 export const recipesSelector = (state: RootState) => state.recipeReducer.recipes
 export const recipeSelector = (state: RootState) => state.recipeReducer.recipe
