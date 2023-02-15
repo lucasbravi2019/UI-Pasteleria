@@ -4,7 +4,6 @@ import { Recipe } from '../../interfaces/recipe'
 import RecipeIngredientItem from '../recipe-ingredient-item'
 
 const RecipeDetailedCard = ({ recipe }: { recipe: Recipe }) => {
-
     return (
         <section className="recipe-detailed-card">
             <h1 className="recipe-detailed-card__title"><strong>Receta:</strong> {recipe.name}</h1>
