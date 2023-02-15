@@ -4,13 +4,13 @@ import {
 } from 'formik'
 
 import {
-    IngredientField,
+    IngredientFieldDTO,
     IngredientPackageDTO,
 } from '../../interfaces/ingredient'
 import { PackageField } from '../../interfaces/package'
 
 const FormIngredientPackage = ({ initialValues, ingredientes, envases, onSubmit }:
-    { initialValues: IngredientPackageDTO, ingredientes: IngredientField[], envases: PackageField[], onSubmit: Function }) => {
+    { initialValues: IngredientPackageDTO, ingredientes: IngredientFieldDTO[], envases: PackageField[], onSubmit: Function }) => {
     return (
         <Formik
             initialValues={initialValues}

@@ -6,7 +6,7 @@ import { runDeleteIngredient } from '../../redux/reducers/ingredientSlice'
 import IngredientPackageItem from '../ingredient-package-item'
 import SubmitButton from '../submit-button'
 
-const IngredientItem = ({ ingredient }: { ingredient: IngredientMultiPackage }) => {
+const IngredientItem = ({ ingredient, handleEdit }: { ingredient: IngredientMultiPackage, handleEdit: Function }) => {
     const dispatch = useAppDispatch()
 
     const handleDeleteIngredient = (id: any) => dispatch(runDeleteIngredient(id))
@@ -33,11 +33,18 @@ const IngredientItem = ({ ingredient }: { ingredient: IngredientMultiPackage }) 
                         </>
                     )
                 }
-                <SubmitButton
-                    buttonText='Borrar Ingrediente'
-                    className='card__delete-button'
-                    onClick={() => handleDeleteIngredient(ingredient.id)}
-                />
+                <section className="button-grid__container">
+                    <SubmitButton
+                        buttonText='Editar Ingrediente'
+                        className='card__edit-button'
+                        onClick={() => handleEdit(ingredient)}
+                    />
+                    <SubmitButton
+                        buttonText='Borrar Ingrediente'
+                        className='card__delete-button'
+                        onClick={() => handleDeleteIngredient(ingredient.id)}
+                    />
+                </section>
             </section>
         </>
     )

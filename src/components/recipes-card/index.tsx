@@ -50,7 +50,7 @@ const RecipeCard = ({ recipe, updatable, deletable, setValue, setUpdating }:
 
             <h3 className="recipe-card__title"><strong>Receta:</strong> {recipe.name}</h3>
             {recipe.price && recipe.price > 0 ? (
-                <p className="recipe-card__paragraph"><strong>Precio: </strong>$ {recipe.price?.toFixed(2)}</p>
+                <p className="recipe-card__paragraph"><strong>Precio: </strong>$ {recipe.price?.toFixed(2)} (x3)</p>
             ) : (
                 <p className="recipe-card__paragraph"><strong>Precio: </strong>$ 0</p>
             )}
