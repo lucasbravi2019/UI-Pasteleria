@@ -6,9 +6,22 @@ import {
     PUT,
 } from './config'
 
-const callApi = async (endpoint: string, verb: {}) => {
+
+const getEndpointWithParams = (endpoint: string, params: any) => {
+    if (Object.keys(params).length === 0) {
+        return endpoint
+    }
+
+    let url = new URL(`${baseUrl}/${endpoint}`)
+    let searchParams = new URLSearchParams(url.search)
+    Object.keys(params).forEach(key => searchParams.append(key, params[key]))
+
+    return `${endpoint}?${searchParams.toString()}`
+}
+
+const callApi = async (endpoint: string, verb: {}): Promise<any> => {
     try {
-        const response = await fetch(`${baseUrl}/${endpoint}`, verb)
+        const response: Response = await fetch(`${baseUrl}/${endpoint}`, verb)
         switch (response.status) {
             case 500:
                 return await response.json()
@@ -27,11 +40,11 @@ const callApi = async (endpoint: string, verb: {}) => {
                 return await response.json()
         }
     } catch (error) {
-        return
+        return Promise.reject(error)
     }
 }
 
-export const getData = (endpoint: string) => callApi(endpoint, GET())
+export const getData = (endpoint: string, params = {}) => callApi(getEndpointWithParams(endpoint, params), GET())
 
 export const postData = (endpoint: string, body = {}) => callApi(endpoint, POST(body))
 
@@ -41,10 +54,10 @@ export const deleteData = (endpoint: string) => callApi(endpoint, DELETE())
 
 export const endpoints = {
     getAllRecipes: 'recipes',
-    getRecipeByOid: (oid: string) => `recipes/${oid}`,
+    getRecipeByOid: 'recipes/find-one',
     createRecipe: 'recipes',
     updateRecipe: (oid: string) => `recipes/${oid}`,
-    deleteRecipe: (oid: string) => `recipes/${oid}`,
+    deleteRecipe: (oid: string) => `recipes/delete-one/${oid}`,
     addIngredientToRecipe: (recipeId: string, ingredientId: string): string => `ingredients/${ingredientId}/recipes/${recipeId}`,
     getAllIngredients: 'ingredients',
     createIngredient: 'ingredients',

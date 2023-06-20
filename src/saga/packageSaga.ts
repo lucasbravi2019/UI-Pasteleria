@@ -76,6 +76,8 @@ export function* deletePackageSaga(action: any): Generator<any> {
 
 export function* changePackagePriceSaga(action: any): Generator<any> {
     try {
+        console.log(action.payload);
+
         const price: PackagePrice = {
             price: action.payload.price
         }
