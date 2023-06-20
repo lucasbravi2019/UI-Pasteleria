@@ -41,10 +41,14 @@ export function* getRecipeSaga(): Generator<any> {
 
 export function* getRecipeByIdSaga(action: any): Generator<any> {
   try {
-    const response: any = yield call(getData, endpoints.getRecipeByOid(action.payload))
+    const body = { id: action.payload }
+    const response: any = yield call(getData, endpoints.getRecipeByOid, body)
+
     if (response.error) {
+      console.log(response.error);
       return
     }
+
     yield put(loadRecipe(response.body))
   } catch (error) {
     console.log(error);

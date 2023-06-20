@@ -15,6 +15,7 @@ const recipeSlice = createSlice({
     reducers: {
         loadRecipes(state, action) {
             state.recipes = action.payload
+            state.recipesFiltered = state.recipes
         },
         loadRecipe(state, action) {
             state.recipe = action.payload
@@ -24,16 +25,18 @@ const recipeSlice = createSlice({
                 ...state.recipes,
                 action.payload
             ]
+            state.recipesFiltered = state.recipes
         },
         filterRecipesByName(state, action) {
             if (action.payload === '') {
-                state.recipesFiltered = []
-            } else {
-                state.recipesFiltered = state.recipes.filter(recipe => recipe.name.toLowerCase().includes(action.payload))
+                state.recipesFiltered = state.recipes
+                return
             }
+            state.recipesFiltered = state.recipes.filter(recipe => recipe.name.toLowerCase().includes(action.payload))
         },
         removeRecipe(state, action) {
             state.recipes = state.recipes.filter(recipe => recipe.id !== action.payload)
+            state.recipesFiltered = state.recipes
         },
         runLoadRecipes(state) {
             return state

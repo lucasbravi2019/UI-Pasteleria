@@ -14,30 +14,35 @@ const ingredientSlice = createSlice({
     reducers: {
         loadIngredients(state, action) {
             state.ingredients = action.payload
+            state.ingredientsFiltered = state.ingredients
         },
         addIngredient(state, action) {
             state.ingredients = [
                 ...state.ingredients,
                 action.payload]
+            state.ingredientsFiltered = state.ingredients
         },
         addIngredients(state, action) {
             state.ingredients = [
                 ...state.ingredients,
                 ...action.payload
             ]
+            state.ingredientsFiltered = state.ingredients
         },
         filterIngredients(state, action) {
             if (action.payload === '') {
-                state.ingredientsFiltered = []
+                state.ingredientsFiltered = state.ingredients
             } else {
                 state.ingredientsFiltered = state.ingredients.filter(ingredient => ingredient.name.toLowerCase().includes(action.payload))
             }
         },
         removeIngredient(state, action) {
             state.ingredients = state.ingredients.filter(ingredient => ingredient.id !== action.payload)
+            state.ingredientsFiltered = state.ingredients
         },
         removeIngredients(state, action) {
             state.ingredients = state.ingredients.filter(ingredient => !action.payload.includes(ingredient.id))
+            state.ingredientsFiltered = state.ingredients
         },
         runLoadIngredients(state) {
             return state
