@@ -15,7 +15,6 @@ import { resetMessages } from '../../../redux/reducers/messageSlice'
 import {
     filterRecipesByName,
     recipeFilterSelector,
-    recipesSelector,
     runAddRecipe,
     runLoadRecipes,
     runUpdateRecipe,
@@ -28,7 +27,6 @@ const initialValue = {
 
 const RecipePage = () => {
     const dispatch = useAppDispatch()
-    const recipeSelector = useAppSelector(recipesSelector)
     const recipeFilterSelect = useAppSelector(recipeFilterSelector)
     const [inputValue, setInputValue] = useState<Recipe>(initialValue)
     const [updating, setUpdating] = useState(false)
@@ -64,33 +62,15 @@ const RecipePage = () => {
                 dispatch={(recipe: string) => dispatch(filterRecipesByName(recipe))}
             />
             {
-                recipeSelector.length === 0 && (
+                recipeFilterSelect != null && recipeFilterSelect.length === 0 && (
                     <h3>No hay Recetas</h3>
                 )
             }
             {
-                recipeFilterSelect && recipeFilterSelect.length > 0 && (
+                recipeFilterSelect != null && recipeFilterSelect.length > 0 && (
                     <section className='recipes__container'>
                         {
                             recipeFilterSelect.map(recipe => (
-                                <RecipeCard
-                                    recipe={recipe}
-                                    deletable={true}
-                                    updatable={true}
-                                    setValue={setInputValue}
-                                    setUpdating={setUpdating}
-                                    key={recipe.id}
-                                />
-                            ))
-                        }
-                    </section>
-                )
-            }
-            {
-                recipeSelector && recipeFilterSelect.length == 0 && (
-                    <section className='recipes__container'>
-                        {
-                            recipeSelector.map(recipe => (
                                 <RecipeCard
                                     recipe={recipe}
                                     deletable={true}

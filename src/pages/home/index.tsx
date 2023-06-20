@@ -12,12 +12,10 @@ import {
 import {
     filterRecipesByName,
     recipeFilterSelector,
-    recipesSelector,
     runLoadRecipes,
 } from '../../redux/reducers/recipeSlice'
 
 const HomePage = () => {
-    const recipeSelector: Recipe[] = useAppSelector(recipesSelector)
     const recipeFilterSelect: Recipe[] = useAppSelector(recipeFilterSelector)
     const dispatch = useAppDispatch()
 
@@ -31,23 +29,13 @@ const HomePage = () => {
                 dispatch={(recipe: string) => dispatch(filterRecipesByName(recipe))}
             />
             {
-                recipeSelector.length < 1 && (
+                recipeFilterSelect != null && recipeFilterSelect.length === 0 && (
                     <h1>Actualmente no hay recetas</h1>
                 )
             }
             <div className="recipes__container">
                 {
-                    recipeFilterSelect && recipeFilterSelect.length > 0 && recipeFilterSelect.map((recipe, index) => (
-                        <RecipeCard
-                            key={index}
-                            deletable={false}
-                            updatable={false}
-                            recipe={recipe}
-                        />
-                    ))
-                }
-                {
-                    recipeSelector && recipeSelector.length > 0 && recipeFilterSelect && recipeFilterSelect.length === 0 && recipeSelector.map((recipe, index) => (
+                    recipeFilterSelect != null && recipeFilterSelect.length > 0 && recipeFilterSelect.map((recipe, index) => (
                         <RecipeCard
                             key={index}
                             deletable={false}

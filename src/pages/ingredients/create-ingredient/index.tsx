@@ -18,7 +18,6 @@ import {
 import {
     filterIngredients,
     ingredientsFilterSelector,
-    ingredientsSelector,
     runAddIngredient,
     runLoadIngredients,
     runUpdateIngredient,
@@ -32,7 +31,6 @@ const initialValue: (id: string) => IngredientFieldDTO = (id: string): Ingredien
 }
 
 const IngredientPage = () => {
-    const ingredientSelector: IngredientMultiPackage[] = useAppSelector(ingredientsSelector)
     const ingredientFilterSelector: IngredientMultiPackage[] = useAppSelector(ingredientsFilterSelector)
     const [initialValues, setInitialValues] = useState<IngredientFieldDTO>(initialValue(''))
     const [isUpdating, setIsUpdating] = useState(false)
@@ -67,24 +65,13 @@ const IngredientPage = () => {
                 dispatch={(name: string) => dispatch(filterIngredients(name))}
             />
             {
-                ingredientSelector.length === 0 && (
+                ingredientFilterSelector != null && ingredientFilterSelector.length === 0 && (
                     <h3>No hay ingredientes</h3>
                 )
             }
             <section className='ingredient__container'>
                 {
-                    ingredientFilterSelector && ingredientFilterSelector.length > 0 && ingredientFilterSelector.map(ingredient =>
-                        <section key={ingredient.id}>
-                            <IngredientItem
-                                ingredient={ingredient}
-                                handleEdit={setInitialValues}
-                            />
-                        </section>
-                    )
-                }
-                {
-                    ingredientSelector && ingredientFilterSelector.length === 0 && ingredientSelector.length > 0
-                    && ingredientSelector.map(ingredient =>
+                    ingredientFilterSelector != null && ingredientFilterSelector.length > 0 && ingredientFilterSelector.map(ingredient =>
                         <section key={ingredient.id}>
                             <IngredientItem
                                 ingredient={ingredient}

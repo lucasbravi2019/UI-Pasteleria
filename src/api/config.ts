@@ -1,5 +1,8 @@
 export const GET = () => {
-    return { method: 'GET' }
+    return {
+        method: 'GET'
+    }
+
 }
 
 export const POST = (body = {}) => {
