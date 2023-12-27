@@ -29,8 +29,15 @@ const RecipePage = () => {
         dispatch(setRecipeId(recipeId))
     }
 
-    const deleteRecipe = () => {
-        dispatch(runDeleteRecipe())
+    const deleteRecipe = (recipeId) => {
+        dispatch(runDeleteRecipe(recipeId))
+    }
+
+    const tableData = (recipes) => {
+        return {
+            data: recipes,
+            onDelete: (recipeId) => deleteRecipe(recipeId)
+        }
     }
 
     return (
@@ -38,10 +45,10 @@ const RecipePage = () => {
             <h1>Recetas</h1>
             <CircleSpinner loading={loading}>
                 <div className="table-recipes">
-                    {!isEmpty(recipes) ? (
+                    {recipes != null && recipes.length > 0 ? (
                         <TableGrid
                             columns={columns(recipes)}
-                            data={data(recipes, onClick)}
+                            data={data(tableData(recipes))}
                         />
                     ) : (
                         <Empty description={<p>No hay recetas</p>} />

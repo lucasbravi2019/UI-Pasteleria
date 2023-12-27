@@ -1,6 +1,6 @@
 import { faDollarSign, faEye, faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import Link from "antd/es/typography/Link";
+import { Link } from "react-router-dom"
 import { Button, Tooltip } from "antd/lib"
 
 
@@ -26,22 +26,22 @@ export const columns = (recipes) => [
         dataIndex: "actions",
         key: "actions",
         width: 100,
-        render: (actions) => {
+        render: (_, record) => {
             return (
                 <div className="grid-3-lg">
                     <Tooltip title='Ver Receta'>
-                        <Link to={`recetas/`} 
+                        <Link to={`recetas/${record.recipeId}`}
                             className='link__icon'
-                            ><FontAwesomeIcon icon={faEye} /></Link>
+                        ><FontAwesomeIcon icon={faEye} /></Link>
                     </Tooltip>
                     <Tooltip title='Editar Receta'>
-                        <Link to={`recetas/editar/`}
+                        <Link to={`recetas/editar/${record.recipeId}`}
                             className='link__icon'
                         ><FontAwesomeIcon icon={faPenToSquare} /></Link>
                     </Tooltip>
                     <Tooltip title='Borrar Receta'>
                         <Button type="primary" danger
-                            onClick={() => actions.onClick(actions.id)}
+                            onClick={() => record.onDelete(record.recipeId)}
                         ><FontAwesomeIcon icon={faTrash} /></Button>
                     </Tooltip>
                 </div>
@@ -59,17 +59,15 @@ const getFilters = (recipes) => {
     })
 }
 
-export const data = (recipes, onClick) => {
-    return Object.values(recipes).map(recipe => {
+export const data = (tableData) => {
+    return Object.values(tableData.data).map(recipe => {
+        console.log(recipe);
         return {
             key: `${recipe.id}`,
             name: recipe.name,
-            ingredients: recipe.ingredients,
             price: recipe.price,
-            actions: {
-                id: recipe.id,
-                onClick: onClick
-            }
+            recipeId: recipe.id,
+            onDelete: (recipeId) => tableData.onDelete(recipeId)
         }
     })
 }

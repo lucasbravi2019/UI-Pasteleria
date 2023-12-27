@@ -7,6 +7,7 @@ import {
 import homeReducer from '../../pages/home/slice'
 import recipeReducer from '../../pages/recipes/slice'
 import loadingReducer from '../../redux/slice'
+import showRecipeReducer from '../../pages/recipe/slice'
 
 import { rootSaga } from '../../saga/rootSaga'
 
@@ -17,7 +18,8 @@ const storeConfig = () => {
     reducer: {
       homeReducer,
       recipeReducer,
-      loadingReducer
+      loadingReducer,
+      showRecipeReducer,
     },
     middleware: [...getDefaultMiddleware({ thunk: false }), sagaMiddleware]
   })

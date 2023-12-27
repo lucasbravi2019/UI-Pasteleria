@@ -1,6 +1,6 @@
 import { Table, ConfigProvider } from 'antd';
 import React from 'react';
-import es_ES  from 'antd/locale/es_ES'
+import es_ES from 'antd/locale/es_ES'
 
 const TableGrid = (props) => {
   const { columns, data } = props
@@ -8,10 +8,10 @@ const TableGrid = (props) => {
   return (
     <>
       <ConfigProvider locale={es_ES}>
-        <Table columns={columns} dataSource={data} bordered />;
+        <Table columns={columns} dataSource={data} bordered />
       </ConfigProvider>
     </>
   )
-} 
+}
 
 export default TableGrid

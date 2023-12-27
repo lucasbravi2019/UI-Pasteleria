@@ -6,6 +6,7 @@ import { Route, BrowserRouter as Router, Switch } from 'react-router-dom'
 import NavigationButton from '../components/navigation-button'
 import HomePage from '../pages/home'
 import RecipePage from '../pages/recipes'
+import ShowRecipe from '../pages/recipe'
 
 const App = () => {
     return (
@@ -26,6 +27,7 @@ const App = () => {
                     <Switch>
                         <Route exact path="/" component={HomePage} />
                         <Route exact path="/recetas" component={RecipePage} />
+                        <Route exact path="/recetas/:recipeId" component={ShowRecipe} />
                     </Switch>
                 </main>
             </section>

@@ -1,34 +1,27 @@
 import { call, put, select, takeLatest } from "redux-saga/effects";
 import { deleteData, endpoints, getData } from "../../api";
 import { setLoaded, setLoading } from "../../redux/slice";
-import { closeModal, loadIngredients, loadPackages, loadRecipes, removeRecipe, runDeleteRecipe, runLoadRecipes } from "./slice";
-import { normalizeRecipes } from "./utils/normalizer";
+import { closeModal, loadRecipes, removeRecipe, runDeleteRecipe, runLoadRecipes } from "./slice";
 import { selectRecipeIdSelector } from "./selectors";
 
 export function* getAllRecipesSaga() {
-    try {   
+    try {
         yield put(setLoading())
         const response = yield call(getData, endpoints.getAllRecipes)
-        const normalizedData = normalizeRecipes(response.body)
-        const recipes = normalizedData.entities.recipes
-        const ingredients = normalizedData.entities.ingredients
-        const packages = normalizedData.entities.packages
-        yield put(loadRecipes(recipes))
-        yield put(loadIngredients(ingredients))
-        yield put(loadPackages(packages))
+        yield put(loadRecipes(response.body))
         yield put(setLoaded())
     } catch (error) {
         yield put(setLoaded())
     }
 }
 
-export function* deleteRecipeSaga() {
+export function* deleteRecipeSaga(action) {
     try {
-        const recipeId = yield select(selectRecipeIdSelector)
-        const response = yield call(deleteData, endpoints.deleteRecipe(recipeId))
-        console.log(response);
-        yield put(removeRecipe(recipeId))
-        yield put(closeModal())
+        const response = yield call(deleteData, endpoints.deleteRecipe(action.payload))
+        if (response.error == null) {
+            yield put(removeRecipe(action.payload))
+            yield put(closeModal())
+        }
     } catch (error) {
         console.log(error);
     }
