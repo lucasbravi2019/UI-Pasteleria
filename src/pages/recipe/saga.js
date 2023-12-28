@@ -5,8 +5,7 @@ import { endpoints, getData } from "../../api";
 export function* getRecipeSaga(action) {
     try {
         const response = yield call(getData, endpoints.getRecipeById(action.payload))
-        console.log(response);
-        if (response.error == null) {
+        if (response.error == '') {
             yield put(loadRecipe(response.body))
         }
     } catch (error) {

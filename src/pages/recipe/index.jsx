@@ -1,35 +1,43 @@
-import { useEffect } from "react"
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { runLoadRecipe } from "./slice"
-import { selectRecipeIdSelector, selectRecipeNameSelector, selectRecipePriceSelector, selectShowRecipeSelector } from "./selectors"
-import { Empty } from "antd"
+import { runLoadRecipe } from './slice'
+import { selectRecipeNameSelector, selectShowRecipeSelector } from './selectors'
+import './index.scss'
+import { Descriptions, Empty } from 'antd'
+import { getDescriptions } from './util/descriptions'
 
 const ShowRecipe = ({ match }) => {
     const dispatch = useDispatch()
     const recipeSelector = useSelector(selectShowRecipeSelector)
-    const recipeIdSelector = useSelector(selectRecipeIdSelector)
     const recipeNameSelector = useSelector(selectRecipeNameSelector)
-    const recipePriceSelector = useSelector(selectRecipePriceSelector)
 
     useEffect(() => {
         const recipeId = match.params.recipeId
         dispatch(runLoadRecipe(recipeId))
     }, [])
 
-
     return (
         <>
-            {
-                recipeSelector != null ? (
-                    <>
-                        <p>{recipeIdSelector}</p>
-                        <p>{recipeNameSelector}</p>
-                        <p>{recipePriceSelector}</p>
-                    </>
-                ) : (
-                    <Empty description={<p>No se encontró la receta</p>} />
-                )
-            }
+            {recipeSelector != null ? (
+                <div>
+                    <Descriptions
+                        title={`Viendo receta: ${recipeNameSelector}`}
+                        bordered
+                        items={getDescriptions(recipeSelector)}
+                        layout="vertical"
+                        labelStyle={{
+                            margin: '0 auto',
+                            display: 'block',
+                            fontSize: '1.2rem',
+                            fontWeight: 'bold',
+                            textAlign: 'center',
+                        }}
+                        column={2}
+                    />
+                </div>
+            ) : (
+                <Empty description={<p>No se encontró la receta</p>} />
+            )}
         </>
     )
 }

@@ -54,7 +54,7 @@ export const deleteData = (endpoint) => callApi(endpoint, DELETE())
 
 export const endpoints = {
     getAllRecipes: 'recipes',
-    getRecipeById: (id) => `recipes/${id}`,
+    getRecipeById: (id) => `recipes/find-one/${id}`,
     createRecipe: 'recipes',
     updateRecipe: (id) => `recipes/${id}`,
     deleteRecipe: (id) => `recipes/${id}`,
