@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
     modalOpen: false,
-    recipes: {},
+    recipes: [],
     event: null,
     recipeId: null
 }
@@ -28,16 +28,18 @@ const recipeSlice = createSlice({
             state.recipeId = action.payload
         },
         removeRecipe(state, action) {
-            const newMap = { ...state.recipes }
-            delete newMap[action.payload]
-            state.recipes = { ...newMap }
+            const newRecipes = state.recipes.filter(recipe => recipe.id !== action.payload)
+            state.recipes = [...newRecipes]
         },
         runLoadRecipes(state) {
             return state
         },
         runDeleteRecipe(state) {
             return state
-        }
+        },
+        runCreateRecipe(state) {
+            return state
+        },
     }
 })
 
@@ -49,7 +51,8 @@ export const {
     setRecipeId,
     removeRecipe,
     runLoadRecipes,
-    runDeleteRecipe
+    runDeleteRecipe,
+    runCreateRecipe,
 } = recipeSlice.actions
 
 export default recipeSlice.reducer

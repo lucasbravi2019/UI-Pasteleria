@@ -2,6 +2,7 @@ import { faDollarSign, faEye, faPenToSquare, faTrash } from "@fortawesome/free-s
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { Link } from "react-router-dom"
 import { Button, Tooltip } from "antd/lib"
+import ModalCustom from "../../../components/modal-custom"
 
 
 export const columns = (recipes) => [
@@ -41,9 +42,10 @@ export const columns = (recipes) => [
                     </Tooltip>
                     <Tooltip title='Borrar Receta'>
                         <Button type="primary" danger
-                            onClick={() => record.onDelete(record.recipeId)}
+                            onClick={() => record.onOpenModal()}
                         ><FontAwesomeIcon icon={faTrash} /></Button>
                     </Tooltip>
+                    <ModalCustom text="Borrar Receta?" onOk={() => record.onDelete(record.recipeId)} />
                 </div>
             )
         }
@@ -61,13 +63,13 @@ const getFilters = (recipes) => {
 
 export const data = (tableData) => {
     return Object.values(tableData.data).map(recipe => {
-        console.log(recipe);
         return {
             key: `${recipe.id}`,
             name: recipe.name,
             price: recipe.price,
             recipeId: recipe.id,
-            onDelete: (recipeId) => tableData.onDelete(recipeId)
+            onDelete: (recipeId) => tableData.onDelete(recipeId),
+            onOpenModal: () => tableData.onOpenModal()
         }
     })
 }

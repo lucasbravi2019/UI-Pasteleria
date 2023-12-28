@@ -7,6 +7,8 @@ import NavigationButton from '../components/navigation-button'
 import HomePage from '../pages/home'
 import RecipePage from '../pages/recipes'
 import ShowRecipe from '../pages/recipe'
+import PackagePage from '../pages/packages'
+import IngredientPage from '../pages/ingredients'
 
 const App = () => {
     return (
@@ -28,6 +30,8 @@ const App = () => {
                         <Route exact path="/" component={HomePage} />
                         <Route exact path="/recetas" component={RecipePage} />
                         <Route exact path="/recetas/:recipeId" component={ShowRecipe} />
+                        <Route exact path="/envases" component={PackagePage} />
+                        <Route exact path="/ingredientes" component={IngredientPage} />
                     </Switch>
                 </main>
             </section>
