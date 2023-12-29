@@ -1,8 +1,10 @@
-import { call, put, takeLatest } from "redux-saga/effects";
-import { deleteData, endpoints, getData, postData } from "../../api";
-import { loadPackages, removePackage, runCreatePackage, runDeletePackage, runLoadPackages } from "./slice";
+import { call, put, select, takeLatest } from "redux-saga/effects";
+import { deleteData, endpoints, getData, postData, putData } from "../../api";
+import { loadPackages, removePackage, runCreatePackage, runDeletePackage, runLoadPackages, runUpdatePackage } from "./slice";
 import { setLoaded, setLoading } from "../../redux/slice";
 import { runCreateRecipe } from "../recipes/slice";
+import { selectPackageIdEditingSelector } from "./selectors";
+import { runShowMessage } from "../../components/message/slice";
 
 
 export function* getAllPackagesSaga() {
@@ -42,8 +44,40 @@ export function* deletePackageSaga(action) {
     }
 }
 
+export function* updatePackageSaga(action) {
+    try {
+        yield put(setLoading())
+        const packageId = yield select(selectPackageIdEditingSelector)
+        const body = {
+            id: packageId,
+            metric: action.payload.metric,
+            quantity: action.payload.quantity
+        }
+        const response = yield call(putData, endpoints.updatePackage, body)
+        if (response.error === '') {
+            yield put(runLoadPackages())
+            yield put(setLoaded())
+            const message = {
+                operation: 'PUT',
+                content: 'El envase fue editado correctamente',
+                error: false
+            }
+            yield put(runShowMessage(message))
+        }
+    } catch (error) {
+        const message = {
+            operation: 'PUT',
+            content: 'El envase no se pudo editar',
+            error: true
+        }
+        yield put(runShowMessage(message))
+        console.log(error);
+    }
+}
+
 export default function* packagesSaga() {
     yield takeLatest(runLoadPackages.type, getAllPackagesSaga)
     yield takeLatest(runCreatePackage.type, createPackageSaga)
     yield takeLatest(runDeletePackage.type, deletePackageSaga)
+    yield takeLatest(runUpdatePackage.type, updatePackageSaga)
 }

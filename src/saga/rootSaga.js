@@ -3,6 +3,7 @@ import homeSaga from '../pages/home/saga'
 import recipeSaga from '../pages/recipes/saga'
 import showRecipeSaga from '../pages/recipe/saga'
 import packagesSaga from '../pages/packages/saga'
+import messageSaga from '../components/message/saga'
 
 
 export function* rootSaga() {
@@ -10,6 +11,7 @@ export function* rootSaga() {
         homeSaga(),
         recipeSaga(),
         showRecipeSaga(),
-        packagesSaga()
+        packagesSaga(),
+        messageSaga()
     ])
 }

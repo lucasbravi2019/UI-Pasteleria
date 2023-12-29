@@ -1,13 +1,16 @@
 import { Form, Modal } from "antd"
+import { useEffect } from "react"
 
-const ModalForm = ({ title, initialValues, okText, open, onOk, onCancel, render, form }) => {
+const ModalForm = ({ form, title, initialValues, okText, open, onOk, onCancel, render }) => {
     return (
         <Modal
             open={open}
             title={title}
             okText={okText}
             cancelText='Cancelar'
-            onCancel={onCancel}
+            onCancel={() => {
+                onCancel()
+            }}
             onOk={() => {
                 form
                     .validateFields()
@@ -32,7 +35,7 @@ const ModalForm = ({ title, initialValues, okText, open, onOk, onCancel, render,
                 style={{
                     width: 600
                 }}
-            >{render}</Form>
+            >{render(initialValues)}</Form>
         </Modal>
     )
 }

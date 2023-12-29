@@ -1,7 +1,7 @@
 import { Select } from "antd"
+import { useEffect, useState } from "react"
 
-const SearchSelect = ({ placeholder, options, name, onChange }) => {
-
+const SearchSelect = ({ placeholder, options, name, onChange, initialValue }) => {
     const filterOption = (input, option) => {
         return (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
     }
@@ -14,7 +14,7 @@ const SearchSelect = ({ placeholder, options, name, onChange }) => {
         <>
             <Select
                 showSearch
-                defaultValue="default"
+                defaultValue={initialValue()}
                 placeholder={placeholder}
                 optionFilterProp="children"
                 filterOption={filterOption}

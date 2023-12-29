@@ -1,6 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { Button, Tooltip } from "antd"
-import { Link } from 'react-router-dom'
 import ModalCustom from "../../../components/modal-custom"
 import { faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons"
 
@@ -30,9 +29,10 @@ export const columns = (packages) => {
                 return (
                     <div className="grid-3-lg">
                         <Tooltip title='Editar Envase'>
-                            <Link to={`recetas/editar/${record.recipeId}`}
-                                className='link__icon'
-                            ><FontAwesomeIcon icon={faPenToSquare} /></Link>
+                            <Button type="primary" onClick={() => {
+                                record.onEdition()
+                            }}
+                            ><FontAwesomeIcon icon={faPenToSquare} /></Button>
                         </Tooltip>
                         <Tooltip title='Borrar Envase'>
                             <Button type="primary" danger
@@ -64,7 +64,8 @@ export const getData = (data) => {
             ...pkg,
             key: pkg.id,
             onDelete: () => data.onDelete(pkg.id),
-            onOpenModal: () => data.onOpenModal()
+            onOpenModal: () => data.onOpenModal(),
+            onEdition: () => data.onEdition(pkg),
         }
     })
 }
