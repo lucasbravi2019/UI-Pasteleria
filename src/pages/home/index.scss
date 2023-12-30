@@ -15,7 +15,11 @@
     font-size: 20px;
     text-align: center;
     margin: 0 auto;
+    padding: 0;
+    min-width: 40px;
     display: block;
     max-width: min-content;
+    box-sizing: border-box;
     color: rgb(162, 184, 161);
+    border: rgb(162, 184, 161) 2px solid;
 }

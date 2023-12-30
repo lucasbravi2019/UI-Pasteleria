@@ -36,9 +36,8 @@ export const columns = (recipes) => [
                         ><FontAwesomeIcon icon={faEye} /></Link>
                     </Tooltip>
                     <Tooltip title='Editar Receta'>
-                        <Link to={`recetas/editar/${record.recipeId}`}
-                            className='link__icon'
-                        ><FontAwesomeIcon icon={faPenToSquare} /></Link>
+                        <Button type="primary"
+                        ><FontAwesomeIcon icon={faPenToSquare} /></Button>
                     </Tooltip>
                     <Tooltip title='Borrar Receta'>
                         <Button type="primary" danger
@@ -52,11 +51,15 @@ export const columns = (recipes) => [
     }
 ]
 
+
+
 const getFilters = (recipes) => {
-    return Object.values(recipes).map(recipe => {
+    const recipeMap = new Map()
+    Object.values(recipes).forEach(recipe => recipeMap.set(recipe.name.toLowerCase(), recipe.name))
+    return Array.from(recipeMap.values()).map(recipe => {
         return {
-            text: recipe.name,
-            value: recipe.name
+            text: recipe,
+            value: recipe
         }
     })
 }

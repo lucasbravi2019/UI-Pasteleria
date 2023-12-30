@@ -1,5 +1,4 @@
 import FormInput from "../../../components/form-input"
-import FormNumber from "../../../components/form-number"
 
 export const render = () => {
     return (

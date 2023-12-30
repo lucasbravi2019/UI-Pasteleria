@@ -15,6 +15,8 @@ import { columns, data } from './utils/columns'
 import ModalForm from '../../components/ModalForm'
 import { render } from './utils/formInputs'
 import { Form } from 'antd'
+import Message from '../../components/message'
+import { selectMessageSelector } from '../../components/message/selectors'
 
 const RecipePage = () => {
     const dispatch = useDispatch()
@@ -22,6 +24,7 @@ const RecipePage = () => {
     const recipes = useSelector(selectRecipesSelector)
     const [openForm, setOpenForm] = useState(false)
     const [form] = Form.useForm()
+    const message = useSelector(selectMessageSelector)
 
     useEffect(() => {
         dispatch(runLoadRecipes())
@@ -42,12 +45,13 @@ const RecipePage = () => {
         return {
             data: recipes,
             onDelete: (recipeId) => deleteRecipe(recipeId),
-            onOpenModal: () => deleteModal()
+            onOpenModal: () => deleteModal(),
         }
     }
 
     return (
         <div>
+            <Message message={message} />
             <h1>Recetas</h1>
             <CircleSpinner loading={loading}>
                 <div className="table-recipes">
@@ -63,16 +67,19 @@ const RecipePage = () => {
             </CircleSpinner>
             <ModalForm
                 form={form}
-                render={render()}
+                render={() => render()}
                 initialValues={{}}
-                okText='Crear Receta'
+                okText="Crear Receta"
                 onCancel={() => setOpenForm(false)}
                 onOk={(body) => createRecipe(body)}
                 open={openForm}
                 title={'Crear receta'}
                 key={1}
             />
-            <FloatButton tooltip="Crear Receta" onClick={() => setOpenForm(true)} />
+            <FloatButton
+                tooltip="Crear Receta"
+                onClick={() => setOpenForm(true)}
+            />
         </div>
     )
 }

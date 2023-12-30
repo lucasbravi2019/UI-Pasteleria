@@ -61,7 +61,7 @@ export const endpoints = {
     addIngredientToRecipe: (recipeId, ingredientId) => `ingredients/${ingredientId}/recipes/${recipeId}`,
     getAllIngredients: 'ingredients',
     createIngredient: 'ingredients',
-    editIngredient: (id) => `ingredients/${id}`,
+    editIngredient: 'ingredients',
     deleteIngredient: (id) => `ingredients/${id}`,
     addPackageToIngredient: (ingredientId, packageId) => `packages/${packageId}/ingredients/${ingredientId}`,
     removePackageFromIngredients: (packageId) => `packages/${packageId}/ingredients`,

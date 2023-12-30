@@ -10,6 +10,7 @@ import loadingReducer from '../../redux/slice'
 import showRecipeReducer from '../../pages/recipe/slice'
 import packagesReducer from '../../pages/packages/slice'
 import messageReducer from '../../components/message/slice'
+import ingredientsReducer from '../../pages/ingredients/slice'
 
 import { rootSaga } from '../../saga/rootSaga'
 
@@ -23,7 +24,8 @@ const storeConfig = () => {
       loadingReducer,
       showRecipeReducer,
       packagesReducer,
-      messageReducer
+      messageReducer,
+      ingredientsReducer
     },
     middleware: [...getDefaultMiddleware({ thunk: false }), sagaMiddleware]
   })

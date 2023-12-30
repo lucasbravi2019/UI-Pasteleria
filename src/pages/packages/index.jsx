@@ -1,25 +1,32 @@
-import { Empty, FloatButton, Form, message } from "antd"
-import CircleSpinner from "../../components/circle-spinner"
-import TableGrid from "../../components/table"
-import ModalForm from "../../components/ModalForm"
+import { Empty, FloatButton, Form, message } from 'antd'
+import CircleSpinner from '../../components/circle-spinner'
+import TableGrid from '../../components/table'
+import ModalForm from '../../components/ModalForm'
 import { useDispatch, useSelector } from 'react-redux'
-import { selectIsLoadingSelector } from "../../redux/selectors"
-import { selectPackagesSelector } from "./selectors"
-import { useEffect, useState } from "react"
-import { closeModal, openModal, runCreateRecipe } from "../recipes/slice"
-import { resetPackageIdEditing, runCreatePackage, runDeletePackage, runLoadPackages, runUpdatePackage, setPackageIdEditing } from "./slice"
-import { columns, getData } from "./util/columns"
-import { options } from "./util/formInputs"
-import FormNumber from "../../components/form-number"
-import FormSearchSelect from "../../components/form-search-select"
-import { runShowMessage } from "../../components/message/slice"
-import Message from "../../components/message"
-import { selectMessageSelector } from "../../components/message/selectors"
+import { selectIsLoadingSelector } from '../../redux/selectors'
+import { selectPackagesSelector } from './selectors'
+import { useEffect, useState } from 'react'
+import { closeModal, openModal, runCreateRecipe } from '../recipes/slice'
+import {
+    resetPackageIdEditing,
+    runCreatePackage,
+    runDeletePackage,
+    runLoadPackages,
+    runUpdatePackage,
+    setPackageIdEditing,
+} from './slice'
+import { columns, getData } from './util/columns'
+import { options } from './util/formInputs'
+import FormNumber from '../../components/form-number'
+import FormSearchSelect from '../../components/form-search-select'
+import Message from '../../components/message'
+import { selectMessageSelector } from '../../components/message/selectors'
 
 const PackagePage = () => {
     const dispatch = useDispatch()
     const loading = useSelector(selectIsLoadingSelector)
     const packages = useSelector(selectPackagesSelector)
+    const message = useSelector(selectMessageSelector)
     const [form] = Form.useForm()
     const [openForm, setOpenForm] = useState(false)
     const [editing, setEditing] = useState(false)
@@ -50,7 +57,7 @@ const PackagePage = () => {
         }
         form.setFieldsValue({
             metric: pkg.metric,
-            quantity: pkg.quantity
+            quantity: pkg.quantity,
         })
     }
 
@@ -97,10 +104,9 @@ const PackagePage = () => {
         )
     }
 
-
     return (
         <div>
-            <Message />
+            <Message message={message} />
             <h1>Envases</h1>
             <CircleSpinner loading={loading}>
                 <div className="table-recipes">
@@ -122,15 +128,20 @@ const PackagePage = () => {
                     changeInitialValues(null)
                     setOpenForm(false)
                 }}
-                onOk={(body) => editing ? updatePackage(body) : createPackage(body)}
+                onOk={(body) =>
+                    editing ? updatePackage(body) : createPackage(body)
+                }
                 open={openForm}
                 title={editing ? 'Editar Envase' : 'Crear Envase'}
             />
-            <FloatButton tooltip="Crear Envase" onClick={() => {
-                setEditing(false)
-                changeInitialValues(null)
-                setOpenForm(true)
-            }} />
+            <FloatButton
+                tooltip="Crear Envase"
+                onClick={() => {
+                    setEditing(false)
+                    changeInitialValues(null)
+                    setOpenForm(true)
+                }}
+            />
         </div>
     )
 }
