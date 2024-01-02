@@ -14,6 +14,9 @@ export function* getAllPackagesSaga() {
         if (response.error === '') {
             yield put(loadPackages(response.body))
             yield put(setLoaded())
+        } else {
+            yield put(showMessage(buildMessage('No se pudieron recuperar los envases', 'GET', true)))
+            yield put(setLoaded())
         }
     } catch (error) {
         yield put(showMessage(buildMessage('No se pudieron recuperar los envases', 'GET', true)))
@@ -29,6 +32,9 @@ export function* createPackageSaga(action) {
             yield put(runLoadPackages())
             yield put(showMessage(buildMessage('Se creó el envase correctamente', 'POST', false)))
             yield put(setLoaded())
+        } else {
+            yield put(showMessage(buildMessage('No se pudo crear el envase', 'POST', true)))
+            yield put(setLoaded())
         }
     } catch (error) {
         yield put(showMessage(buildMessage('No se pudo crear el envase', 'POST', true)))
@@ -43,6 +49,9 @@ export function* deletePackageSaga(action) {
         if (response.error === '') {
             yield put(removePackage(action.payload))
             yield put(showMessage(buildMessage('El envase fue borrado correctamente', 'DELETE', false)))
+            yield put(setLoaded())
+        } else {
+            yield put(showMessage(buildMessage('El envase no se pudo borrar', 'DELETE', true)))
             yield put(setLoaded())
         }
     } catch (error) {
@@ -65,6 +74,9 @@ export function* updatePackageSaga(action) {
             yield put(runLoadPackages())
             yield put(setLoaded())
             yield put(runShowMessage(buildMessage('El envase fue editado correctamente', 'PUT', false)))
+        } else {
+            yield put(runShowMessage(buildMessage('El envase no se pudo editar', 'PUT', true)))
+            yield put(setLoaded())
         }
     } catch (error) {
         yield put(runShowMessage(buildMessage('El envase no se pudo editar', 'PUT', true)))

@@ -1,17 +1,24 @@
-import { Form } from "antd"
-import SearchSelect from "../search-select"
-import { useState } from "react"
+import { Form } from 'antd'
+import SearchSelect from '../search-select'
 
-const FormSearchSelect = ({ label, name, placeholder, options, onChange, initialValue }) => {
-
-    useState(() => {
-        console.log(initialValue());
-    }, [initialValue])
-
+const FormSearchSelect = ({
+    label,
+    name,
+    placeholder,
+    options,
+    onChange,
+    initialValue,
+}) => {
     return (
         <>
             <Form.Item label={label} name={name}>
-                <SearchSelect initialValue={initialValue} placeholder={placeholder} options={options} onChange={onChange} name={name} />
+                <SearchSelect
+                    initialValue={initialValue}
+                    placeholder={placeholder}
+                    options={options}
+                    onChange={onChange}
+                    name={name}
+                />
             </Form.Item>
         </>
     )
