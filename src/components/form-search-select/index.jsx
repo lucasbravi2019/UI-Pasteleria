@@ -11,7 +11,14 @@ const FormSearchSelect = ({
 }) => {
     return (
         <>
-            <Form.Item label={label} name={name}>
+            <Form.Item
+                label={label}
+                name={name}
+                style={{
+                    display: 'block',
+                    margin: 'auto',
+                }}
+            >
                 <SearchSelect
                     initialValue={initialValue}
                     placeholder={placeholder}

@@ -67,7 +67,7 @@ const RecipePage = () => {
             </CircleSpinner>
             <ModalForm
                 form={form}
-                render={() => render()}
+                render={() => render(null)}
                 initialValues={{}}
                 okText="Crear Receta"
                 onCancel={() => setOpenForm(false)}

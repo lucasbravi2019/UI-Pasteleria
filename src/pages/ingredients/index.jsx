@@ -19,10 +19,13 @@ import ModalForm from '../../components/ModalForm'
 import { columns, getData } from './util/columns'
 import { closeModal, openModal } from '../recipes/slice'
 import { render } from './util/formInputs'
+import { selectPackagesSelector } from '../packages/selectors'
+import { runLoadPackages } from '../packages/slice'
 
 const IngredientPage = () => {
     const dispatch = useDispatch()
     const ingredients = useSelector(selectIngredientsSelector)
+    const packages = useSelector(selectPackagesSelector)
     const message = useSelector(selectMessageSelector)
     const loading = useSelector(selectIsLoadingSelector)
     const [openForm, setOpenForm] = useState(false)
@@ -31,6 +34,7 @@ const IngredientPage = () => {
 
     useEffect(() => {
         dispatch(runLoadIngredients())
+        dispatch(runLoadPackages())
     }, [])
 
     const deleteAction = (ingredientId) => {
@@ -94,7 +98,7 @@ const IngredientPage = () => {
             </CircleSpinner>
             <ModalForm
                 form={form}
-                render={() => render()}
+                render={() => render(packages, form)}
                 initialValues={{}}
                 okText={editing ? 'Editar Ingrediente' : 'Crear Ingrediente'}
                 onCancel={() => setOpenForm(false)}
