@@ -6,13 +6,13 @@ const FormNumber = ({
     required,
     tooltip,
     placeholder,
-    defaultValue,
+    initialValue,
 }) => {
     return (
         <>
             <Form.Item
                 name={name}
-                label={label}
+                label={label ? label : null}
                 required={required}
                 tooltip={tooltip}
                 style={{
@@ -20,10 +20,10 @@ const FormNumber = ({
                     margin: 'auto',
                     minWidth: '100%',
                 }}
+                initialValue={initialValue}
             >
                 <InputNumber
                     placeholder={placeholder}
-                    value={defaultValue}
                     style={{
                         display: 'block',
                         minWidth: '100%',

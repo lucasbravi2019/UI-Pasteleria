@@ -1,14 +1,16 @@
-import { Form } from 'antd'
-import SearchSelect from '../search-select'
+import { Form, Select } from 'antd'
 
 const FormSearchSelect = ({
     label,
     name,
     placeholder,
     options,
-    onChange,
     initialValue,
 }) => {
+    const filterOption = (input, option) => {
+        return (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+    }
+
     return (
         <>
             <Form.Item
@@ -18,13 +20,19 @@ const FormSearchSelect = ({
                     display: 'block',
                     margin: 'auto',
                 }}
+                initialValue={initialValue}
             >
-                <SearchSelect
-                    initialValue={initialValue}
+                <Select
+                    showSearch
                     placeholder={placeholder}
+                    optionFilterProp="children"
+                    filterOption={filterOption}
                     options={options}
-                    onChange={onChange}
-                    name={name}
+                    style={{
+                        display: 'block',
+                        minWidth: '100%',
+                        margin: 'auto',
+                    }}
                 />
             </Form.Item>
         </>

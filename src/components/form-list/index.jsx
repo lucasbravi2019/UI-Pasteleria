@@ -1,7 +1,13 @@
 import { CloseOutlined } from '@ant-design/icons'
 import { Button, Form, Input, InputNumber, Select, Space } from 'antd'
+import FormNumber from '../form-number'
+import FormSearchSelect from '../form-search-select'
 
 const FormList = ({ form, fieldName, label, placeholder, options }) => {
+    const filterOption = (input, option) => {
+        return (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+    }
+
     return (
         <>
             <Form.Item>
@@ -10,10 +16,7 @@ const FormList = ({ form, fieldName, label, placeholder, options }) => {
                         return (
                             <div>
                                 {fields.map(
-                                    (
-                                        { key, name, fieldKey, ...restField },
-                                        index
-                                    ) => (
+                                    ({ key, name, fieldKey, ...restField }) => (
                                         <Space
                                             key={key}
                                             style={{
@@ -24,24 +27,22 @@ const FormList = ({ form, fieldName, label, placeholder, options }) => {
                                                 margin: '.5rem auto',
                                             }}
                                         >
-                                            <Form.Item name={[name, 'id']}>
-                                                <Select
-                                                    showSearch
-                                                    optionFilterProp="children"
-                                                    options={options}
-                                                    initialValue="default"
-                                                    // onChange={(value) => {
-                                                    //     console.log(value)
-                                                    //     // form.setFieldsValue({
-                                                    //     //     [`id[${index}].id`]:
-                                                    //     //         value,
-                                                    //     // })
-                                                    // }}
-                                                />
-                                            </Form.Item>
-                                            <Form.Item name={[name, 'price']}>
-                                                <InputNumber />
-                                            </Form.Item>
+                                            <FormSearchSelect
+                                                name={[name, 'id']}
+                                                initialValue={
+                                                    options != null
+                                                        ? options[0]
+                                                        : null
+                                                }
+                                                options={options}
+                                            />
+                                            <FormNumber
+                                                name={[name, 'price']}
+                                                defaultValue={0}
+                                                required={true}
+                                                tooltip="Precio del envase para ingrediente seleccionado"
+                                                placeholder="1000"
+                                            />
                                             <CloseOutlined
                                                 style={{
                                                     display: 'block',

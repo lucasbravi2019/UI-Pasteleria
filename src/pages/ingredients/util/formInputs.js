@@ -11,10 +11,17 @@ export const render = (packages, form) => {
 }
 
 const options = (packages) => {
-    return Object.values(packages).map(pkg => {
+    const defaultOption = {
+        label: "--Seleccionar--",
+        value: 'default',
+        disabled: true
+    }
+    const packagesOptions = Object.values(packages).map(pkg => {
         return {
             label: pkg.metric,
             value: pkg.id
         }
     })
+
+    return [defaultOption, ...packagesOptions]
 }
