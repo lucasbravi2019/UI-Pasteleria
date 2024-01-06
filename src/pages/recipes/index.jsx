@@ -14,7 +14,6 @@ import {
     selectRecipeEditingIngredientsOptions,
     selectRecipeEditingNameSelector,
 } from './selectors'
-import { useEffect } from 'react'
 
 const RecipePage = () => {
     const {
@@ -36,10 +35,6 @@ const RecipePage = () => {
     const recipeEditingOptions = useSelector(
         selectRecipeEditingIngredientsOptions
     )
-
-    useEffect(() => {
-        console.log(options(ingredients))
-    }, [ingredients])
 
     const inputs = () => {
         return (

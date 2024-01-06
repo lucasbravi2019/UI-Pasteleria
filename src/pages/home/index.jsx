@@ -14,21 +14,25 @@ import {
     selectRecipesNamesSelector,
 } from './selectors'
 import { runGetRecipes } from './slice'
+import Message from '../../components/message'
+import { selectMessageSelector } from '../../components/message/selectors'
 
 const HomePage = () => {
     const recipesSelector = useSelector(selectRecipeBasicSelector)
     const recipesNamesSelector = useSelector(selectRecipesNamesSelector)
     const loadingSelector = useSelector(selectIsLoadingSelector)
+    const message = useSelector(selectMessageSelector)
     const dispatch = useDispatch()
 
-    const table = !isEmpty(recipesSelector) ? (
-        <TableGrid
-            columns={columns(recipesNamesSelector)}
-            data={recipesSelector}
-        />
-    ) : (
-        <Empty description={<p>No hay recetas</p>} />
-    )
+    const table =
+        recipesSelector != null && recipesSelector.length > 0 ? (
+            <TableGrid
+                columns={columns(recipesNamesSelector)}
+                data={recipesSelector}
+            />
+        ) : (
+            <Empty description={<p>No hay recetas</p>} />
+        )
 
     useEffect(() => {
         dispatch(runGetRecipes())
@@ -36,6 +40,7 @@ const HomePage = () => {
 
     return (
         <div>
+            <Message message={message} />
             <h1>Recetas</h1>
             <CircleSpinner loading={loadingSelector}>
                 <div className="table-recipes">{table}</div>

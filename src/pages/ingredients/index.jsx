@@ -28,10 +28,6 @@ const IngredientPage = () => {
     const ingredientName = useSelector(selectIngredientEditingNameSelector)
     const packagesOptions = useSelector(selectIngredientPackagesOptions)
 
-    useEffect(() => {
-        console.log(ingredients)
-    }, [ingredients])
-
     const {
         createIngredient,
         updateIngredient,

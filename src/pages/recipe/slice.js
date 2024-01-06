@@ -14,6 +14,9 @@ const showRecipeSlice = createSlice({
         },
         loadRecipe(state, action) {
             state.recipe = action.payload
+        },
+        resetRecipe(state) {
+            state.recipe = null
         }
     }
 
@@ -21,7 +24,8 @@ const showRecipeSlice = createSlice({
 
 export const {
     runLoadRecipe,
-    loadRecipe
+    loadRecipe,
+    resetRecipe
 } = showRecipeSlice.actions
 
 export default showRecipeSlice.reducer

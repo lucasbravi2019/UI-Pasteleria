@@ -18,14 +18,16 @@ export const columns = [
         key: 'price',
         dataIndex: 'price',
         width: 200,
-        render: (_, record) => <span>$ {record.ingredient.price}</span>
+        render: (_, record) => <span>$ {record.price}</span>
     },
     {
         title: 'Envase',
         key: 'package',
         dataIndex: 'package',
         width: 200,
-        render: (_, record) => <span>{record.ingredient.package.quantity} {record.ingredient.package.metric}</span>
+        render: (_, record) => <span>
+            {record.ingredient.package.quantity} {record.ingredient.package.metric} / $ {record.ingredient.price}
+            </span>
     },
 ]
 

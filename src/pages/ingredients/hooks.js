@@ -33,7 +33,6 @@ export const useIngredientPage = () => {
     }
 
     const deleteIngredient = (ingredientId) => {
-        console.log(ingredientId);
         dispatch(runDeleteIngredient(ingredientId))
         dispatch(closeModal())
     }
