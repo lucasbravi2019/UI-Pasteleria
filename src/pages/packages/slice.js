@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     packages: [],
-    packageIdEditing: null,
+    packageEditing: null,
 }
 
 
@@ -22,11 +22,11 @@ const packagesSlice = createSlice({
         runUpdatePackage(state) {
             return state
         },
-        setPackageIdEditing(state, action) {
-            state.packageIdEditing = action.payload
+        setPackageEditing(state, action) {
+            state.packageEditing = action.payload
         },
-        resetPackageIdEditing(state) {
-            state.packageIdEditing = null
+        resetPackageEditing(state) {
+            state.packageEditing = null
         },
         removePackage(state, action) {
             const packages = state.packages.filter(pkg => pkg.id !== action.payload)
@@ -43,8 +43,8 @@ export const {
     runCreatePackage,
     runDeletePackage,
     runUpdatePackage,
-    setPackageIdEditing,
-    resetPackageIdEditing,
+    setPackageEditing,
+    resetPackageEditing,
     loadPackages,
     removePackage
 } = packagesSlice.actions

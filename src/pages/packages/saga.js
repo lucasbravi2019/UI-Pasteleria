@@ -2,7 +2,7 @@ import { call, put, select, takeLatest } from "redux-saga/effects";
 import { deleteData, endpoints, getData, postData, putData } from "../../api";
 import { loadPackages, removePackage, runCreatePackage, runDeletePackage, runLoadPackages, runUpdatePackage } from "./slice";
 import { setLoaded, setLoading } from "../../redux/slice";
-import { selectPackageIdEditingSelector } from "./selectors";
+import { selectPackageEditingIdSelector } from "./selectors";
 import { runShowMessage, showMessage } from "../../components/message/slice";
 import { buildMessage } from "../../components/message";
 
@@ -13,13 +13,12 @@ export function* getAllPackagesSaga() {
         const response = yield call(getData, endpoints.getAllPackages)
         if (response.error === '') {
             yield put(loadPackages(response.body))
-            yield put(setLoaded())
         } else {
             yield put(showMessage(buildMessage('No se pudieron recuperar los envases', 'GET', true)))
-            yield put(setLoaded())
         }
     } catch (error) {
         yield put(showMessage(buildMessage('No se pudieron recuperar los envases', 'GET', true)))
+    } finally {
         yield put(setLoaded())
     }
 }
@@ -31,13 +30,12 @@ export function* createPackageSaga(action) {
         if (response.error === '') {
             yield put(runLoadPackages())
             yield put(showMessage(buildMessage('Se creó el envase correctamente', 'POST', false)))
-            yield put(setLoaded())
         } else {
             yield put(showMessage(buildMessage('No se pudo crear el envase', 'POST', true)))
-            yield put(setLoaded())
         }
     } catch (error) {
         yield put(showMessage(buildMessage('No se pudo crear el envase', 'POST', true)))
+    } finally {
         yield put(setLoaded())
     }
 }
@@ -49,13 +47,12 @@ export function* deletePackageSaga(action) {
         if (response.error === '') {
             yield put(removePackage(action.payload))
             yield put(showMessage(buildMessage('El envase fue borrado correctamente', 'DELETE', false)))
-            yield put(setLoaded())
         } else {
             yield put(showMessage(buildMessage('El envase no se pudo borrar', 'DELETE', true)))
-            yield put(setLoaded())
         }
     } catch (error) {
         yield put(showMessage(buildMessage('El envase no se pudo borrar', 'DELETE', true)))
+    } finally {
         yield put(setLoaded())
     }
 }
@@ -63,7 +60,7 @@ export function* deletePackageSaga(action) {
 export function* updatePackageSaga(action) {
     try {
         yield put(setLoading())
-        const packageId = yield select(selectPackageIdEditingSelector)
+        const packageId = yield select(selectPackageEditingIdSelector)
         const body = {
             id: packageId,
             metric: action.payload.metric,
@@ -72,14 +69,13 @@ export function* updatePackageSaga(action) {
         const response = yield call(putData, endpoints.updatePackage, body)
         if (response.error === '') {
             yield put(runLoadPackages())
-            yield put(setLoaded())
             yield put(runShowMessage(buildMessage('El envase fue editado correctamente', 'PUT', false)))
         } else {
             yield put(runShowMessage(buildMessage('El envase no se pudo editar', 'PUT', true)))
-            yield put(setLoaded())
         }
     } catch (error) {
         yield put(runShowMessage(buildMessage('El envase no se pudo editar', 'PUT', true)))
+    } finally {
         yield put(setLoaded())
     }
 }

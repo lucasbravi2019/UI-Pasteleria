@@ -1,84 +1,35 @@
-import { Empty, FloatButton, Form, message } from 'antd'
+import { Empty, FloatButton } from 'antd'
 import CircleSpinner from '../../components/circle-spinner'
 import TableGrid from '../../components/table'
 import ModalForm from '../../components/ModalForm'
-import { useDispatch, useSelector } from 'react-redux'
-import { selectIsLoadingSelector } from '../../redux/selectors'
-import { selectPackagesSelector } from './selectors'
-import { useEffect, useState } from 'react'
-import { closeModal, openModal, runCreateRecipe } from '../recipes/slice'
-import {
-    resetPackageIdEditing,
-    runCreatePackage,
-    runDeletePackage,
-    runLoadPackages,
-    runUpdatePackage,
-    setPackageIdEditing,
-} from './slice'
 import { columns, getData } from './util/columns'
 import { options } from './util/formInputs'
 import FormNumber from '../../components/form-number'
 import FormSearchSelect from '../../components/form-search-select'
 import Message from '../../components/message'
+import { usePackagePage } from './hooks'
 import { selectMessageSelector } from '../../components/message/selectors'
+import { useSelector } from 'react-redux'
+import { selectPackageEditingMetricSelector, selectPackageEditingQuantitySelector, selectPackagesSelector } from './selectors'
+import { selectIsLoadingSelector } from '../../redux/selectors'
 
 const PackagePage = () => {
-    const dispatch = useDispatch()
-    const loading = useSelector(selectIsLoadingSelector)
-    const packages = useSelector(selectPackagesSelector)
+    const {
+        createPackage,
+        updatePackage,
+        getTableData,
+        onCreation,
+        closeForm,
+        openForm,
+        editing,
+        form,
+    } = usePackagePage()
+
     const message = useSelector(selectMessageSelector)
-    const [form] = Form.useForm()
-    const [openForm, setOpenForm] = useState(false)
-    const [editing, setEditing] = useState(false)
-
-    const createPackage = (body) => {
-        dispatch(runCreatePackage(body))
-        form.resetFields()
-        setOpenForm(false)
-    }
-
-    const updatePackage = (body) => {
-        dispatch(runUpdatePackage(body))
-        setEditing(false)
-        dispatch(resetPackageIdEditing())
-        form.resetFields()
-        setOpenForm(false)
-    }
-
-    const deleteAction = (packageId) => {
-        dispatch(runDeletePackage(packageId))
-        dispatch(closeModal())
-    }
-
-    const changeInitialValues = (pkg) => {
-        if (pkg == null) {
-            form.resetFields()
-            return
-        }
-        form.setFieldsValue({
-            metric: pkg.metric,
-            quantity: pkg.quantity,
-        })
-    }
-
-    const getTableData = (packages) => {
-        return {
-            packages: [...packages],
-            onDelete: (packageId) => deleteAction(packageId),
-            onOpenModal: () => dispatch(openModal()),
-            onEdition: (pkg) => {
-                form.resetFields()
-                changeInitialValues(pkg)
-                setEditing(true)
-                dispatch(setPackageIdEditing(pkg.id))
-                setOpenForm(true)
-            },
-        }
-    }
-
-    useEffect(() => {
-        dispatch(runLoadPackages())
-    }, [])
+    const packages = useSelector(selectPackagesSelector)
+    const loading = useSelector(selectIsLoadingSelector)
+    const packageMetricEditing = useSelector(selectPackageEditingMetricSelector)
+    const packageQuantityEditing = useSelector(selectPackageEditingQuantitySelector)
 
     const inputs = () => {
         return (
@@ -87,11 +38,8 @@ const PackagePage = () => {
                     label="Medida"
                     name="metric"
                     placeholder="g"
-                    required
-                    tooltip="Dimensión usada"
                     options={options()}
-                    onChange={(name, value) => form.setFieldValue(name, value)}
-                    initialValue={() => form.getFieldValue('metric')}
+                    initialValue={packageMetricEditing != null ? packageMetricEditing : options()[0]}
                 />
                 <FormNumber
                     label="Cantidad"
@@ -99,6 +47,7 @@ const PackagePage = () => {
                     placeholder="150"
                     required
                     tooltip="Cantidad que tiene el envase"
+                    initialValue={packageQuantityEditing != null ? packageQuantityEditing : 0}
                 />
             </>
         )
@@ -122,12 +71,9 @@ const PackagePage = () => {
             </CircleSpinner>
             <ModalForm
                 form={form}
-                render={() => inputs()}
+                inputs={inputs}
                 okText={editing ? 'Editar Envase' : 'Crear Envase'}
-                onCancel={() => {
-                    changeInitialValues(null)
-                    setOpenForm(false)
-                }}
+                onCancel={closeForm}
                 onOk={(body) =>
                     editing ? updatePackage(body) : createPackage(body)
                 }
@@ -136,11 +82,7 @@ const PackagePage = () => {
             />
             <FloatButton
                 tooltip="Crear Envase"
-                onClick={() => {
-                    setEditing(false)
-                    changeInitialValues(null)
-                    setOpenForm(true)
-                }}
+                onClick={onCreation}
             />
         </div>
     )

@@ -1,4 +1,5 @@
 import { Form, InputNumber } from 'antd'
+import { useEffect } from 'react'
 
 const FormNumber = ({
     name,
@@ -21,6 +22,7 @@ const FormNumber = ({
                     minWidth: '100%',
                 }}
                 initialValue={initialValue}
+
             >
                 <InputNumber
                     placeholder={placeholder}

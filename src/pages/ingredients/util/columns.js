@@ -23,17 +23,15 @@ export const columns = (ingredients) => {
                 return (
                     <div className="grid-3-lg">
                         <Tooltip title='Editar Ingrediente'>
-                            <Button type="primary" onClick={() => {
-                                record.onEdition()
-                            }}
+                            <Button type="primary" onClick={record.onEdition}
                             ><FontAwesomeIcon icon={faPenToSquare} /></Button>
                         </Tooltip>
                         <Tooltip title='Borrar Ingrediente'>
                             <Button type="primary" danger
-                                onClick={() => record.onOpenModal()}
+                                onClick={record.onDelete}
                             ><FontAwesomeIcon icon={faTrash} /></Button>
                         </Tooltip>
-                        <ModalCustom text="Borrar Ingrediente?" onOk={() => record.onDelete()} />
+                        <ModalCustom text="Borrar Ingrediente?" onOk={record.deleteIngredient} />
                     </div>
                 )
             }
@@ -48,18 +46,6 @@ const getFilters = (ingredients) => {
         return {
             text: ingredient,
             value: ingredient
-        }
-    })
-}
-
-export const getData = (tableData) => {
-    return Object.values(tableData.data).map(ingredient => {
-        return {
-            key: ingredient.id,
-            name: ingredient.name,
-            onOpenModal: () => tableData.onOpenModal(),
-            onEdition: () => tableData.onEdition(ingredient),
-            onDelete: () => tableData.onDelete(ingredient.id)
         }
     })
 }

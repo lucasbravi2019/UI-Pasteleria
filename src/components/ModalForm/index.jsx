@@ -1,7 +1,6 @@
 import { Form, Modal } from "antd"
-import { useEffect } from "react"
 
-const ModalForm = ({ form, title, initialValues, okText, open, onOk, onCancel, render }) => {
+const ModalForm = ({ form, title, okText, open, onOk, onCancel, inputs }) => {
     return (
         <Modal
             open={open}
@@ -23,7 +22,6 @@ const ModalForm = ({ form, title, initialValues, okText, open, onOk, onCancel, r
         >
             <Form
                 form={form}
-                initialValues={initialValues}
                 labelCol={{
                     span: 18
                 }}
@@ -35,7 +33,7 @@ const ModalForm = ({ form, title, initialValues, okText, open, onOk, onCancel, r
                 style={{
                     width: 600
                 }}
-            >{render(initialValues)}</Form>
+            >{inputs}</Form>
         </Modal>
     )
 }

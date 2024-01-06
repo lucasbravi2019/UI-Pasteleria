@@ -29,17 +29,15 @@ export const columns = (packages) => {
                 return (
                     <div className="grid-3-lg">
                         <Tooltip title='Editar Envase'>
-                            <Button type="primary" onClick={() => {
-                                record.onEdition()
-                            }}
+                            <Button type="primary" onClick={record.onEdition}
                             ><FontAwesomeIcon icon={faPenToSquare} /></Button>
                         </Tooltip>
                         <Tooltip title='Borrar Envase'>
                             <Button type="primary" danger
-                                onClick={() => record.onOpenModal()}
+                                onClick={record.onDelete}
                             ><FontAwesomeIcon icon={faTrash} /></Button>
                         </Tooltip>
-                        <ModalCustom text="Borrar Envase?" onOk={() => record.onDelete()} />
+                        <ModalCustom text="Borrar Envase?" onOk={record.deletePackage} />
                     </div>
                 )
             }
@@ -64,8 +62,8 @@ export const getData = (data) => {
             ...pkg,
             key: pkg.id,
             onDelete: () => data.onDelete(pkg.id),
-            onOpenModal: () => data.onOpenModal(),
             onEdition: () => data.onEdition(pkg),
+            deletePackage: () => data.deletePackage(pkg.id)
         }
     })
 }

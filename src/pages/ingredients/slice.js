@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     ingredients: [],
-    ingredientId: null
+    ingredientEditing: null
 }
 
 const ingredientSlice = createSlice({
@@ -12,11 +12,11 @@ const ingredientSlice = createSlice({
         loadIngredients(state, action) {
             state.ingredients = [...action.payload]
         },
-        setIngredientId(state, action) {
-            state.ingredientId = action.payload
+        setIngredientEditing(state, action) {
+            state.ingredientEditing = action.payload
         },
-        resetIngredientId(state) {
-            state.ingredientId = null
+        resetIngredientEditing(state) {
+            state.ingredientEditing = null
         },
         runLoadIngredients(state) {
             return state
@@ -29,14 +29,14 @@ const ingredientSlice = createSlice({
         },
         runDeleteIngredient(state) {
             return state
-        } 
+        }
     }
 })
 
 export const {
     loadIngredients,
-    setIngredientId,
-    resetIngredientId,
+    setIngredientEditing,
+    resetIngredientEditing,
     runLoadIngredients,
     runCreateIngredient,
     runUpdateIngredient,

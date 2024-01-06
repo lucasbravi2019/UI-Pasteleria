@@ -4,7 +4,7 @@ import { showMessage } from "../../components/message/slice";
 import { buildMessage } from "../../components/message";
 import { setLoaded, setLoading } from "../../redux/slice";
 import { deleteData, endpoints, getData, postData, putData } from "../../api";
-import { selectIngredientIdSelector } from "./selector";
+import { selectIngredientEditingIdSelector, selectIngredientEditingSelector, selectIngredientIdSelector } from "./selector";
 
 export function* loadIngredientsSaga() {
     try {
@@ -12,10 +12,12 @@ export function* loadIngredientsSaga() {
         const response = yield call(getData, endpoints.getAllIngredients)
         if (response.error === '') {
             yield put(loadIngredients(response.body))
-            yield put(setLoaded())
+        } else {
+            yield put(showMessage(buildMessage('No se pudieron recuperar los ingredientes', 'GET', true)))
         }
     } catch (error) {
         yield put(showMessage(buildMessage('No se pudieron recuperar los ingredientes', 'GET', true)))
+    } finally {
         yield put(setLoaded())
     }
 }
@@ -27,10 +29,12 @@ export function* createIngredientSaga(action) {
         if (response.error === '') {
             yield put(runLoadIngredients())
             yield put(showMessage(buildMessage('El ingrediente se creó correctamente', 'POST', false)))
-            yield put(setLoaded())
-        } 
+        } else {
+            yield put(showMessage(buildMessage('No se pudo crear el ingrediente', 'POST', true)))
+        }
     } catch (error) {
         yield put(showMessage(buildMessage('No se pudo crear el ingrediente', 'POST', true)))
+    } finally {
         yield put(setLoaded())
     }
 }
@@ -38,22 +42,22 @@ export function* createIngredientSaga(action) {
 export function* updateIngredientSaga(action) {
     try {
         yield put(setLoading())
-        const ingredientId = yield select(selectIngredientIdSelector)
+        const ingredientId = yield select(selectIngredientEditingIdSelector)
         const body = {
             id: ingredientId,
-            name: action.payload.name
+            name: action.payload.name,
+            packages: action.payload.packages
         }
         const response = yield call(putData, endpoints.editIngredient, body)
         if (response.error === '') {
             yield put(runLoadIngredients())
             yield put(showMessage(buildMessage('Se editó el ingrediente correctamente', 'PUT', false)))
-            yield put(setLoaded())
         } else {
             yield put(showMessage(buildMessage('No se pudo editar el ingrediente', 'PUT', true)))
-            yield put(setLoaded())
         }
     } catch (error) {
         yield put(showMessage(buildMessage('No se pudo editar el ingrediente', 'PUT', true)))
+    } finally {
         yield put(setLoaded())
     }
 }
@@ -65,10 +69,12 @@ export function* deleteIngredientSaga(action) {
         if (response.error === '') {
             yield put(runLoadIngredients())
             yield put(showMessage(buildMessage('Se borró el ingrediente correctamente', 'DELETE', false)))
-            yield put(setLoaded())
+        } else {
+            yield put(showMessage(buildMessage('El ingrediente no se pudo borrar', 'DELETE', true)))
         }
     } catch (error) {
         yield put(showMessage(buildMessage('El ingrediente no se pudo borrar', 'DELETE', true)))
+    } finally {
         yield put(setLoaded())
     }
 }

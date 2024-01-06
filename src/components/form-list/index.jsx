@@ -1,22 +1,19 @@
 import { CloseOutlined } from '@ant-design/icons'
-import { Button, Form, Input, InputNumber, Select, Space } from 'antd'
+import { Button, Form, Space } from 'antd'
 import FormNumber from '../form-number'
 import FormSearchSelect from '../form-search-select'
 
-const FormList = ({ form, fieldName, label, placeholder, options }) => {
-    const filterOption = (input, option) => {
-        return (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
-    }
+const FormList = ({ options, initialValue }) => {
 
     return (
         <>
-            <Form.Item>
+            <Form.Item initialValue={initialValue}>
                 <Form.List name="packages">
                     {(fields, { add, remove }) => {
                         return (
                             <div>
                                 {fields.map(
-                                    ({ key, name, fieldKey, ...restField }) => (
+                                    ({ key, name }) => (
                                         <Space
                                             key={key}
                                             style={{
@@ -30,9 +27,10 @@ const FormList = ({ form, fieldName, label, placeholder, options }) => {
                                             <FormSearchSelect
                                                 name={[name, 'id']}
                                                 initialValue={
-                                                    options != null
-                                                        ? options[0]
-                                                        : null
+                                                    initialValue != null && initialValue.length > 0 ? initialValue[key][name]
+                                                        : options != null
+                                                            ? options[0]
+                                                            : null
                                                 }
                                                 options={options}
                                             />
@@ -42,6 +40,7 @@ const FormList = ({ form, fieldName, label, placeholder, options }) => {
                                                 required={true}
                                                 tooltip="Precio del envase para ingrediente seleccionado"
                                                 placeholder="1000"
+                                                initialValue={initialValue != null && initialValue.length > 0 ? initialValue[key][name] : 0}
                                             />
                                             <CloseOutlined
                                                 style={{
