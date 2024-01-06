@@ -5,7 +5,8 @@ const initialState = {
     modalOpen: false,
     recipes: [],
     event: null,
-    recipeId: null
+    recipeId: null,
+    recipeEditing: null
 }
 
 const recipeSlice = createSlice({
@@ -27,6 +28,12 @@ const recipeSlice = createSlice({
         setRecipeId(state, action) {
             state.recipeId = action.payload
         },
+        setRecipeEditing(state, action) {
+            state.recipeEditing = action.payload
+        },
+        resetRecipeEditing(state) {
+            state.recipeEditing = null
+        },
         removeRecipe(state, action) {
             const newRecipes = state.recipes.filter(recipe => recipe.id !== action.payload)
             state.recipes = [...newRecipes]
@@ -40,6 +47,9 @@ const recipeSlice = createSlice({
         runCreateRecipe(state) {
             return state
         },
+        runUpdateRecipe(state) {
+            return state
+        }
     }
 })
 
@@ -49,10 +59,13 @@ export const {
     loadRecipes,
     setEvent,
     setRecipeId,
+    setRecipeEditing,
+    resetRecipeEditing,
     removeRecipe,
     runLoadRecipes,
     runDeleteRecipe,
     runCreateRecipe,
+    runUpdateRecipe
 } = recipeSlice.actions
 
 export default recipeSlice.reducer

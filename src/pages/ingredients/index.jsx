@@ -1,5 +1,10 @@
 import { useSelector } from 'react-redux'
-import { selectIngredientEditingNameSelector, selectIngredientEditingPackagesSelector, selectIngredientPackagesOptions, selectIngredientsSelector } from './selector'
+import {
+    selectIngredientEditingNameSelector,
+    selectIngredientEditingPackagesSelector,
+    selectIngredientPackagesOptions,
+    selectIngredientsSelector,
+} from './selector'
 import { selectMessageSelector } from '../../components/message/selectors'
 import Message from '../../components/message'
 import CircleSpinner from '../../components/circle-spinner'
@@ -24,7 +29,7 @@ const IngredientPage = () => {
     const packagesOptions = useSelector(selectIngredientPackagesOptions)
 
     useEffect(() => {
-        console.log(ingredients);
+        console.log(ingredients)
     }, [ingredients])
 
     const {
@@ -35,7 +40,7 @@ const IngredientPage = () => {
         getTableData,
         editing,
         openForm,
-        onCreation
+        onCreation,
     } = useIngredientPage()
 
     const inputs = () => {
@@ -52,6 +57,8 @@ const IngredientPage = () => {
                 <FormList
                     options={options(packages)}
                     initialValue={packagesOptions}
+                    names={['id', 'price']}
+                    name="packages"
                 />
             </>
         )
@@ -85,10 +92,7 @@ const IngredientPage = () => {
                 title={editing ? 'Editar Ingrediente' : 'Crear Ingrediente'}
                 key={1}
             />
-            <FloatButton
-                tooltip="Crear Ingrediente"
-                onClick={onCreation}
-            />
+            <FloatButton tooltip="Crear Ingrediente" onClick={onCreation} />
         </div>
     )
 }

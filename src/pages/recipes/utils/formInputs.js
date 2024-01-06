@@ -1,12 +1,23 @@
-import FormInput from "../../../components/form-input"
+export const options = (ingredients) => {
+    const defaultOption = {
+        label: "--Seleccionar--",
+        value: 'default',
+        disabled: true
+    }
+    const ingredientsOptions = Object.values(ingredients).map(ingredient => {
+        if (ingredient?.packages != null) {
+            return Object.values(ingredient.packages).map(pkg => {
+                return {
+                    label: `${ingredient.name} / ${pkg.package.quantity} ${pkg.package.metric}`,
+                    value: pkg.ingredientPackageId 
+                }
+            })
+        }
+        
+        return null
+    }).flatMap(obj => obj)
 
-export const render = () => {
-    return (
-        <>
-            <FormInput name="name" label="Receta" required tooltip="Nombre de receta" placeholder="Chocotorta" />
-        </>
-    )
+    return [defaultOption, ...ingredientsOptions]
 }
-
 
 

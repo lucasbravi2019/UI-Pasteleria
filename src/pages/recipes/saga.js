@@ -1,9 +1,12 @@
-import { call, put, takeLatest } from "redux-saga/effects";
-import { deleteData, endpoints, getData, postData } from "../../api";
+import { call, put, select, takeLatest } from "redux-saga/effects";
+import { deleteData, endpoints, getData, postData, putData } from "../../api";
 import { setLoaded, setLoading } from "../../redux/slice";
-import { addRecipe, closeModal, loadRecipes, removeRecipe, runCreateRecipe, runDeleteRecipe, runLoadRecipes } from "./slice";
+import { closeModal, loadRecipes, removeRecipe, runCreateRecipe, runDeleteRecipe, runLoadRecipes, runUpdateRecipe } from "./slice";
 import { buildMessage } from "../../components/message";
 import { showMessage } from "../../components/message/slice";
+import { useSelect } from 'react-redux'
+import { selectIngredientEditingIdSelector } from "../ingredients/selector";
+import { selectRecipeEditingIdSelector } from "./selectors";
 
 export function* getAllRecipesSaga() {
     try {
@@ -41,10 +44,31 @@ export function* createRecipeSaga(action) {
         if (response.error === '') {
             yield put(runLoadRecipes())
             yield put(showMessage(buildMessage('La receta se creó correctamente', 'POST', false)))
-            yield put(setLoaded())
         }
     } catch (error) {
         yield put(showMessage(buildMessage('No se pudo crear la receta', 'POST', true)))
+    } finally {
+        yield put(setLoaded())
+    }
+}
+
+export function* updateRecipeSaga(action) {
+    try {
+        yield put(setLoading())
+        const recipeId = yield select(selectRecipeEditingIdSelector)
+        const body = {
+            id: recipeId,
+            name: action.payload.name,
+            ingredients: action.payload.ingredients
+        }
+        const response = yield call(putData, endpoints.updateRecipe, body)
+        if (response.error === '') {
+            yield put(runLoadRecipes())
+            yield put(showMessage(buildMessage('La receta fue editada correctamente', 'PUT', false)))
+        }
+    } catch (error) {
+        yield put(showMessage(buildMessage('No se pudo editar la receta', 'PUT', true)))
+    } finally {
         yield put(setLoaded())
     }
 }
@@ -53,4 +77,5 @@ export default function* recipeSaga() {
     yield takeLatest(runLoadRecipes.type, getAllRecipesSaga)
     yield takeLatest(runDeleteRecipe.type, deleteRecipeSaga)
     yield takeLatest(runCreateRecipe.type, createRecipeSaga)
+    yield takeLatest(runUpdateRecipe.type, updateRecipeSaga)
 } 

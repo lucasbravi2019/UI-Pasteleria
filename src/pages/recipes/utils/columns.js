@@ -36,22 +36,20 @@ export const columns = (recipes) => [
                         ><FontAwesomeIcon icon={faEye} /></Link>
                     </Tooltip>
                     <Tooltip title='Editar Receta'>
-                        <Button type="primary"
+                        <Button type="primary" onClick={record.onEdition}
                         ><FontAwesomeIcon icon={faPenToSquare} /></Button>
                     </Tooltip>
                     <Tooltip title='Borrar Receta'>
                         <Button type="primary" danger
-                            onClick={() => record.onOpenModal()}
+                            onClick={record.onDelete}
                         ><FontAwesomeIcon icon={faTrash} /></Button>
                     </Tooltip>
-                    <ModalCustom text="Borrar Receta?" onOk={() => record.onDelete(record.recipeId)} />
+                    <ModalCustom text="Borrar Receta?" onOk={record.deleteRecipe} />
                 </div>
             )
         }
     }
 ]
-
-
 
 const getFilters = (recipes) => {
     const recipeMap = new Map()
@@ -60,19 +58,6 @@ const getFilters = (recipes) => {
         return {
             text: recipe,
             value: recipe
-        }
-    })
-}
-
-export const data = (tableData) => {
-    return Object.values(tableData.data).map(recipe => {
-        return {
-            key: `${recipe.id}`,
-            name: recipe.name,
-            price: recipe.price,
-            recipeId: recipe.id,
-            onDelete: (recipeId) => tableData.onDelete(recipeId),
-            onOpenModal: () => tableData.onOpenModal()
         }
     })
 }

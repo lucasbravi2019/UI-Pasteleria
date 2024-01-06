@@ -25,7 +25,6 @@ export const useIngredientPage = () => {
     }
 
     const updateIngredient = (body) => {
-        console.log(body);
         dispatch(runUpdateIngredient(body))
         setEditing(false)
         dispatch(resetIngredientEditing())
@@ -46,7 +45,6 @@ export const useIngredientPage = () => {
     }
 
     const onEdition = (ingredient) => {
-        console.log(ingredient);
         setEditing(true)
         dispatch(setIngredientEditing(ingredient))
         setOpenForm(true)

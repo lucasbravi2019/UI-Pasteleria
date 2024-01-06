@@ -56,7 +56,7 @@ export const endpoints = {
     getAllRecipes: 'recipes',
     getRecipeById: (id) => `recipes/find-one/${id}`,
     createRecipe: 'recipes',
-    updateRecipe: (id) => `recipes/${id}`,
+    updateRecipe: 'recipes',
     deleteRecipe: (id) => `recipes/${id}`,
     addIngredientToRecipe: (recipeId, ingredientId) => `ingredients/${ingredientId}/recipes/${recipeId}`,
     getAllIngredients: 'ingredients',

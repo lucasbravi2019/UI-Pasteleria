@@ -1,25 +1,66 @@
 import { Empty, FloatButton } from 'antd/lib'
 import CircleSpinner from '../../components/circle-spinner'
 import TableGrid from '../../components/table'
-import { columns, data } from './utils/columns'
+import { columns } from './utils/columns'
 import ModalForm from '../../components/ModalForm'
-import { render } from './utils/formInputs'
 import Message from '../../components/message'
 import { useRecipePage } from './hooks'
+import FormInput from '../../components/form-input'
+import FormList from '../../components/form-list'
+import { options } from './utils/formInputs'
+import { useSelector } from 'react-redux'
+import { selectIngredientsSelector } from '../ingredients/selector'
+import {
+    selectRecipeEditingIngredientsOptions,
+    selectRecipeEditingNameSelector,
+} from './selectors'
+import { useEffect } from 'react'
 
 const RecipePage = () => {
-
     const {
         loading,
         message,
         recipes,
         form,
         openForm,
-        openCreationForm,
+        editing,
+        onCreation,
         closeForm,
         createRecipe,
-        tableData
+        updateRecipe,
+        tableData,
     } = useRecipePage()
+
+    const ingredients = useSelector(selectIngredientsSelector)
+    const recipeName = useSelector(selectRecipeEditingNameSelector)
+    const recipeEditingOptions = useSelector(
+        selectRecipeEditingIngredientsOptions
+    )
+
+    useEffect(() => {
+        console.log(options(ingredients))
+    }, [ingredients])
+
+    const inputs = () => {
+        return (
+            <>
+                <FormInput
+                    name="name"
+                    label="Receta"
+                    tooltip="Nombre de receta"
+                    placeholder="Chocotorta"
+                    required
+                    initialValue={recipeName != null ? recipeName : ''}
+                />
+                <FormList
+                    options={options(ingredients)}
+                    initialValue={recipeEditingOptions}
+                    names={['id', 'quantity']}
+                    name="ingredients"
+                />
+            </>
+        )
+    }
 
     return (
         <div>
@@ -30,7 +71,7 @@ const RecipePage = () => {
                     {recipes != null && recipes.length > 0 ? (
                         <TableGrid
                             columns={columns(recipes)}
-                            data={data(tableData(recipes))}
+                            data={tableData(recipes)}
                         />
                     ) : (
                         <Empty description={<p>No hay recetas</p>} />
@@ -39,19 +80,17 @@ const RecipePage = () => {
             </CircleSpinner>
             <ModalForm
                 form={form}
-                render={render}
-                initialValues={{}}
-                okText="Crear Receta"
+                inputs={inputs}
+                okText={editing ? 'Editar Receta' : 'Crear Receta'}
                 onCancel={closeForm}
-                onOk={(body) => createRecipe(body)}
+                onOk={(body) =>
+                    editing ? updateRecipe(body) : createRecipe(body)
+                }
                 open={openForm}
                 title={'Crear receta'}
                 key={1}
             />
-            <FloatButton
-                tooltip="Crear Receta"
-                onClick={openCreationForm}
-            />
+            <FloatButton tooltip="Crear Receta" onClick={onCreation} />
         </div>
     )
 }
