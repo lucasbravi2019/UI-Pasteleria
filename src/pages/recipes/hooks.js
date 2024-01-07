@@ -1,11 +1,33 @@
-import { useEffect, useState } from "react"
-import { openModal, resetRecipeEditing, runCreateRecipe, runDeleteRecipe, runLoadRecipes, runUpdateRecipe, setRecipeEditing } from "./slice"
+import { useEffect, useState } from 'react'
+import {
+    closeModal,
+    openModal,
+    resetRecipeEditing,
+    runCreateRecipe,
+    runDeleteRecipe,
+    runLoadRecipes,
+    runUpdateRecipe,
+    setRecipeEditing,
+} from './slice'
 import { useDispatch, useSelector } from 'react-redux'
-import { Form } from "antd"
-import { selectIsLoadingSelector } from "../../redux/selectors"
-import { selectRecipeEditingIngredientsOptions, selectRecipeEditingNameSelector, selectRecipesSelector } from "./selectors"
-import { selectMessageSelector } from "../../components/message/selectors"
-import { runLoadIngredients } from "../ingredients/slice"
+import { Button, Form, Tooltip } from 'antd'
+import { selectIsLoadingSelector } from '../../redux/selectors'
+import {
+    selectRecipeEditingIngredientsOptions,
+    selectRecipeEditingNameSelector,
+    selectRecipesSelector,
+} from './selectors'
+import { selectMessageSelector } from '../../components/message/selectors'
+import { runLoadIngredients } from '../ingredients/slice'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {
+    faDollarSign,
+    faEye,
+    faPenToSquare,
+    faTrash,
+} from '@fortawesome/free-solid-svg-icons'
+import { getFilters } from './utils/columns'
+import { Link } from 'react-router-dom'
 
 export const useRecipePage = () => {
     const [openForm, setOpenForm] = useState(false)
@@ -14,7 +36,10 @@ export const useRecipePage = () => {
     const [editing, setEditing] = useState(false)
     const [form] = Form.useForm()
     const message = useSelector(selectMessageSelector)
-    const ingredientsOptions = useSelector(selectRecipeEditingIngredientsOptions)
+    const [actualRow, setActualRow] = useState(null)
+    const ingredientsOptions = useSelector(
+        selectRecipeEditingIngredientsOptions
+    )
     const recipeName = useSelector(selectRecipeEditingNameSelector)
 
     const dispatch = useDispatch()
@@ -31,7 +56,8 @@ export const useRecipePage = () => {
     }
 
     const onEdition = (recipe) => {
-        setEditing(true)    
+        setActualRow(recipe)
+        setEditing(true)
         dispatch(setRecipeEditing(recipe))
         setOpenForm(true)
     }
@@ -55,35 +81,97 @@ export const useRecipePage = () => {
         setOpenForm(false)
     }
 
-    const onDelete = () => dispatch(openModal())
+    const onDelete = (record) => {
+        setActualRow(record)
+        dispatch(openModal())
+    }
 
     const tableData = (recipes) => {
-        return Object.values(recipes).map(recipe => {
+        return Object.values(recipes).map((recipe) => {
             return {
                 key: `${recipe.id}`,
                 name: recipe.name,
                 price: recipe.price,
-                recipeId: recipe.id,
-                onCreation: tableData.onCreation,
-                onDelete,
-                onEdition: () => onEdition(recipe),
-                deleteRecipe: () => deleteRecipe(recipe.id)
+                ingredients: recipe.ingredients,
+                id: recipe.id,
             }
         })
     }
 
+    const columns = (recipes) => [
+        {
+            title: 'Nombre',
+            dataIndex: 'name',
+            key: 'name',
+            filters: getFilters(recipes),
+            sorter: (a, b) => a.name.localeCompare(b.name),
+            onFilter: (value, record) => record.name === value,
+            width: 200,
+        },
+        {
+            title: 'Precio',
+            dataIndex: 'price',
+            key: 'price',
+            width: 150,
+            render: (price) => (
+                <span>
+                    <FontAwesomeIcon icon={faDollarSign} /> {price.toFixed(2)}
+                </span>
+            ),
+        },
+        {
+            title: 'Acciones',
+            dataIndex: 'actions',
+            key: 'actions',
+            width: 100,
+            render: (_, record) => {
+                return (
+                    <div className="grid-3-lg">
+                        <Tooltip title="Ver Receta">
+                            <Link
+                                to={`recetas/${record.id}`}
+                                className="link__icon"
+                            >
+                                <FontAwesomeIcon icon={faEye} />
+                            </Link>
+                        </Tooltip>
+                        <Tooltip title="Editar Receta">
+                            <Button
+                                type="primary"
+                                onClick={() => onEdition(record)}
+                            >
+                                <FontAwesomeIcon icon={faPenToSquare} />
+                            </Button>
+                        </Tooltip>
+                        <Tooltip title="Borrar Receta">
+                            <Button
+                                type="primary"
+                                danger
+                                onClick={() => onDelete(record)}
+                            >
+                                <FontAwesomeIcon icon={faTrash} />
+                            </Button>
+                        </Tooltip>
+                    </div>
+                )
+            },
+        },
+    ]
+
+    const hideModal = () => {
+        dispatch(closeModal())
+    }
+
     useEffect(() => {
         if (editing && ingredientsOptions != null) {
-            console.log(recipeName);
-            console.log(ingredientsOptions);
             form.setFieldsValue({
                 name: recipeName,
-                ingredients: [...ingredientsOptions.ingredients]
+                ingredients: [...ingredientsOptions.ingredients],
             })
         } else {
             form.setFieldsValue({
                 name: undefined,
-                ingredients: undefined
+                ingredients: undefined,
             })
         }
     }, [editing, recipeName, ingredientsOptions])
@@ -99,6 +187,11 @@ export const useRecipePage = () => {
         closeForm,
         createRecipe,
         updateRecipe,
-        tableData
+        deleteRecipe,
+        tableData,
+        columns,
+        actualRow,
+        hideModal,
+        columns,
     }
 }

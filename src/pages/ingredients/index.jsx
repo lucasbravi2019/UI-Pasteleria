@@ -19,6 +19,8 @@ import FormInput from '../../components/form-input'
 import FormList from '../../components/form-list'
 import { options } from './util/formInputs'
 import { useEffect } from 'react'
+import ModalCustom from '../../components/modal-custom'
+import ModalRender from '../ingredient'
 
 const IngredientPage = () => {
     const ingredients = useSelector(selectIngredientsSelector)
@@ -37,6 +39,11 @@ const IngredientPage = () => {
         editing,
         openForm,
         onCreation,
+        columns,
+        actualRow,
+        deleting,
+        onOk,
+        hideModal,
     } = useIngredientPage()
 
     const inputs = () => {
@@ -53,8 +60,9 @@ const IngredientPage = () => {
                 <FormList
                     options={options(packages)}
                     initialValue={packagesOptions}
-                    names={['id', 'price']}
+                    names={['packageId', 'price', 'id']}
                     name="packages"
+                    titles={['Envase', 'Precio']}
                 />
             </>
         )
@@ -89,6 +97,17 @@ const IngredientPage = () => {
                 key={1}
             />
             <FloatButton tooltip="Crear Ingrediente" onClick={onCreation} />
+            <ModalCustom
+                onOk={() => onOk(actualRow.id)}
+                onCancel={hideModal}
+                withButtons={deleting ? true : false}
+            >
+                <ModalRender
+                    ingredient={actualRow}
+                    key={actualRow?.id}
+                    deleting={deleting}
+                />
+            </ModalCustom>
         </div>
     )
 }

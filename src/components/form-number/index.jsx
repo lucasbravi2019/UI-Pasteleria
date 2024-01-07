@@ -22,7 +22,6 @@ const FormNumber = ({
                     minWidth: '100%',
                 }}
                 initialValue={initialValue}
-
             >
                 <InputNumber
                     placeholder={placeholder}

@@ -1,7 +1,6 @@
 import { Empty, FloatButton } from 'antd/lib'
 import CircleSpinner from '../../components/circle-spinner'
 import TableGrid from '../../components/table'
-import { columns } from './utils/columns'
 import ModalForm from '../../components/ModalForm'
 import Message from '../../components/message'
 import { useRecipePage } from './hooks'
@@ -14,6 +13,7 @@ import {
     selectRecipeEditingIngredientsOptions,
     selectRecipeEditingNameSelector,
 } from './selectors'
+import ModalCustom from '../../components/modal-custom'
 
 const RecipePage = () => {
     const {
@@ -28,6 +28,10 @@ const RecipePage = () => {
         createRecipe,
         updateRecipe,
         tableData,
+        actualRow,
+        hideModal,
+        deleteRecipe,
+        columns,
     } = useRecipePage()
 
     const ingredients = useSelector(selectIngredientsSelector)
@@ -52,6 +56,7 @@ const RecipePage = () => {
                     initialValue={recipeEditingOptions}
                     names={['id', 'quantity']}
                     name="ingredients"
+                    titles={['Ingrediente', 'Cantidad']}
                 />
             </>
         )
@@ -86,6 +91,13 @@ const RecipePage = () => {
                 key={1}
             />
             <FloatButton tooltip="Crear Receta" onClick={onCreation} />
+            <ModalCustom
+                onOk={() => deleteRecipe(actualRow.id)}
+                onCancel={hideModal}
+                withButtons={true}
+            >
+                <span>Borrar Receta?</span>
+            </ModalCustom>
         </div>
     )
 }

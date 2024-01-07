@@ -2,7 +2,6 @@ import { Empty, FloatButton } from 'antd'
 import CircleSpinner from '../../components/circle-spinner'
 import TableGrid from '../../components/table'
 import ModalForm from '../../components/ModalForm'
-import { columns, getData } from './util/columns'
 import { options } from './util/formInputs'
 import FormNumber from '../../components/form-number'
 import FormSearchSelect from '../../components/form-search-select'
@@ -10,26 +9,37 @@ import Message from '../../components/message'
 import { usePackagePage } from './hooks'
 import { selectMessageSelector } from '../../components/message/selectors'
 import { useSelector } from 'react-redux'
-import { selectPackageEditingMetricSelector, selectPackageEditingQuantitySelector, selectPackagesSelector } from './selectors'
+import {
+    selectPackageEditingMetricSelector,
+    selectPackageEditingQuantitySelector,
+    selectPackagesSelector,
+} from './selectors'
 import { selectIsLoadingSelector } from '../../redux/selectors'
+import ModalCustom from '../../components/modal-custom'
 
 const PackagePage = () => {
     const {
         createPackage,
         updatePackage,
-        getTableData,
         onCreation,
         closeForm,
         openForm,
         editing,
         form,
+        columns,
+        tableData,
+        deletePackage,
+        actualRow,
+        onCancel,
     } = usePackagePage()
 
     const message = useSelector(selectMessageSelector)
     const packages = useSelector(selectPackagesSelector)
     const loading = useSelector(selectIsLoadingSelector)
     const packageMetricEditing = useSelector(selectPackageEditingMetricSelector)
-    const packageQuantityEditing = useSelector(selectPackageEditingQuantitySelector)
+    const packageQuantityEditing = useSelector(
+        selectPackageEditingQuantitySelector
+    )
 
     const inputs = () => {
         return (
@@ -39,7 +49,11 @@ const PackagePage = () => {
                     name="metric"
                     placeholder="g"
                     options={options()}
-                    initialValue={packageMetricEditing != null ? packageMetricEditing : options()[0]}
+                    initialValue={
+                        packageMetricEditing != null
+                            ? packageMetricEditing
+                            : options()[0]
+                    }
                 />
                 <FormNumber
                     label="Cantidad"
@@ -47,7 +61,11 @@ const PackagePage = () => {
                     placeholder="150"
                     required
                     tooltip="Cantidad que tiene el envase"
-                    initialValue={packageQuantityEditing != null ? packageQuantityEditing : 0}
+                    initialValue={
+                        packageQuantityEditing != null
+                            ? packageQuantityEditing
+                            : 0
+                    }
                 />
             </>
         )
@@ -62,7 +80,7 @@ const PackagePage = () => {
                     {packages != null && packages.length > 0 ? (
                         <TableGrid
                             columns={columns(packages)}
-                            data={getData(getTableData(packages))}
+                            data={tableData(packages)}
                         />
                     ) : (
                         <Empty description={<p>No hay envases</p>} />
@@ -80,10 +98,14 @@ const PackagePage = () => {
                 open={openForm}
                 title={editing ? 'Editar Envase' : 'Crear Envase'}
             />
-            <FloatButton
-                tooltip="Crear Envase"
-                onClick={onCreation}
-            />
+            <FloatButton tooltip="Crear Envase" onClick={onCreation} />
+            <ModalCustom
+                onOk={() => deletePackage(actualRow.id)}
+                onCancel={onCancel}
+                withButtons={true}
+            >
+                <span>Borrar envase?</span>
+            </ModalCustom>
         </div>
     )
 }

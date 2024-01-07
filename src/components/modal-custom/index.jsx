@@ -1,13 +1,11 @@
 import { Modal } from 'antd/lib'
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { selectModalOpenSelector } from '../../pages/recipes/selectors'
-import { closeModal } from '../../pages/recipes/slice'
 import { useEffect, useState } from 'react'
+import { Button } from 'antd'
 
-const ModalCustom = (props) => {
+const ModalCustom = ({ onOk, onCancel, withButtons, children }) => {
     const openSelector = useSelector(selectModalOpenSelector)
-    const dispatch = useDispatch()
-    const { text, onOk } = props
 
     const [open, setOpen] = useState(openSelector)
 
@@ -20,9 +18,23 @@ const ModalCustom = (props) => {
             open={open}
             confirmLoading={false}
             onOk={onOk}
-            onCancel={() => dispatch(closeModal())}
+            onCancel={onCancel}
+            cancelText="Cancelar"
+            okText="Aceptar"
+            footer={
+                withButtons
+                    ? [
+                          <Button key="cancel" onClick={onCancel}>
+                              Cancelar
+                          </Button>,
+                          <Button key="ok" type="primary" onClick={onOk}>
+                              Aceptar
+                          </Button>,
+                      ]
+                    : null
+            }
         >
-            {text}
+            {children}
         </Modal>
     )
 }
