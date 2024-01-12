@@ -106,6 +106,7 @@ export const useRecipePage = () => {
             filters: getFilters(recipes),
             sorter: (a, b) => a.name.localeCompare(b.name),
             onFilter: (value, record) => record.name === value,
+            defaultSortOrder: 'ascend',
             width: 250,
         },
         {
@@ -113,6 +114,7 @@ export const useRecipePage = () => {
             dataIndex: 'price',
             key: 'price',
             width: 100,
+            sorter: (a, b) => a.price - b.price,
             render: (price) => (
                 <span>
                     <FontAwesomeIcon icon={faDollarSign} /> {price.toFixed(2)}

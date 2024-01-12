@@ -103,6 +103,7 @@ export const useIngredientPage = () => {
                 filters: getFilters(ingredients),
                 sorter: (a, b) => a.name.localeCompare(b.name),
                 onFilter: (value, record) => record.name === value,
+                defaultSortOrder: 'ascend',
             },
             {
                 title: 'Acciones',

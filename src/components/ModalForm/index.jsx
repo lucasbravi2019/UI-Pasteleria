@@ -1,6 +1,17 @@
 import { Form, Modal } from "antd"
+import { showMessage } from "../message/slice"
+import Message, { buildMessage } from "../message"
+import { useDispatch, useSelector } from "react-redux"
+import { selectMessageSelector } from "../message/selectors"
 
 const ModalForm = ({ form, title, okText, open, onOk, onCancel, inputs }) => {
+    const dispatch = useDispatch()
+
+    const message = useSelector(selectMessageSelector)
+    const showErrorMessage = () => {
+        dispatch(showMessage(buildMessage('Por favor revisar valores ingresados', 'ANY', true)))
+    }
+
     return (
         <Modal
             open={open}
@@ -17,9 +28,10 @@ const ModalForm = ({ form, title, okText, open, onOk, onCancel, inputs }) => {
                         form.resetFields()
                         onOk(values)
                     })
-                    .catch(error => console.log(error))
+                    .catch(_ => showErrorMessage())
             }}
         >
+            <Message message={message} />
             <Form
                 form={form}
                 labelCol={{

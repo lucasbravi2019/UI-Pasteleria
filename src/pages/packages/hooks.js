@@ -111,8 +111,11 @@ export const usePackagePage = () => {
                 key: 'metric',
                 width: 300,
                 filters: getFilters(packages),
-                sorter: (a, b) => a.metric.localeCompare(b.metric),
+                sorter: (a, b) => {
+                    return a.metric.localeCompare(b.metric) || a.quantity - b.quantity
+                },
                 onFilter: (value, record) => record.metric === value,
+                defaultSortOrder: 'ascend',
                 render: (_, record) => (
                     <span>
                         {record.quantity} {record.metric}
