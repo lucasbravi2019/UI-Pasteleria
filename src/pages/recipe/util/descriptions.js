@@ -35,7 +35,7 @@ export const getDescriptions = (recipe) => {
                             display: 'block',
                         }}
                     >
-                        {'Precio total: '}
+                        {'Precio de Venta: '}
                         {<FontAwesomeIcon icon={faDollarSign} />}
                         {` ${(recipe.price * 3).toFixed(2)}`}
                     </span>
@@ -58,7 +58,7 @@ export const getDescriptions = (recipe) => {
             children: (
                 <>
                     {recipe.ingredients != null &&
-                    recipe.ingredients.length > 0 ? (
+                        recipe.ingredients.length > 0 ? (
                         <>
                             <TableGrid
                                 key={recipe.id}

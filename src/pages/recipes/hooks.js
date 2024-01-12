@@ -106,13 +106,13 @@ export const useRecipePage = () => {
             filters: getFilters(recipes),
             sorter: (a, b) => a.name.localeCompare(b.name),
             onFilter: (value, record) => record.name === value,
-            width: 200,
+            width: 250,
         },
         {
-            title: 'Precio',
+            title: 'Costo',
             dataIndex: 'price',
             key: 'price',
-            width: 150,
+            width: 100,
             render: (price) => (
                 <span>
                     <FontAwesomeIcon icon={faDollarSign} /> {price.toFixed(2)}
@@ -120,10 +120,21 @@ export const useRecipePage = () => {
             ),
         },
         {
+            title: 'Precio de Venta',
+            dataIndex: 'price',
+            key: 'price',
+            width: 150,
+            render: (price) => (
+                <span>
+                    <FontAwesomeIcon icon={faDollarSign} /> {(price * 3).toFixed(2)}
+                </span>
+            ),
+        },
+        {
             title: 'Acciones',
             dataIndex: 'actions',
             key: 'actions',
-            width: 100,
+            width: 200,
             render: (_, record) => {
                 return (
                     <div className="grid-3-lg">

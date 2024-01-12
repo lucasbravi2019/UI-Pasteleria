@@ -54,6 +54,7 @@ const PackagePage = () => {
                             ? packageMetricEditing
                             : options()[0]
                     }
+                    required
                 />
                 <FormNumber
                     label="Cantidad"

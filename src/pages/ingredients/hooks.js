@@ -63,7 +63,6 @@ export const useIngredientPage = () => {
     }
 
     const onEdition = (ingredient) => {
-        console.log(ingredient)
         setEditing(true)
         dispatch(setIngredientEditing(ingredient))
         setOpenForm(true)
@@ -100,7 +99,7 @@ export const useIngredientPage = () => {
                 title: 'Nombre',
                 dataIndex: 'name',
                 key: 'name',
-                width: 200,
+                width: 250,
                 filters: getFilters(ingredients),
                 sorter: (a, b) => a.name.localeCompare(b.name),
                 onFilter: (value, record) => record.name === value,
@@ -162,7 +161,6 @@ export const useIngredientPage = () => {
     }
 
     useEffect(() => {
-        console.log(form.getFieldsValue())
         if (editing && packagesOptions != null) {
             form.setFieldsValue({
                 name: ingredientName,
@@ -174,7 +172,6 @@ export const useIngredientPage = () => {
                 packages: undefined,
             })
         }
-        console.log(form.getFieldsValue())
     }, [editing, ingredientName, packagesOptions])
 
     return {

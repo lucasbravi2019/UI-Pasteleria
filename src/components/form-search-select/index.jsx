@@ -6,9 +6,17 @@ const FormSearchSelect = ({
     placeholder,
     options,
     initialValue,
+    required
 }) => {
     const filterOption = (input, option) => {
         return (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+    }
+
+    const validateSelect = (_, value) => {
+        if (value === 'default')
+            return Promise.reject('Debe seleccionar algún valor')
+
+        return Promise.resolve()
     }
 
     return (
@@ -21,6 +29,8 @@ const FormSearchSelect = ({
                     margin: 'auto',
                 }}
                 initialValue={initialValue}
+                required={required}
+                rules={[{ required: true, message: `${label} es obligatorio` }, { validator: validateSelect }]}
             >
                 <Select
                     showSearch

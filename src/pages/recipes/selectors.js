@@ -23,7 +23,6 @@ export const selectRecipeEditingIngredientsSelector = createSelector(
 export const selectRecipeEditingIngredientsOptions = createSelector(
     selectRecipeEditingSelector,
     (substate) => {
-        console.log(substate)
         let options = substate?.ingredients?.map((ingredient) => {
             return {
                 id: ingredient.ingredient.id,

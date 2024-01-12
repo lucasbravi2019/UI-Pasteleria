@@ -32,7 +32,7 @@ export const columns = [
         render: (_, record) => (
             <span>
                 {record.ingredient.package.quantity}{' '}
-                {record.ingredient.package.metric} / $ {record.ingredient.price}
+                {record.ingredient.package.metric} / $ {record.ingredient.price.toFixed(2)}
             </span>
         ),
     },

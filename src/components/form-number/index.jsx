@@ -9,6 +9,13 @@ const FormNumber = ({
     placeholder,
     initialValue,
 }) => {
+
+    const validateInputNumber = (_, value) => {
+        if (value <= 0)
+            return Promise.reject('Debe ser mayor a 0')
+
+        return Promise.resolve()
+    }
     return (
         <>
             <Form.Item
@@ -22,6 +29,7 @@ const FormNumber = ({
                     minWidth: '100%',
                 }}
                 initialValue={initialValue}
+                rules={[{ required: true, message: "Debe ingresar un valor" }, { validator: validateInputNumber }]}
             >
                 <InputNumber
                     placeholder={placeholder}
@@ -29,6 +37,7 @@ const FormNumber = ({
                         display: 'block',
                         minWidth: '100%',
                     }}
+                    min={0}
                 />
             </Form.Item>
         </>

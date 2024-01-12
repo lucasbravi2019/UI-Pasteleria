@@ -14,14 +14,14 @@ const ModalRender = ({ ingredient, deleting }) => {
                 <>
                     <h1>{ingredient.name}</h1>
                     {ingredient.packages != null &&
-                    ingredient.packages.length > 0 ? (
+                        ingredient.packages.length > 0 ? (
                         <Card title="Envases">
                             {Object.values(ingredient.packages).map((pkg) => (
                                 <Card.Grid
                                     style={cardStyle}
                                     key={pkg.ingredientPackageId}
                                 >
-                                    {`$ ${pkg.price} x ${pkg.package.quantity} ${pkg.package.metric}`}
+                                    {`$ ${pkg.price.toFixed(2)} x ${pkg.package.quantity} ${pkg.package.metric}`}
                                 </Card.Grid>
                             ))}
                         </Card>

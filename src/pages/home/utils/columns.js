@@ -11,16 +11,27 @@ export const columns = (recipes) => [
         filters: getFilters(recipes),
         sorter: (a, b) => a.name.localeCompare(b.name),
         onFilter: (value, record) => record.name === value,
-        width: 200,
+        width: 250,
     },
     {
-        title: 'Precio',
+        title: 'Costo',
+        dataIndex: 'price',
+        key: 'price',
+        width: 100,
+        render: (price) => (
+            <span>
+                <FontAwesomeIcon icon={faDollarSign} /> {price.toFixed(2)}
+            </span>
+        ),
+    },
+    {
+        title: 'Precio de Venta',
         dataIndex: 'price',
         key: 'price',
         width: 150,
         render: (price) => (
             <span>
-                <FontAwesomeIcon icon={faDollarSign} /> {price.toFixed(2)}
+                <FontAwesomeIcon icon={faDollarSign} /> {(price * 3).toFixed(2)}
             </span>
         ),
     },

@@ -8,7 +8,7 @@ const TableGrid = (props) => {
   return (
     <>
       <ConfigProvider locale={es_ES}>
-        <Table columns={columns} dataSource={data} bordered />
+        <Table columns={columns} dataSource={data} bordered tableLayout='fixed' />
       </ConfigProvider>
     </>
   )

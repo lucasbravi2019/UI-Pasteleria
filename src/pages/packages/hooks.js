@@ -123,7 +123,7 @@ export const usePackagePage = () => {
                 title: 'Acciones',
                 dataIndex: 'actions',
                 key: 'actions',
-                width: 200,
+                width: 105,
                 render: (_, record) => {
                     return (
                         <div className="grid-3-lg">

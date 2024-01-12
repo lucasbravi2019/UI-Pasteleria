@@ -4,38 +4,42 @@ import FormNumber from '../form-number'
 import FormSearchSelect from '../form-search-select'
 
 const FormList = ({ options, initialValue, names, name, titles }) => {
+
     return (
         <>
-            <div
-                style={{
-                    display: 'grid',
-                    gridTemplateColumns: 'repeat(3, 1fr)',
-                    textAlign: 'center',
-                    margin: '.5rem auto',
-                }}
-            >
-                {titles.map((title, index) => (
-                    <span key={index}>{title}</span>
-                ))}
-            </div>
+
             <Form.Item initialValue={initialValue}>
+
                 <Form.List name={name}>
                     {(fields, { add, remove }) => {
+
                         return (
                             <>
+                                <div
+                                    style={{
+                                        display: 'grid',
+                                        gridTemplateColumns: 'repeat(3, 1fr)',
+                                        textAlign: 'center',
+                                        margin: '.5rem auto',
+                                    }}
+                                >
+                                    {fields.length > 0 ? titles.map((title, index) => (
+                                        <span key={index}>{title}</span>
+                                    )) : null}
+                                </div>
                                 {fields.map(({ key, name }) => (
                                     <div key={key}>
                                         {names.length === 3 && (
                                             <Form.Item
                                                 initialValue={
                                                     initialValue != null &&
-                                                    initialValue[key] != null &&
-                                                    initialValue[key][
+                                                        initialValue[key] != null &&
+                                                        initialValue[key][
                                                         names[2]
-                                                    ] != null
+                                                        ] != null
                                                         ? initialValue[key][
-                                                              names[2]
-                                                          ]
+                                                        names[2]
+                                                        ]
                                                         : 0
                                                 }
                                                 style={{
@@ -55,17 +59,8 @@ const FormList = ({ options, initialValue, names, name, titles }) => {
                                         >
                                             <FormSearchSelect
                                                 name={[name, names[0]]}
-                                                initialValue={
-                                                    initialValue != null &&
-                                                    initialValue.length > 0
-                                                        ? initialValue[key][
-                                                              name
-                                                          ]
-                                                        : options != null
-                                                        ? options[0]
-                                                        : null
-                                                }
                                                 options={options}
+                                                initialValue="default"
                                             />
                                             <FormNumber
                                                 name={[name, names[1]]}
@@ -73,14 +68,7 @@ const FormList = ({ options, initialValue, names, name, titles }) => {
                                                 required={true}
                                                 tooltip="Precio del envase para ingrediente seleccionado"
                                                 placeholder="1000"
-                                                initialValue={
-                                                    initialValue != null &&
-                                                    initialValue.length > 0
-                                                        ? initialValue[key][
-                                                              name
-                                                          ]
-                                                        : 0
-                                                }
+                                                initialValue={0}
                                             />
                                             <CloseOutlined
                                                 style={{
@@ -96,7 +84,9 @@ const FormList = ({ options, initialValue, names, name, titles }) => {
                                 ))}
                                 <Button
                                     type="dashed"
-                                    onClick={() => add()}
+                                    onClick={() => {
+                                        add()
+                                    }}
                                     block
                                 >
                                     + Agregar nuevo

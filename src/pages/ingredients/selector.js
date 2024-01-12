@@ -32,7 +32,6 @@ export const selectIngredientEditingPackagesSelector = createSelector(
 export const selectIngredientPackagesOptions = createSelector(
     selectIngredientEditingPackagesSelector,
     (substate) => {
-        console.log(substate)
         let packages = substate?.map((pkg) => {
             return {
                 id: pkg?.ingredientPackageId,
