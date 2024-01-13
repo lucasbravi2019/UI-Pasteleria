@@ -113,7 +113,7 @@ export const useRecipePage = () => {
             title: 'Costo',
             dataIndex: 'price',
             key: 'price',
-            width: 100,
+            width: 150,
             sorter: (a, b) => a.price - b.price,
             render: (price) => (
                 <span>
@@ -128,7 +128,8 @@ export const useRecipePage = () => {
             width: 150,
             render: (price) => (
                 <span>
-                    <FontAwesomeIcon icon={faDollarSign} /> {(price * 3).toFixed(2)}
+                    <FontAwesomeIcon icon={faDollarSign} />{' '}
+                    {(price * 3).toFixed(2)}
                 </span>
             ),
         },
