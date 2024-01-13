@@ -1,4 +1,26 @@
-.recipes__container {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+.table-recipes {
+    width: 100%;
+    margin: 1rem auto;
+    
+    @media (min-width: 768px) {
+        width: 70%;
+    }
+
+    @media (min-width: 996px) {
+        width: 50%;
+    }
+}
+
+.link__icon {
+    font-size: 20px;
+    text-align: center;
+    margin: 0 auto;
+    padding: 0;
+    min-width: 40px;
+    display: block;
+    max-width: min-content;
+    box-sizing: border-box;
+    color: rgb(9, 9, 9);
+    border: rgb(169, 169, 169) 1px solid;
+    border-radius: 10px;
 }
