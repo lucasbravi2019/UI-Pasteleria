@@ -18,6 +18,7 @@ export const columns = (recipes) => [
         dataIndex: 'price',
         key: 'price',
         width: 150,
+        sorter: (a, b) => a.price - b.price,
         render: (price) => (
             <span>
                 <FontAwesomeIcon icon={faDollarSign} /> {price.toFixed(2)}
